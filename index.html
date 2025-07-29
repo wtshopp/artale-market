@@ -1,257 +1,141 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <title>西龜商城 🍉🐢</title>
+  <meta charset="UTF-8">
+  <title>裝備清單</title>
   <style>
     body {
+      background-color: #ddd;
       font-family: Arial, sans-serif;
-      padding: 20px;
-      background-color: #e0e0e0;
-      color: #000;
     }
-
-    h2 {
-      color: #005ab5;
-    }
-
     .controls {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
-      gap: 10px;
+      flex-wrap: wrap;
       margin-bottom: 20px;
+      gap: 10px;
     }
-
-    .controls input[type="text"],
-    .controls input[type="number"] {
-      padding: 5px;
-      max-width: 150px;
-    }
-
+    .controls input,
+    .controls select,
     .controls button {
-      background-color: #dddddd;
-      color: #333;
-      border: 1px solid #ccc;
       padding: 5px 10px;
       border-radius: 5px;
+      border: 1px solid #aaa;
+      background-color: #f0f0f0;
+    }
+    .controls button:hover {
       cursor: pointer;
     }
-
-    .controls button:hover {
-      background-color: #cccccc;
+    .reset-button {
+      background-color: #ffeeee;
     }
 
-    .reset-btn {
-      background-color: #cce5ff;
-      color: #004085;
+    details summary {
+      cursor: pointer;
+      padding: 5px 10px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      background-color: #f0f0f0;
+    }
+    details[open] summary {
+      background-color: #e0e0e0;
     }
 
-    .reset-btn:hover {
-      background-color: #b3d7ff;
-    }
-
-    .items-container {
+    .product-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 30px;
+      gap: 20px;
     }
-
-    .item {
+    .product {
+      background-color: #ccc;
+      padding: 15px;
+      border-radius: 10px;
+      width: calc(50% - 20px);
       display: flex;
-      flex-direction: row;
-      width: calc(33.33% - 20px);
-      background-color: #fff;
-      padding: 10px;
-      border-radius: 8px;
-      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      gap: 15px;
+      box-sizing: border-box;
     }
-
-    .item-details {
-      flex: 1;
-      margin-right: 10px;
-    }
-
-    .item img {
-      width: 180px;
+    .product img {
+      width: 230px;
       height: auto;
+      object-fit: contain;
     }
-
-    .attribute-range {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 5px;
-      align-items: center;
-    }
-
-    hr.group-divider {
-      width: 100%;
+    hr {
       border: 1px solid #bbb;
+      width: 100%;
       margin: 30px 0;
     }
   </style>
 </head>
 <body>
-
-  <h2>西龜商城 🍉🐢</h2>
-
-  <p>
-    Discord: jun_.0605 |
-    FB: Weijun |
-    Instagram: wei_.0605_ |
-    Artale: Lin凜#5YfsH
-  </p>
-
+  <h2>裝備</h2>
   <div class="controls">
-    <input type="text" id="searchInput" placeholder="搜尋商品..." onkeyup="applyFilters()">
-    <button class="reset-btn" onclick="resetFilters()">重置篩選</button>
+    <input type="text" placeholder="搜尋商品">
+    <button class="reset-button">重置所有篩選</button>
+    <button>All</button>
 
-    <button onclick="filterCategory('全部')">全部</button>
-    <button onclick="filterCategory('鞋子')">鞋子</button>
+    <button id="priceSort">楓幣 ⬆</button>
+    <button id="snowSort">雪 ⬆</button>
 
-    <button onclick="toggleSort('meso')">楓幣 <span id="mesoArrow">⬆️</span></button>
-    <button onclick="toggleSort('snow')">雪數 <span id="snowArrow">⬆️</span></button>
-
-    <label><input type="checkbox" class="attributeCheckbox" value="移動速度" onchange="applyFilters()"> 移動速度</label>
-    <label><input type="checkbox" class="attributeCheckbox" value="智力" onchange="applyFilters()"> 智力</label>
-    <label><input type="checkbox" class="attributeCheckbox" value="魔攻" onchange="applyFilters()"> 魔攻</label>
-    <label><input type="checkbox" class="attributeCheckbox" value="幸運" onchange="applyFilters()"> 幸運</label>
-
-    <div class="attribute-range">
-      移速範圍: <input type="number" id="speedMin" placeholder="最小值" onchange="applyFilters()">
-      智力: <input type="number" id="intMin" placeholder="≥" onchange="applyFilters()">
-      魔攻: <input type="number" id="matkMin" placeholder="≥" onchange="applyFilters()">
-      幸運: <input type="number" id="lukMin" placeholder="≥" onchange="applyFilters()">
-    </div>
+    <details>
+      <summary>進階篩選</summary>
+      <div style="margin-top: 10px;">
+        <label>屬性多選：
+          <select multiple>
+            <option>移動速度</option>
+            <option>智力</option>
+            <option>幸運</option>
+            <option>魔攻</option>
+          </select>
+        </label>
+        <label style="margin-left: 10px;">
+          屬性範圍：
+          <input type="number" placeholder="最小值" style="width: 60px;">
+          <input type="number" placeholder="最大值" style="width: 60px;">
+        </label>
+      </div>
+    </details>
   </div>
 
-  <div id="items" class="items-container"></div>
+  <div class="product-list">
+    <div class="product">
+      <div class="info">
+        <p><strong>商品名:</strong> 藍雪鞋</p>
+        <p style="color:red;"><strong>屬性:</strong></p>
+        <p>移動速度+12</p>
+        <p style="color:red;">剩餘卷軸數: 0</p>
+        <p>商品量: 2</p>
+        <p style="color:red;">售價: 15雪 / 900萬楓幣</p>
+      </div>
+      <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
+    </div>
 
-  <script>
-    const items = [
-      {
-        name: "藍雪鞋",
-        attributes: { "移動速度": 12 },
-        scrolls: 0,
-        quantity: 2,
-        snow: 15,
-        meso: 900,
-        category: "鞋子",
-        image: "12速藍雪鞋.png"
-      },
-      {
-        name: "藍雪鞋",
-        attributes: { "移動速度": 10 },
-        scrolls: 0,
-        quantity: 3,
-        snow: 3,
-        meso: 180,
-        category: "鞋子",
-        image: "10速藍雪鞋.png"
-      },
-      {
-        name: "紅色艾倫鞋",
-        attributes: { "魔攻": 1, "移動速度": 8, "智力": 4, "幸運": 2 },
-        scrolls: 0,
-        quantity: 1,
-        snow: 5,
-        meso: 300,
-        category: "鞋子",
-        image: "8速7屬艾倫鞋.png"
-      }
-    ];
+    <div class="product">
+      <div class="info">
+        <p><strong>商品名:</strong> 藍雪鞋</p>
+        <p style="color:red;"><strong>屬性:</strong></p>
+        <p>移動速度+10</p>
+        <p style="color:red;">剩餘卷軸數: 0</p>
+        <p>商品量: 3</p>
+        <p style="color:red;">售價: 3雪 / 180萬楓幣</p>
+      </div>
+      <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
+    </div>
 
-    let currentCategory = "全部";
-    let currentSort = "";
-    let sortOrder = { meso: 'asc', snow: 'asc' };
+    <hr>
 
-    function renderItems(filteredItems) {
-      const container = document.getElementById("items");
-      container.innerHTML = "";
-
-      filteredItems.forEach((item, index) => {
-        if (index % 3 === 0 && index !== 0) {
-          container.innerHTML += '<hr class="group-divider">';
-        }
-
-        const attrText = Object.entries(item.attributes)
-          .map(([k, v]) => `${k}+${v}`)
-          .join(" ");
-
-        container.innerHTML += `
-          <div class="item">
-            <div class="item-details">
-              <h4>商品名: <strong>${item.name}</strong></h4>
-              <p><span style="color:#ad0003;">屬性:</span></p>
-              <p>${attrText}</p>
-              <p><span style="color:#ad0003;">剩餘卷軸數:</span> ${item.scrolls}</p>
-              <p><span style="color:#ad0003;">商品量:</span> ${item.quantity}</p>
-              <p><span style="color:#ad0003;">售價:</span> ${item.snow}雪 / ${item.meso}萬楓幣</p>
-            </div>
-            <img src="${item.image}" alt="${item.name}">
-          </div>
-        `;
-      });
-    }
-
-    function applyFilters() {
-      let result = items.filter(item => {
-        const keyword = document.getElementById('searchInput').value.toLowerCase();
-        if (keyword && !item.name.toLowerCase().includes(keyword)) return false;
-
-        if (currentCategory !== "全部" && item.category !== currentCategory) return false;
-
-        const checked = [...document.querySelectorAll('.attributeCheckbox:checked')].map(cb => cb.value);
-        if (checked.length && !checked.every(attr => attr in item.attributes)) return false;
-
-        const speedMin = parseInt(document.getElementById('speedMin').value);
-        const intMin = parseInt(document.getElementById('intMin').value);
-        const matkMin = parseInt(document.getElementById('matkMin').value);
-        const lukMin = parseInt(document.getElementById('lukMin').value);
-
-        if (!isNaN(speedMin) && (item.attributes["移動速度"] || 0) < speedMin) return false;
-        if (!isNaN(intMin) && (item.attributes["智力"] || 0) < intMin) return false;
-        if (!isNaN(matkMin) && (item.attributes["魔攻"] || 0) < matkMin) return false;
-        if (!isNaN(lukMin) && (item.attributes["幸運"] || 0) < lukMin) return false;
-
-        return true;
-      });
-
-      if (currentSort) {
-        result.sort((a, b) => {
-          const valA = a[currentSort];
-          const valB = b[currentSort];
-          return sortOrder[currentSort] === 'asc' ? valA - valB : valB - valA;
-        });
-        document.getElementById(currentSort + "Arrow").textContent = sortOrder[currentSort] === 'asc' ? '⬆️' : '⬇️';
-      }
-
-      renderItems(result);
-    }
-
-    function filterCategory(cat) {
-      currentCategory = cat;
-      applyFilters();
-    }
-
-    function toggleSort(type) {
-      currentSort = type;
-      sortOrder[type] = sortOrder[type] === 'asc' ? 'desc' : 'asc';
-      applyFilters();
-    }
-
-    function resetFilters() {
-      document.getElementById('searchInput').value = '';
-      currentCategory = "全部";
-      document.querySelectorAll('.attributeCheckbox').forEach(cb => cb.checked = false);
-      document.getElementById('speedMin').value = '';
-      document.getElementById('intMin').value = '';
-      document.getElementById('matkMin').value = '';
-      document.getElementById('lukMin').value = '';
-      applyFilters();
-    }
-
-    applyFilters();
-  </script>
+    <div class="product">
+      <div class="info">
+        <p><strong>商品名:</strong> 紅色艾倫鞋</p>
+        <p style="color:red;"><strong>屬性:</strong></p>
+        <p>智力+4 幸運+2</p>
+        <p>魔攻+1 移動速度+8</p>
+        <p style="color:red;">剩餘卷軸數: 0</p>
+        <p>商品量: 1</p>
+        <p style="color:red;">售價: 5雪 / 300萬楓幣</p>
+      </div>
+      <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
+    </div>
+  </div>
 </body>
 </html>
