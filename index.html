@@ -14,6 +14,7 @@
 
     h2 {
       color: #005ab5;
+      margin-bottom: 10px;
     }
 
     h4 {
@@ -39,6 +40,20 @@
     strong {
       color: #005ab5;
     }
+
+    #searchInput {
+      padding: 8px;
+      font-size: 16px;
+      width: 250px;
+      margin-bottom: 20px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 40px;
+    }
   </style>
 </head>
 <body>
@@ -55,8 +70,13 @@
 
   <hr>
 
-  <h2>裝備</h2>
+  <!-- 標題 + 搜尋 -->
+  <div class="section-header">
+    <h2>裝備</h2>
+    <input type="text" id="searchInput" placeholder="搜尋商品名..." onkeyup="filterItems()">
+  </div>
 
+  <!-- 商品清單 -->
   <div class="item">
     <div class="item-details">
       <h4>商品名: <strong>藍雪鞋</strong></h4>
@@ -78,6 +98,19 @@
     </div>
     <img src="10速藍雪鞋.png" alt="10速藍雪鞋">
   </div>
+
+  <script>
+    function filterItems() {
+      const input = document.getElementById("searchInput");
+      const filter = input.value.toLowerCase();
+      const items = document.querySelectorAll(".item");
+
+      items.forEach(item => {
+        const name = item.querySelector("h4").textContent.toLowerCase();
+        item.style.display = name.includes(filter) ? "" : "none";
+      });
+    }
+  </script>
 
 </body>
 </html>
