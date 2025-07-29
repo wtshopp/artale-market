@@ -7,7 +7,6 @@
     body {
       font-family: Arial, sans-serif;
       padding: 20px;
-      line-height: 1.6;
       background-color: #e0e0e0;
       color: #000;
     }
@@ -16,172 +15,154 @@
       color: #005ab5;
     }
 
-    h4 {
-      color: #333;
-    }
-
-    .top-bar {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
-      flex-wrap: wrap;
-    }
-
-    .search-bar input {
-      padding: 5px;
-      width: 200px;
-    }
-
-    .category-buttons {
-      display: flex;
-      gap: 10px;
-    }
-
-    .category-buttons button {
-      padding: 5px 10px;
-      background-color: #005ab5;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-    }
-
-    .category-buttons button:hover {
-      background-color: #004080;
-    }
-
-    .items-container {
+    .item-container {
       display: flex;
       flex-wrap: wrap;
-      gap: 40px;
+      gap: 30px;
     }
 
     .item {
       display: flex;
-      flex-direction: row;
-      width: 100%;
-      max-width: 420px;
-      padding-bottom: 20px;
-      border-bottom: 1px solid #bbb;
+      width: 30%;
+      min-width: 300px;
+      background: #f7f7f7;
+      padding: 10px;
     }
 
     .item-details {
-      flex: 1;
+      margin-right: 10px;
     }
 
     .item img {
+      max-width: 180px;
+    }
+
+    .search-filter-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .search-filter-row input {
+      padding: 5px;
       width: 200px;
-      margin-left: 20px;
-      margin-top: 20px;
     }
 
-    strong {
-      color: #005ab5;
+    .sort-buttons {
+      display: flex;
+      gap: 10px;
+      margin: 10px 0 30px 0;
     }
 
-    .label {
-      color: #ad0003;
-    }
-
-    @media (min-width: 960px) {
-      .items-container {
-        justify-content: space-between;
-      }
-
-      .item {
-        width: 30%;
-      }
+    button {
+      padding: 5px 10px;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
 
   <h2>西龜商城 🍉🐢</h2>
-
-  <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
-  <p>
-    Discord: jun_.0605 |
-    FB: Weijun |
-    Instagram: wei_.0605_ |
-    Artale: Lin凜#5YfsH
-  </p>
-
+  <p>Discord: jun_.0605 | Instagram: wei_.0605_ | Artale: Lin凜#5YfsH</p>
   <hr>
 
-  <!-- 搜尋框 + 分類 -->
-  <div class="top-bar">
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="搜尋商品..." onkeyup="filterItems()">
-    </div>
-    <div class="category-buttons">
-      <button onclick="filterCategory('all')">全部</button>
-      <button onclick="filterCategory('鞋子')">鞋子</button>
-    </div>
+  <div class="search-filter-row">
+    <input type="text" id="searchInput" placeholder="搜尋商品..." onkeyup="filterItems()">
+    <button onclick="filterByCategory('鞋子')">鞋子</button>
+    <button onclick="resetFilter()">顯示全部</button>
+  </div>
+
+  <div class="sort-buttons">
+    <button onclick="toggleSort('meso')">楓幣排序</button>
+    <button onclick="toggleSort('snow')">雪數排序</button>
   </div>
 
   <h2>裝備</h2>
-
-  <div class="items-container">
-    <div class="item" data-category="鞋子">
+  <div id="itemContainer" class="item-container">
+    <div class="item" data-category="鞋子" data-snow="15" data-meso="900">
       <div class="item-details">
-        <h4>商品名: <strong>藍雪鞋</strong></h4>
-        <p><span class="label">屬性:</span></p>
+        <p>商品名: <strong>藍雪鞋</strong></p>
+        <p><span style="color:#ad0003;">屬性:</span></p>
         <p>移動速度+12</p>
-        <p><span class="label">剩餘卷軸數:</span> 0</p>
-        <p><span class="label">商品量:</span> 2</p>
-        <p><span class="label">售價:</span> 15雪 / 900萬楓幣</p>
+        <p><span style="color:#ad0003;">剩餘卷軸數:</span> 0</p>
+        <p><span style="color:#ad0003;">商品量:</span> 2</p>
+        <p><span style="color:#ad0003;">售價:</span> 15雪 / 900萬楓幣</p>
       </div>
       <img src="12速藍雪鞋.png" alt="12速藍雪鞋">
     </div>
 
-    <div class="item" data-category="鞋子">
+    <div class="item" data-category="鞋子" data-snow="3" data-meso="180">
       <div class="item-details">
-        <h4>商品名: <strong>藍雪鞋</strong></h4>
-        <p><span class="label">屬性:</span></p>
+        <p>商品名: <strong>藍雪鞋</strong></p>
+        <p><span style="color:#ad0003;">屬性:</span></p>
         <p>移動速度+10</p>
-        <p><span class="label">剩餘卷軸數:</span> 0</p>
-        <p><span class="label">商品量:</span> 3</p>
-        <p><span class="label">售價:</span> 3雪 / 180萬楓幣</p>
+        <p><span style="color:#ad0003;">剩餘卷軸數:</span> 0</p>
+        <p><span style="color:#ad0003;">商品量:</span> 3</p>
+        <p><span style="color:#ad0003;">售價:</span> 3雪 / 180萬楓幣</p>
       </div>
       <img src="10速藍雪鞋.png" alt="10速藍雪鞋">
     </div>
 
-    <div class="item" data-category="鞋子">
+    <div class="item" data-category="鞋子" data-snow="5" data-meso="300">
       <div class="item-details">
-        <h4>商品名: <strong>紅色艾倫鞋</strong></h4>
-        <p><span class="label">屬性:</span></p>
+        <p>商品名: <strong>紅色艾倫鞋</strong></p>
+        <p><span style="color:#ad0003;">屬性:</span></p>
         <p>智力+4 幸運+2</p>
         <p>魔攻+1 移動速度+8</p>
-        <p><span class="label">剩餘卷軸數:</span> 0</p>
-        <p><span class="label">商品量:</span> 1</p>
-        <p><span class="label">售價:</span> 5雪 / 300萬楓幣</p>
+        <p><span style="color:#ad0003;">剩餘卷軸數:</span> 0</p>
+        <p><span style="color:#ad0003;">商品量:</span> 1</p>
+        <p><span style="color:#ad0003;">售價:</span> 5雪 / 300萬楓幣</p>
       </div>
-      <img src="8速7屬艾倫鞋.png" alt="8速7屬艾倫鞋">
+      <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋">
     </div>
   </div>
 
   <script>
+    let currentSort = { type: null, order: 'asc' };
+
     function filterItems() {
       const input = document.getElementById('searchInput').value.toLowerCase();
       const items = document.querySelectorAll('.item');
-
       items.forEach(item => {
         const text = item.innerText.toLowerCase();
         item.style.display = text.includes(input) ? 'flex' : 'none';
       });
     }
 
-    function filterCategory(category) {
+    function filterByCategory(category) {
+      document.getElementById('searchInput').value = '';
       const items = document.querySelectorAll('.item');
-      const searchInput = document.getElementById('searchInput').value.toLowerCase();
-
       items.forEach(item => {
-        const itemText = item.innerText.toLowerCase();
-        const matchSearch = itemText.includes(searchInput);
-        const matchCategory = category === 'all' || item.dataset.category === category;
-        item.style.display = matchSearch && matchCategory ? 'flex' : 'none';
+        item.style.display = item.dataset.category === category ? 'flex' : 'none';
       });
+    }
+
+    function resetFilter() {
+      document.getElementById('searchInput').value = '';
+      const items = document.querySelectorAll('.item');
+      items.forEach(item => item.style.display = 'flex');
+    }
+
+    function toggleSort(type) {
+      if (currentSort.type === type) {
+        currentSort.order = currentSort.order === 'asc' ? 'desc' : 'asc';
+      } else {
+        currentSort.type = type;
+        currentSort.order = 'asc';
+      }
+
+      const container = document.getElementById('itemContainer');
+      const items = Array.from(container.querySelectorAll('.item'));
+      const visibleItems = items.filter(item => item.style.display !== 'none');
+
+      visibleItems.sort((a, b) => {
+        const aVal = parseInt(a.dataset[type]);
+        const bVal = parseInt(b.dataset[type]);
+        return currentSort.order === 'asc' ? aVal - bVal : bVal - aVal;
+      });
+
+      visibleItems.forEach(item => container.appendChild(item));
     }
   </script>
 
