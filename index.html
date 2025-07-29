@@ -64,7 +64,7 @@
       gap: 15px;
     }
     .product img {
-      width: 260px;
+      width: 200px;
       height: auto;
       object-fit: contain;
     }
@@ -83,10 +83,15 @@
       color: red;
       font-weight: normal;
     }
+    .info p.attr + p,
+    .info p.scrolls + p,
+    .info p.amount + p,
+    .info p.price + p {
+      color: black;
+    }
   </style>
 </head>
 <body>
-
   <h2>西龜商城 🍉🐢</h2>
   <div class="contact">
     <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
@@ -100,12 +105,23 @@
 
   <div class="controls">
     <input type="text" placeholder="搜尋商品" id="searchInput">
+    <select onchange="filterByCategory(this.value)">
+      <option value="all">全部分類</option>
+      <option value="頭盔">頭盔</option>
+      <option value="手套">手套</option>
+      <option value="鞋子">鞋子</option>
+      <option value="盾牌">盾牌</option>
+      <option value="耳環">耳環</option>
+      <option value="披風">披風</option>
+      <option value="武器">武器</option>
+      <option value="上衣">上衣</option>
+      <option value="下衣">下衣</option>
+      <option value="套服">套服</option>
+      <option value="特殊部位飾品">特殊部位飾品</option>
+    </select>
     <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
-    <button onclick="filterByCategory('all')">All</button>
-    <button onclick="filterByCategory('鞋子')">鞋子</button>
     <button id="priceSort" onclick="sortBy('price')">楓幣 ⬆</button>
     <button id="snowSort" onclick="sortBy('snow')">雪 ⬆</button>
-
     <details>
       <summary>進階篩選</summary>
       <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 10px;">
@@ -116,7 +132,7 @@
         <div><label>物攻：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
         <div><label>魔攻：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
         <div><label>物防：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>魔防：</label><input type=" nplaceholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>魔防：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
         <div><label>跳躍：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
         <div><label>迴避：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
         <div><label>移動速度：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
@@ -137,7 +153,17 @@
       </div>
       <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
     </div>
-
+    <div class="product" data-price="2500000" data-snow="4">
+      <div class="info">
+        <p>商品名: 藍雪鞋</p>
+        <p class="attr">屬性:</p>
+        <p>移動速度+12</p>
+        <p class="scrolls">剩餘卷軸數: 0</p>
+        <p class="amount">商品量: 1</p>
+        <p class="price">售價: 4雪 / 250萬楓幣</p>
+      </div>
+      <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
+    </div>
     <div class="product" data-price="3000000" data-snow="5">
       <div class="info">
         <p>商品名: 紅色艾倫鞋</p>
@@ -149,18 +175,6 @@
         <p class="price">售價: 5雪 / 300萬楓幣</p>
       </div>
       <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
-    </div>
-
-    <div class="product" data-price="2500000" data-snow="4">
-      <div class="info">
-        <p>商品名: 藍雪鞋</p>
-        <p class="attr">屬性:</p>
-        <p>移動速度+12</p>
-        <p class="scrolls">剩餘卷軸數: 0</p>
-        <p class="amount">商品量: 1</p>
-        <p class="price">售價: 4雪 / 250萬楓幣</p>
-      </div>
-      <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
     </div>
   </div>
 
@@ -188,7 +202,22 @@
         document.getElementById("snowSort").textContent = `雪 ${snowAsc ? '⬆' : '⬇'}`;
       }
     }
-  </script>
 
+    function resetFilters() {
+      document.getElementById("searchInput").value = "";
+      filterByCategory("all");
+    }
+
+    function filterByCategory(category) {
+      const products = document.querySelectorAll(".product");
+      products.forEach(p => {
+        if (category === "all" || p.textContent.includes(category)) {
+          p.style.display = "flex";
+        } else {
+          p.style.display = "none";
+        }
+      });
+    }
+  </script>
 </body>
 </html>
