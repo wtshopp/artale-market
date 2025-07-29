@@ -7,18 +7,18 @@ body {
 
 .item {
   display: flex;
-  align-items: center; /* 讓文字與圖片垂直置中 */
+  align-items: start;
   margin-bottom: 40px;
 }
 
 .item img {
   width: 200px;
-  margin-left: 20px;
+  margin-left: 40px;
 }
 
 .item-details {
   max-width: 500px;
-  height: 150px; /* 統一左側高度，讓圖片對齊 */
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
