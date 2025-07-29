@@ -2,11 +2,21 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>裝備清單</title>
+  <title>西龜商城 🍉🐢</title>
   <style>
     body {
-      background-color: #ddd;
+      background-color: #d0d0d0;
       font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h2 {
+      color: #005ab5;
+    }
+    h4 {
+      color: #333;
+    }
+    .contact {
+      margin-bottom: 20px;
     }
     .controls {
       display: flex;
@@ -21,20 +31,20 @@
       padding: 5px 10px;
       border-radius: 5px;
       border: 1px solid #aaa;
-      background-color: #f0f0f0;
+      background-color: #f7f7f7;
     }
     .controls button:hover {
       cursor: pointer;
     }
     .reset-button {
-      background-color: #ffeeee;
+      background-color: #ffeaea;
     }
     details summary {
       cursor: pointer;
       padding: 5px 10px;
       border-radius: 5px;
       border: 1px solid #aaa;
-      background-color: #f0f0f0;
+      background-color: #f7f7f7;
     }
     details[open] summary {
       background-color: #e0e0e0;
@@ -45,7 +55,7 @@
       gap: 20px;
     }
     .product {
-      background-color: #bbb;
+      background-color: #bfbfbf;
       padding: 15px;
       border-radius: 10px;
       width: calc(50% - 20px);
@@ -54,7 +64,7 @@
       box-sizing: border-box;
     }
     .product img {
-      width: 230px;
+      width: 250px;
       height: auto;
       object-fit: contain;
     }
@@ -66,127 +76,27 @@
   </style>
 </head>
 <body>
-  <h2>裝備</h2>
+
+  <h2>西龜商城 🍉🐢</h2>
+  <div class="contact">
+    <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
+    <p>
+      Discord: jun_.0605 |
+      FB: Weijun |
+      Instagram: wei_.0605_ |
+      Artale: Lin凜#5YfsH
+    </p>
+  </div>
+
   <div class="controls">
-    <input type="text" id="searchInput" placeholder="搜尋商品">
+    <input type="text" placeholder="搜尋商品" id="searchInput">
     <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
-    <button onclick="filterCategory('')">All</button>
-    <button onclick="filterCategory('鞋')">鞋子</button>
-    <button id="priceSort" onclick="sortProducts('price')">楓幣 ⬆</button>
-    <button id="snowSort" onclick="sortProducts('snow')">雪 ⬆</button>
+    <button onclick="filterByCategory('all')">All</button>
+    <button onclick="filterByCategory('鞋子')">鞋子</button>
+    <button id="priceSort" onclick="sortBy('price')">楓幣 ⬆</button>
+    <button id="snowSort" onclick="sortBy('snow')">雪 ⬆</button>
+
     <details>
       <summary>進階篩選</summary>
       <div style="margin-top: 10px;">
-        <label>屬性多選：
-          <select id="attributeSelect" multiple>
-            <option value="移動速度">移動速度</option>
-            <option value="智力">智力</option>
-            <option value="幸運">幸運</option>
-            <option value="魔攻">魔攻</option>
-          </select>
-        </label>
-        <label style="margin-left: 10px;">
-          屬性範圍：
-          <input id="minValue" type="number" placeholder="最小值" style="width: 60px;">
-          <input id="maxValue" type="number" placeholder="最大值" style="width: 60px;">
-        </label>
-      </div>
-    </details>
-  </div>
-
-  <div class="product-list" id="productList">
-    <div class="product" data-name="藍雪鞋" data-attributes="移動速度:12" data-price="900" data-snow="15" data-category="鞋">
-      <div class="info">
-        <p><strong>商品名:</strong> 藍雪鞋</p>
-        <p style="color:red;"><strong>屬性:</strong></p>
-        <p>移動速度+12</p>
-        <p style="color:red;">剩餘卷軸數: 0</p>
-        <p>商品量: 2</p>
-        <p style="color:red;">售價: 15雪 / 900萬楓幣</p>
-      </div>
-      <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
-    </div>
-
-    <div class="product" data-name="藍雪鞋" data-attributes="移動速度:10" data-price="180" data-snow="3" data-category="鞋">
-      <div class="info">
-        <p><strong>商品名:</strong> 藍雪鞋</p>
-        <p style="color:red;"><strong>屬性:</strong></p>
-        <p>移動速度+10</p>
-        <p style="color:red;">剩餘卷軸數: 0</p>
-        <p>商品量: 3</p>
-        <p style="color:red;">售價: 3雪 / 180萬楓幣</p>
-      </div>
-      <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
-    </div>
-
-    <hr>
-
-    <div class="product" data-name="紅色艾倫鞋" data-attributes="移動速度:8,智力:4,幸運:2,魔攻:1" data-price="300" data-snow="5" data-category="鞋">
-      <div class="info">
-        <p><strong>商品名:</strong> 紅色艾倫鞋</p>
-        <p style="color:red;"><strong>屬性:</strong></p>
-        <p>智力+4 幸運+2</p>
-        <p>魔攻+1 移動速度+8</p>
-        <p style="color:red;">剩餘卷軸數: 0</p>
-        <p>商品量: 1</p>
-        <p style="color:red;">售價: 5雪 / 300萬楓幣</p>
-      </div>
-      <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
-    </div>
-  </div>
-
-  <script>
-    function resetFilters() {
-      document.getElementById('searchInput').value = '';
-      document.getElementById('attributeSelect').selectedIndex = -1;
-      document.getElementById('minValue').value = '';
-      document.getElementById('maxValue').value = '';
-      filterProducts();
-    }
-
-    function filterCategory(category) {
-      const products = document.querySelectorAll('.product');
-      products.forEach(product => {
-        const prodCategory = product.getAttribute('data-category');
-        product.style.display = (category === '' || prodCategory.includes(category)) ? 'flex' : 'none';
-      });
-    }
-
-    function filterProducts() {
-      const searchInput = document.getElementById('searchInput').value.toLowerCase();
-      const selectedAttributes = Array.from(document.getElementById('attributeSelect').selectedOptions).map(o => o.value);
-      const minValue = parseInt(document.getElementById('minValue').value) || 0;
-      const maxValue = parseInt(document.getElementById('maxValue').value) || 9999;
-
-      document.querySelectorAll('.product').forEach(product => {
-        const name = product.getAttribute('data-name').toLowerCase();
-        const attrStr = product.getAttribute('data-attributes');
-
-        const attributes = Object.fromEntries(attrStr.split(',').map(s => {
-          const [key, val] = s.split(':');
-          return [key, parseInt(val)];
-        }));
-
-        const matchesSearch = name.includes(searchInput);
-        const matchesAttributes = selectedAttributes.every(attr => attributes[attr] !== undefined && attributes[attr] >= minValue && attributes[attr] <= maxValue);
-
-        product.style.display = (matchesSearch && matchesAttributes) ? 'flex' : 'none';
-      });
-    }
-
-    document.getElementById('searchInput').addEventListener('input', filterProducts);
-    document.getElementById('attributeSelect').addEventListener('change', filterProducts);
-    document.getElementById('minValue').addEventListener('input', filterProducts);
-    document.getElementById('maxValue').addEventListener('input', filterProducts);
-
-    function sortProducts(type) {
-      const productList = document.getElementById('productList');
-      const products = Array.from(productList.querySelectorAll('.product'));
-      const sortKey = (type === 'price') ? 'data-price' : 'data-snow';
-
-      products.sort((a, b) => parseInt(a.getAttribute(sortKey)) - parseInt(b.getAttribute(sortKey)));
-      products.forEach(p => productList.appendChild(p));
-    }
-  </script>
-</body>
-</html>
+        <div><label>力量：</label><
