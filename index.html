@@ -76,17 +76,10 @@
     .info p {
       margin: 4px 0;
     }
-    .info p.attr,
-    .info p.scrolls,
-    .info p.amount,
-    .info p.price {
+    .info p span.label {
       color: red;
-      font-weight: normal;
     }
-    .info p.attr + p,
-    .info p.scrolls + p,
-    .info p.amount + p,
-    .info p.price + p {
+    .info p span.value {
       color: black;
     }
   </style>
@@ -105,7 +98,7 @@
 
   <div class="controls">
     <input type="text" placeholder="搜尋商品" id="searchInput">
-    <select onchange="filterByCategory(this.value)">
+    <select id="categorySelect" onchange="filterProducts()">
       <option value="all">全部分類</option>
       <option value="頭盔">頭盔</option>
       <option value="手套">手套</option>
@@ -124,55 +117,45 @@
     <button id="snowSort" onclick="sortBy('snow')">雪 ⬆</button>
     <details>
       <summary>進階篩選</summary>
-      <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 10px;">
-        <div><label>力量：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>敏捷：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>智力：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>幸運：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>物攻：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>魔攻：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>物防：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>魔防：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>跳躍：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>迴避：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>移動速度：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
-        <div><label>剩餘卷軸數：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+      <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 10px;" id="advancedFilter">
+        <label>力量：<input type="number" id="strMin" placeholder="最小"> <input type="number" id="strMax" placeholder="最大"></label>
+        <!-- 可加入更多屬性欄位 -->
       </div>
     </details>
   </div>
 
   <div class="product-list" id="productList">
-    <div class="product" data-price="1800000" data-snow="3">
+    <div class="product" data-price="1800000" data-snow="3" data-category="鞋子" data-str="0">
       <div class="info">
-        <p>商品名: 藍雪鞋</p>
-        <p class="attr">屬性:</p>
-        <p>移動速度+10</p>
-        <p class="scrolls">剩餘卷軸數: 0</p>
-        <p class="amount">商品量: 3</p>
-        <p class="price">售價: 3雪 / 180萬楓幣</p>
+        <p><span class="label">商品名:</span> <span class="value">藍雪鞋</span></p>
+        <p><span class="label">屬性:</span></p>
+        <p><span class="value">移動速度+10</span></p>
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+        <p><span class="label">商品量:</span> <span class="value">3</span></p>
+        <p><span class="label">售價:</span> <span class="value">3雪 / 180萬楓幣</span></p>
       </div>
       <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
     </div>
-    <div class="product" data-price="2500000" data-snow="4">
+    <div class="product" data-price="2500000" data-snow="4" data-category="鞋子" data-str="0">
       <div class="info">
-        <p>商品名: 藍雪鞋</p>
-        <p class="attr">屬性:</p>
-        <p>移動速度+12</p>
-        <p class="scrolls">剩餘卷軸數: 0</p>
-        <p class="amount">商品量: 1</p>
-        <p class="price">售價: 4雪 / 250萬楓幣</p>
+        <p><span class="label">商品名:</span> <span class="value">藍雪鞋</span></p>
+        <p><span class="label">屬性:</span></p>
+        <p><span class="value">移動速度+12</span></p>
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+        <p><span class="label">商品量:</span> <span class="value">1</span></p>
+        <p><span class="label">售價:</span> <span class="value">4雪 / 250萬楓幣</span></p>
       </div>
       <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
     </div>
-    <div class="product" data-price="3000000" data-snow="5">
+    <div class="product" data-price="3000000" data-snow="5" data-category="鞋子" data-str="0">
       <div class="info">
-        <p>商品名: 紅色艾倫鞋</p>
-        <p class="attr">屬性:</p>
-        <p>智力+4 幸運+2</p>
-        <p>魔攻+1 移動速度+8</p>
-        <p class="scrolls">剩餘卷軸數: 0</p>
-        <p class="amount">商品量: 1</p>
-        <p class="price">售價: 5雪 / 300萬楓幣</p>
+        <p><span class="label">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
+        <p><span class="label">屬性:</span></p>
+        <p><span class="value">智力+4 幸運+2</span></p>
+        <p><span class="value">魔攻+1 移動速度+8</span></p>
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+        <p><span class="label">商品量:</span> <span class="value">1</span></p>
+        <p><span class="label">售價:</span> <span class="value">5雪 / 300萬楓幣</span></p>
       </div>
       <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
     </div>
@@ -205,19 +188,34 @@
 
     function resetFilters() {
       document.getElementById("searchInput").value = "";
-      filterByCategory("all");
+      document.getElementById("categorySelect").value = "all";
+      document.getElementById("strMin").value = "";
+      document.getElementById("strMax").value = "";
+      filterProducts();
     }
 
-    function filterByCategory(category) {
+    function filterProducts() {
+      const search = document.getElementById("searchInput").value.toLowerCase();
+      const category = document.getElementById("categorySelect").value;
+      const strMin = parseInt(document.getElementById("strMin").value) || -Infinity;
+      const strMax = parseInt(document.getElementById("strMax").value) || Infinity;
+
       const products = document.querySelectorAll(".product");
       products.forEach(p => {
-        if (category === "all" || p.textContent.includes(category)) {
-          p.style.display = "flex";
-        } else {
-          p.style.display = "none";
-        }
+        const name = p.querySelector(".value").textContent.toLowerCase();
+        const cat = p.dataset.category;
+        const str = parseInt(p.dataset.str);
+
+        const show = (search === "" || name.includes(search)) &&
+                     (category === "all" || cat === category) &&
+                     (str >= strMin && str <= strMax);
+        p.style.display = show ? "flex" : "none";
       });
     }
+
+    document.getElementById("searchInput").addEventListener("input", filterProducts);
+    document.getElementById("strMin").addEventListener("input", filterProducts);
+    document.getElementById("strMax").addEventListener("input", filterProducts);
   </script>
 </body>
 </html>
