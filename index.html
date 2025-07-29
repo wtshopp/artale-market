@@ -1,254 +1,599 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="zh-Hant">
 
 <head>
+
   <meta charset="UTF-8">
+
   <title>西龜商城 🍉🐢</title>
+
   <style>
+
     body {
+
       background-color: #d0d0d0;
+
       font-family: Arial, sans-serif;
+
       padding: 20px;
+
     }
+
     h2 {
+
       color: #005ab5;
+
     }
+
     h4 {
+
       color: #333;
+
     }
+
     .contact {
+
       margin-bottom: 20px;
+
     }
+
     .controls {
+
       display: flex;
+
       align-items: flex-start;
+
       flex-wrap: wrap;
+
       margin-bottom: 20px;
+
       gap: 10px;
+
     }
+
     .controls input,
+
     .controls select,
+
     .controls button {
+
       padding: 5px 10px;
+
       border-radius: 5px;
+
       border: 1px solid #aaa;
+
       background-color: #eeeeee;
+
     }
+
     .controls button:hover {
+
       cursor: pointer;
+
     }
+
     .reset-button {
+
       background-color: #ffdddd;
+
     }
+
     details summary {
+
       cursor: pointer;
+
       padding: 5px 10px;
+
       border-radius: 5px;
+
       border: 1px solid #aaa;
+
       background-color: #eeeeee;
+
     }
+
     details[open] summary {
+
       background-color: #e0e0e0;
+
     }
+
     .product-list {
+
       display: flex;
+
       flex-wrap: wrap;
+
       gap: 20px;
+
     }
+
     .product {
+
       background-color: #a0a0a0;
+
       padding: 15px;
+
       border-radius: 10px;
+
       width: calc(50% - 20px);
+
       display: flex;
+
       box-sizing: border-box;
+
       gap: 15px;
+
     }
+
     .product img {
+
       width: 300px;
+
       height: auto;
+
       object-fit: contain;
+
     }
+
     hr {
+
       border: 1px solid #bbb;
+
       width: 100%;
+
       margin: 30px 0;
+
     }
+
     .info p {
+
       margin: 4px 0;
+
     }
+
     .info p span.label {
+
       color: red;
+
       font-weight: normal;
+
     }
+
     .info p span.label-name {
+
       color: darkgreen;
+
       font-weight: normal;
+
     }
+
     .info p span.value {
+
       color: black;
+
     }
+
     .advanced-grid {
+
       display: grid;
+
       grid-template-columns: repeat(4, 1fr);
+
       gap: 10px;
+
     }
+
     .advanced-grid label {
+
       display: flex;
+
       align-items: flex-start;
+
       flex-direction: column;
+
     }
+
     .advanced-grid input {
+
       width: 50%;
+
     }
+
     .break-row {
+
       grid-column: 1 / -1;
+
       height: 0;
+
     }
+
   </style>
+
 </head>
 
 <body>
+
   <h2>西龜商城 🍉🐢</h2>
+
   <div class="contact">
+
     <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
+
     <p>
+
       Discord: jun_.0605 |
+
       FB: Weijun |
+
       Instagram: wei_.0605_ |
+
       Artale: Lin凜#5YfsH
+
     </p>
+
   </div>
+
+
 
   <div class="controls">
+
     <input type="text" id="searchInput" placeholder="搜尋商品">
+
     <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
+
     <select id="categorySelect">
+
       <option value="all">所有分類</option>
+
       <option value="頭盔">頭盔</option>
+
       <option value="手套">手套</option>
+
       <option value="鞋子">鞋子</option>
+
       <option value="盾牌">盾牌</option>
+
       <option value="耳環">耳環</option>
+
       <option value="披風">披風</option>
+
       <option value="武器">武器</option>
+
       <option value="上衣">上衣</option>
+
       <option value="下衣">下衣</option>
+
       <option value="套服">套服</option>
+
       <option value="特殊部位飾品">特殊部位飾品</option>
+
     </select>
+
     <button id="priceSort">楓幣 ⬆</button>
+
     <button id="snowSort">雪⬆</button>
+
     <details>
+
       <summary>進階篩選</summary>
+
       <div style="margin-top: 10px;">
-        <div class="advanced-grid" id="advancedInputs"></div>
+
+        <div class="advanced-grid">
+
+          <label>力量<input type="number" id="strMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="strMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>敏捷<input type="number" id="dexMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="dexMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>智力<input type="number" id="intMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="intMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>幸運<input type="number" id="lukMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="lukMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>物攻<input type="number" id="atkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="atkMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>魔攻<input type="number" id="matkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="matkMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>Hp<input type="number" id="hpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="hpMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>Mp<input type="number" id="mpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="mpMax" placeholder="最大" style="width: 60px;"></label>
+
+          <div class="break-row"></div>
+
+          <label>跳躍<input type="number" id="jumpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="jumpMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>迴避<input type="number" id="avoidMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="avoidMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>移動速度<input type="number" id="spdMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="spdMax" placeholder="最大" style="width: 60px;"></label>
+
+          <label>剩餘卷軸數<input type="number" id="scrollMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="scrollMax" placeholder="最大" style="width: 60px;"></label>
+
+        </div>
+
       </div>
+
     </details>
+
   </div>
 
-  <div class="product-list" id="productContainer"></div>
+
+
+  <div class="product-list">
+
+      <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="9000000" data-snow="15" data-type="鞋子" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="12" data-scroll="0">
+
+      <div class="info">
+
+        <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
+
+        <p><span class="label">屬性:</span></p>
+
+        <p><span class="value">移動速度+12</span></p>
+
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
+        <p><span class="label">商品量:</span> <span class="value">2</span></p>
+
+        <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
+
+      </div>
+
+      <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
+
+    </div>
+
+
+
+    <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="10" data-scroll="0">
+
+      <div class="info">
+
+        <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
+
+        <p><span class="label">屬性:</span></p>
+
+        <p><span class="value">移動速度+10</span></p>
+
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
+        <p><span class="label">商品量:</span> <span class="value">3</span></p>
+
+        <p><span class="label">售價:</span> <span class="value">3雪 / 180萬楓幣</span></p>
+
+      </div>
+
+      <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
+
+    </div>
+
+
+
+    <hr>
+
+
+
+    <div class="product" data-name="紅色艾倫鞋" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="8" data-scroll="0">
+
+      <div class="info">
+
+        <p><span class="label-name">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
+
+        <p><span class="label">屬性:</span></p>
+
+        <p><span class="value">智力+4 幸運+2</span></p>
+
+        <p><span class="value">魔攻+1 移動速度+8</span></p>
+
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
+        <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
+        <p><span class="label">售價:</span> <span class="value">5雪 / 300萬楓幣</span></p>
+
+      </div>
+
+      <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
+
+    </div>
+
+  </div>
+
+
 
   <script>
-    const attributes = [
-      "str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "scroll"
-    ];
 
-    const products = [...document.querySelectorAll(".product")].map(p => p.cloneNode(true));
-    const productContainer = document.getElementById("productContainer");
-    products.forEach(p => productContainer.appendChild(p));
+  const originalProducts = Array.from(document.querySelectorAll(".product")).map(p => p.cloneNode(true));
 
-    function createAdvancedInputs() {
-      const container = document.getElementById("advancedInputs");
-      attributes.forEach(attr => {
-        const label = document.createElement("label");
-        label.innerText = attr.toUpperCase();
-        const minInput = document.createElement("input");
-        minInput.type = "number";
-        minInput.id = `${attr}Min`;
-        minInput.placeholder = "最小";
-        minInput.style.width = "60px";
-        const maxInput = document.createElement("input");
-        maxInput.type = "number";
-        maxInput.id = `${attr}Max`;
-        maxInput.placeholder = "最大";
-        maxInput.style.width = "60px";
-        label.append(minInput, document.createTextNode(" ~ "), maxInput);
-        container.appendChild(label);
-      });
-    }
+  let sortState = { price: true, snow: true };
 
-    function getValue(id, def) {
-      const el = document.getElementById(id);
-      return el && el.value !== "" ? parseInt(el.value, 10) : def;
-    }
+  let currentSort = null;
 
-    function filterProducts() {
-      const search = document.getElementById("searchInput").value.toLowerCase();
-      const category = document.getElementById("categorySelect").value;
-      const filtered = products.filter(product => {
-        const name = product.getAttribute("data-name").toLowerCase();
-        const type = product.getAttribute("data-type");
-        if (!(name.includes(search) && (category === "all" || category === type))) return false;
-        return attributes.every(attr => {
-          const val = parseInt(product.getAttribute(`data-${attr}`), 10);
-          const min = getValue(`${attr}Min`, -Infinity);
-          const max = getValue(`${attr}Max`, Infinity);
-          return val >= min && val <= max;
-        });
-      });
-      productContainer.innerHTML = "";
-      applyCurrentSort(filtered).forEach(p => productContainer.appendChild(p.cloneNode(true)));
-    }
 
-    let currentSort = null;
-    function applyCurrentSort(list) {
-      if (!currentSort) return list;
-      const { type, ascending } = currentSort;
-      return list.slice().sort((a, b) => {
-        const aVal = parseInt(a.getAttribute(`data-${type}`));
-        const bVal = parseInt(b.getAttribute(`data-${type}`));
-        return ascending ? aVal - bVal : bVal - aVal;
-      });
-    }
 
-    function sortBy(type) {
-      currentSort = {
-        type,
-        ascending: currentSort?.type !== type ? true : !currentSort.ascending
-      };
-      document.getElementById("priceSort").innerText = `楓幣 ${currentSort.type === "price" && currentSort.ascending ? "⬆" : "⬇"}`;
-      document.getElementById("snowSort").innerText = `雪 ${currentSort.type === "snow" && currentSort.ascending ? "⬆" : "⬇"}`;
-      filterProducts();
-    }
+  function getValue(id, def) {
 
-    function resetFilters() {
-      document.getElementById("searchInput").value = "";
-      document.getElementById("categorySelect").value = "all";
-      attributes.forEach(attr => {
-        document.getElementById(`${attr}Min`).value = "";
-        document.getElementById(`${attr}Max`).value = "";
-      });
-      currentSort = null;
-      document.getElementById("priceSort").innerText = "楓幣 ⬆";
-      document.getElementById("snowSort").innerText = "雪 ⬆";
-      filterProducts();
-    }
+    const val = document.getElementById(id)?.value;
 
-    document.getElementById("searchInput").addEventListener("input", filterProducts);
-    document.getElementById("categorySelect").addEventListener("change", filterProducts);
-    document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
-    document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
+    return val === "" ? def : parseInt(val);
 
-    window.addEventListener("DOMContentLoaded", () => {
-      createAdvancedInputs();
-      attributes.forEach(attr => {
-        document.getElementById(`${attr}Min`).addEventListener("input", filterProducts);
-        document.getElementById(`${attr}Max`).addEventListener("input", filterProducts);
-      });
-      filterProducts();
+  }
+
+
+
+  function applyCurrentSort(products) {
+
+    if (!currentSort) return products;
+
+    const { type, ascending } = currentSort;
+
+    return products.sort((a, b) => {
+
+      const aVal = +a.getAttribute("data-" + type);
+
+      const bVal = +b.getAttribute("data-" + type);
+
+      return ascending ? aVal - bVal : bVal - aVal;
+
     });
-  </script>
+
+  }
+
+
+
+  function filterProducts() {
+
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+
+    const category = document.getElementById("categorySelect").value;
+
+
+
+    const filters = {
+
+      strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
+
+      dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
+
+      intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
+
+      lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
+
+      atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
+
+      matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
+
+      hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
+
+      mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
+
+      jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
+
+      avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
+
+      spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
+
+      scrollMin: getValue("scrollMin", -Infinity), scrollMax: getValue("scrollMax", Infinity)
+
+    };
+
+
+
+    const allProducts = Array.from(document.querySelectorAll(".product"));
+
+    const filtered = allProducts.filter((product) => {
+
+      const name = product.getAttribute("data-name")?.toLowerCase() || "";
+
+      const type = product.getAttribute("data-type") || "";
+
+      const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","scroll"];
+
+
+
+      return (
+
+        name.includes(searchInput) &&
+
+        (category === "all" || type === category) &&
+
+        attrs.every(attr => {
+
+          const val = +product.getAttribute("data-" + attr);
+
+          return val >= filters[attr+"Min"] && val <= filters[attr+"Max"];
+
+        })
+
+      );
+
+    });
+
+
+
+    const sorted = applyCurrentSort(filtered);
+
+    const container = document.querySelector(".product-list");
+
+    container.innerHTML = "";
+
+    sorted.forEach(p => container.appendChild(p));
+
+  }
+
+
+
+  function sortBy(type) {
+
+    const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
+
+    sortState[type] = ascending;
+
+    document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
+
+    currentSort = { type, ascending };
+
+    filterProducts();
+
+  }
+
+
+
+  function resetFilters() {
+
+    document.getElementById("searchInput").value = "";
+
+    document.getElementById("categorySelect").value = "all";
+
+    document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
+
+    sortState = { price: true, snow: true };
+
+    currentSort = null;
+
+    document.getElementById("priceSort").innerText = "楓幣 ⬆";
+
+    document.getElementById("snowSort").innerText = "雪 ⬆";
+
+
+
+    const container = document.querySelector(".product-list");
+
+    container.innerHTML = "";
+
+    originalProducts.forEach(p => container.appendChild(p.cloneNode(true)));
+
+    filterProducts();
+
+  }
+
+
+
+  document.getElementById("searchInput").addEventListener("input", filterProducts);
+
+  document.getElementById("categorySelect").addEventListener("change", filterProducts);
+
+  document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
+
+  document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
+
+
+
+  window.addEventListener("DOMContentLoaded", () => {
+
+    document.querySelectorAll(".advanced-grid input").forEach(input => {
+
+      input.addEventListener("input", filterProducts);
+
+      input.addEventListener("change", filterProducts);
+
+    });
+
+  });
+
+</script>
+
 </body>
 
 </html>
+幫我全部一起更改 我在做輸入篩選時都會遇到資料不見的問題 請幫我解決
