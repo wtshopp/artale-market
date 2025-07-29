@@ -13,14 +13,13 @@ h2 {
 
 .item {
   display: flex;
-  align-items: flex-start;
+  align-items: center;垂直置中 */
   margin-bottom: 40px;
 }
 
 .item img {
   width: 200px;
   margin-left: 20px;
-  margin-top: 15px;
 }
 
 .item-details {
