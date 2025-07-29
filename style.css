@@ -18,7 +18,8 @@ h2 {
 }
 
 .item img {
-  width: 200px;
+  width: auto;
+  height: 150px;
   margin-left: 20px;
 }
 
