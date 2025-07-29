@@ -292,6 +292,10 @@ filterProducts();
     window.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".advanced-grid input").forEach(input => {
     input.addEventListener("input", filterProducts);
+    input.addEventListener("change", filterProducts);
+  });
+});
+
   });
 });
 
