@@ -201,104 +201,100 @@
   </div>
 
   <script>
-    const originalProducts = Array.from(document.querySelectorAll(".product")).map(p => p.cloneNode(true));
-    let sortState = { price: true, snow: true };
-    let currentSort = null;
+  const originalProducts = Array.from(document.querySelectorAll(".product")).map(p => p.cloneNode(true));
+  let sortState = { price: true, snow: true };
+  let currentSort = null;
 
-    function getValue(id, def) {
-      const val = document.getElementById(id)?.value;
-      return val === "" ? def : parseInt(val);
-    }
+  function getValue(id, def) {
+    const val = document.getElementById(id)?.value;
+    return val === "" ? def : parseInt(val);
+  }
 
-    function applyCurrentSort(products) {
-      if (!currentSort) return products;
-      const { type, ascending } = currentSort;
-      return products.sort((a, b) => {
-        const aVal = +a.getAttribute("data-" + type);
-        const bVal = +b.getAttribute("data-" + type);
-        return ascending ? aVal - bVal : bVal - aVal;
-      });
-    }
+  function applyCurrentSort(products) {
+    if (!currentSort) return products;
+    const { type, ascending } = currentSort;
+    return products.sort((a, b) => {
+      const aVal = +a.getAttribute("data-" + type);
+      const bVal = +b.getAttribute("data-" + type);
+      return ascending ? aVal - bVal : bVal - aVal;
+    });
+  }
 
-    function filterProducts() {
-      const searchInput = document.getElementById("searchInput").value.toLowerCase();
-      const category = document.getElementById("categorySelect").value;
+  function filterProducts() {
+    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    const category = document.getElementById("categorySelect").value;
 
-      const filters = {
-        strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
-        dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
-        intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
-        lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
-        atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
-        matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
-        hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
-        mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
-        jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
-        avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
-        spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
-        scrollMin: getValue("scrollMin", -Infinity), scrollMax: getValue("scrollMax", Infinity)
-      };
+    const filters = {
+      strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
+      dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
+      intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
+      lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
+      atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
+      matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
+      hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
+      mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
+      jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
+      avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
+      spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
+      scrollMin: getValue("scrollMin", -Infinity), scrollMax: getValue("scrollMax", Infinity)
+    };
 
-      const allProducts = Array.from(document.querySelectorAll(".product"));
-      const filtered = allProducts.filter((product) => {
-        const name = product.getAttribute("data-name")?.toLowerCase() || "";
-        const type = product.getAttribute("data-type") || "";
-        const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","scroll"];
+    const allProducts = Array.from(document.querySelectorAll(".product"));
+    const filtered = allProducts.filter((product) => {
+      const name = product.getAttribute("data-name")?.toLowerCase() || "";
+      const type = product.getAttribute("data-type") || "";
+      const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","scroll"];
 
-        return (
-          name.includes(searchInput) &&
-          (category === "all" || type === category) &&
-          attrs.every(attr => {
-            const val = +product.getAttribute("data-" + attr);
-            return val >= filters[attr+"Min"] && val <= filters[attr+"Max"];
-          })
-        );
-      });
+      return (
+        name.includes(searchInput) &&
+        (category === "all" || type === category) &&
+        attrs.every(attr => {
+          const val = +product.getAttribute("data-" + attr);
+          return val >= filters[attr+"Min"] && val <= filters[attr+"Max"];
+        })
+      );
+    });
 
-      const sorted = applyCurrentSort(filtered);
-      const container = document.querySelector(".product-list");
-      container.innerHTML = "";
-      sorted.forEach(p => container.appendChild(p));
-    }
+    const sorted = applyCurrentSort(filtered);
+    const container = document.querySelector(".product-list");
+    container.innerHTML = "";
+    sorted.forEach(p => container.appendChild(p));
+  }
 
-    function sortBy(type) {
-      const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
-      sortState[type] = ascending;
-      document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
-      currentSort = { type, ascending };
-      filterProducts();
-    }
+  function sortBy(type) {
+    const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
+    sortState[type] = ascending;
+    document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
+    currentSort = { type, ascending };
+    filterProducts();
+  }
 
-    function resetFilters() {
-      document.getElementById("searchInput").value = "";
-      document.getElementById("categorySelect").value = "all";
-      document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
-      sortState = { price: true, snow: true };
-      currentSort = null;
-      document.getElementById("priceSort").innerText = "楓幣 ⬆";
-      document.getElementById("snowSort").innerText = "雪 ⬆";
+  function resetFilters() {
+    document.getElementById("searchInput").value = "";
+    document.getElementById("categorySelect").value = "all";
+    document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
+    sortState = { price: true, snow: true };
+    currentSort = null;
+    document.getElementById("priceSort").innerText = "楓幣 ⬆";
+    document.getElementById("snowSort").innerText = "雪 ⬆";
 
-      const container = document.querySelector(".product-list");
-container.innerHTML = "";
-originalProducts.forEach(p => container.appendChild(p.cloneNode(true)));
-filterProducts();
+    const container = document.querySelector(".product-list");
+    container.innerHTML = "";
+    originalProducts.forEach(p => container.appendChild(p.cloneNode(true)));
+    filterProducts();
+  }
 
-    }
+  document.getElementById("searchInput").addEventListener("input", filterProducts);
+  document.getElementById("categorySelect").addEventListener("change", filterProducts);
+  document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
+  document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
 
-    document.getElementById("searchInput").addEventListener("input", filterProducts);
-    document.getElementById("categorySelect").addEventListener("change", filterProducts);
-    document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
-    document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
-    window.addEventListener("DOMContentLoaded", () => {
+  window.addEventListener("DOMContentLoaded", () => {
     document.querySelectorAll(".advanced-grid input").forEach(input => {
-    input.addEventListener("input", filterProducts);
-    input.addEventListener("change", filterProducts);
+      input.addEventListener("input", filterProducts);
+      input.addEventListener("change", filterProducts);
+    });
   });
-});
-
-  });
-});
-
-  </script>
+</script>
 </body>
 </html>
