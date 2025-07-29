@@ -1,599 +1,591 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
+
 <html lang="zh-Hant">
 
 <head>
 
-  <meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-  <title>西龜商城 🍉🐢</title>
+  <title>西龜商城 🍉🐢</title>
 
-  <style>
+  <style>
 
-    body {
+    body {
 
-      background-color: #d0d0d0;
+      background-color: #d0d0d0;
 
-      font-family: Arial, sans-serif;
+      font-family: Arial, sans-serif;
 
-      padding: 20px;
+      padding: 20px;
 
-    }
+    }
 
-    h2 {
+    h2 {
 
-      color: #005ab5;
+      color: #005ab5;
 
-    }
+    }
 
-    h4 {
+    h4 {
 
-      color: #333;
+      color: #333;
 
-    }
+    }
 
-    .contact {
+    .contact {
 
-      margin-bottom: 20px;
+      margin-bottom: 20px;
 
-    }
+    }
 
-    .controls {
+    .controls {
 
-      display: flex;
+      display: flex;
 
-      align-items: flex-start;
+      align-items: flex-start;
 
-      flex-wrap: wrap;
+      flex-wrap: wrap;
 
-      margin-bottom: 20px;
+      margin-bottom: 20px;
 
-      gap: 10px;
+      gap: 10px;
 
-    }
+    }
 
-    .controls input,
+    .controls input,
 
-    .controls select,
+    .controls select,
 
-    .controls button {
+    .controls button {
 
-      padding: 5px 10px;
+      padding: 5px 10px;
 
-      border-radius: 5px;
+      border-radius: 5px;
 
-      border: 1px solid #aaa;
+      border: 1px solid #aaa;
 
-      background-color: #eeeeee;
+      background-color: #eeeeee;
 
-    }
+    }
 
-    .controls button:hover {
+    .controls button:hover {
 
-      cursor: pointer;
+      cursor: pointer;
 
-    }
+    }
 
-    .reset-button {
+    .reset-button {
 
-      background-color: #ffdddd;
+      background-color: #ffdddd;
 
-    }
+    }
 
-    details summary {
+    details summary {
 
-      cursor: pointer;
+      cursor: pointer;
 
-      padding: 5px 10px;
+      padding: 5px 10px;
 
-      border-radius: 5px;
+      border-radius: 5px;
 
-      border: 1px solid #aaa;
+      border: 1px solid #aaa;
 
-      background-color: #eeeeee;
+      background-color: #eeeeee;
 
-    }
+    }
 
-    details[open] summary {
+    details[open] summary {
 
-      background-color: #e0e0e0;
+      background-color: #e0e0e0;
 
-    }
+    }
 
-    .product-list {
+    .product-list {
 
-      display: flex;
+      display: flex;
 
-      flex-wrap: wrap;
+      flex-wrap: wrap;
 
-      gap: 20px;
+      gap: 20px;
 
-    }
+    }
 
-    .product {
+    .product {
 
-      background-color: #a0a0a0;
+      background-color: #a0a0a0;
 
-      padding: 15px;
+      padding: 15px;
 
-      border-radius: 10px;
+      border-radius: 10px;
 
-      width: calc(50% - 20px);
+      width: calc(50% - 20px);
 
-      display: flex;
+      display: flex;
 
-      box-sizing: border-box;
+      box-sizing: border-box;
 
-      gap: 15px;
+      gap: 15px;
 
-    }
+    }
 
-    .product img {
+    .product img {
 
-      width: 300px;
+      width: 300px;
 
-      height: auto;
+      height: auto;
 
-      object-fit: contain;
+      object-fit: contain;
 
-    }
+    }
 
-    hr {
+    hr {
 
-      border: 1px solid #bbb;
+      border: 1px solid #bbb;
 
-      width: 100%;
+      width: 100%;
 
-      margin: 30px 0;
+      margin: 30px 0;
 
-    }
+    }
 
-    .info p {
+    .info p {
 
-      margin: 4px 0;
+      margin: 4px 0;
 
-    }
+    }
 
-    .info p span.label {
+    .info p span.label {
 
-      color: red;
+      color: red;
 
-      font-weight: normal;
+      font-weight: normal;
 
-    }
+    }
 
-    .info p span.label-name {
+    .info p span.label-name {
 
-      color: darkgreen;
+      color: darkgreen;
 
-      font-weight: normal;
+      font-weight: normal;
 
-    }
+    }
 
-    .info p span.value {
+    .info p span.value {
 
-      color: black;
+      color: black;
 
-    }
+    }
 
-    .advanced-grid {
+    .advanced-grid {
 
-      display: grid;
+      display: grid;
 
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(4, 1fr);
 
-      gap: 10px;
+      gap: 10px;
 
-    }
+    }
 
-    .advanced-grid label {
+    .advanced-grid label {
 
-      display: flex;
+      display: flex;
 
-      align-items: flex-start;
+      align-items: flex-start;
 
-      flex-direction: column;
+      flex-direction: column;
 
-    }
+    }
 
-    .advanced-grid input {
+    .advanced-grid input {
 
-      width: 50%;
+      width: 50%;
 
-    }
+    }
 
-    .break-row {
+    .break-row {
 
-      grid-column: 1 / -1;
+      grid-column: 1 / -1;
 
-      height: 0;
+      height: 0;
 
-    }
+    }
 
-  </style>
+  </style>
 
 </head>
 
 <body>
 
-  <h2>西龜商城 🍉🐢</h2>
+  <h2>西龜商城 🍉🐢</h2>
 
-  <div class="contact">
+  <div class="contact">
 
-    <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
+    <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
 
-    <p>
+    <p>
 
-      Discord: jun_.0605 |
+      Discord: jun_.0605 |
 
-      FB: Weijun |
+      FB: Weijun |
 
-      Instagram: wei_.0605_ |
+      Instagram: wei_.0605_ |
 
-      Artale: Lin凜#5YfsH
+      Artale: Lin凜#5YfsH
 
-    </p>
+    </p>
 
-  </div>
+  </div>
 
 
 
-  <div class="controls">
+  <div class="controls">
 
-    <input type="text" id="searchInput" placeholder="搜尋商品">
+    <input type="text" id="searchInput" placeholder="搜尋商品">
 
-    <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
+    <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
 
-    <select id="categorySelect">
+    <select id="categorySelect">
 
-      <option value="all">所有分類</option>
+      <option value="all">所有分類</option>
 
-      <option value="頭盔">頭盔</option>
+      <option value="頭盔">頭盔</option>
 
-      <option value="手套">手套</option>
+      <option value="手套">手套</option>
 
-      <option value="鞋子">鞋子</option>
+      <option value="鞋子">鞋子</option>
 
-      <option value="盾牌">盾牌</option>
+      <option value="盾牌">盾牌</option>
 
-      <option value="耳環">耳環</option>
+      <option value="耳環">耳環</option>
 
-      <option value="披風">披風</option>
+      <option value="披風">披風</option>
 
-      <option value="武器">武器</option>
+      <option value="武器">武器</option>
 
-      <option value="上衣">上衣</option>
+      <option value="上衣">上衣</option>
 
-      <option value="下衣">下衣</option>
+      <option value="下衣">下衣</option>
 
-      <option value="套服">套服</option>
+      <option value="套服">套服</option>
 
-      <option value="特殊部位飾品">特殊部位飾品</option>
+      <option value="特殊部位飾品">特殊部位飾品</option>
 
-    </select>
+    </select>
 
-    <button id="priceSort">楓幣 ⬆</button>
+    <button id="priceSort">楓幣 ⬆</button>
 
-    <button id="snowSort">雪⬆</button>
+    <button id="snowSort">雪⬆</button>
 
-    <details>
+    <details>
 
-      <summary>進階篩選</summary>
+      <summary>進階篩選</summary>
 
-      <div style="margin-top: 10px;">
+      <div style="margin-top: 10px;">
 
-        <div class="advanced-grid">
+        <label>屬性多選：</label>
 
-          <label>力量<input type="number" id="strMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="strMax" placeholder="最大" style="width: 60px;"></label>
+        <div class="advanced-grid">
 
-          <label>敏捷<input type="number" id="dexMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="dexMax" placeholder="最大" style="width: 60px;"></label>
+          <label>力量<input type="number" id="strMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="strMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>智力<input type="number" id="intMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="intMax" placeholder="最大" style="width: 60px;"></label>
+          <label>敏捷<input type="number" id="dexMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="dexMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>幸運<input type="number" id="lukMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="lukMax" placeholder="最大" style="width: 60px;"></label>
+          <label>智力<input type="number" id="intMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="intMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>物攻<input type="number" id="atkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="atkMax" placeholder="最大" style="width: 60px;"></label>
+          <label>幸運<input type="number" id="lukMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="lukMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>魔攻<input type="number" id="matkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="matkMax" placeholder="最大" style="width: 60px;"></label>
+          <label>物攻<input type="number" id="atkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="atkMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>Hp<input type="number" id="hpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="hpMax" placeholder="最大" style="width: 60px;"></label>
+          <label>魔攻<input type="number" id="matkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="matkMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>Mp<input type="number" id="mpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="mpMax" placeholder="最大" style="width: 60px;"></label>
+          <label>物防<input type="number" id="defMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="defMax" placeholder="最大" style="width: 60px;"></label>
 
-          <div class="break-row"></div>
+          <label>魔防<input type="number" id="mdefMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="mdefMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>跳躍<input type="number" id="jumpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="jumpMax" placeholder="最大" style="width: 60px;"></label>
+          <div class="break-row"></div>
 
-          <label>迴避<input type="number" id="avoidMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="avoidMax" placeholder="最大" style="width: 60px;"></label>
+          <label>跳躍<input type="number" id="jumpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="jumpMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>移動速度<input type="number" id="spdMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="spdMax" placeholder="最大" style="width: 60px;"></label>
+          <label>迴避<input type="number" id="avoidMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="avoidMax" placeholder="最大" style="width: 60px;"></label>
 
-          <label>剩餘卷軸數<input type="number" id="scrollMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="scrollMax" placeholder="最大" style="width: 60px;"></label>
+          <label>移動速度<input type="number" id="spdMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="spdMax" placeholder="最大" style="width: 60px;"></label>
 
-        </div>
+          <label>剩餘卷軸數<input type="number" id="scrollMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="scrollMax" placeholder="最大" style="width: 60px;"></label>
 
-      </div>
+        </div>
 
-    </details>
+      </div>
 
-  </div>
+    </details>
 
+  </div>
 
 
-  <div class="product-list">
 
-      <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="9000000" data-snow="15" data-type="鞋子" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="12" data-scroll="0">
+  <div class="product-list">
 
-      <div class="info">
+      <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="9000000" data-snow="15" data-type="鞋子" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="12" data-scroll="0">
 
-        <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
+      <div class="info">
 
-        <p><span class="label">屬性:</span></p>
+        <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
 
-        <p><span class="value">移動速度+12</span></p>
+        <p><span class="label">屬性:</span></p>
 
-        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+        <p><span class="value">移動速度+12</span></p>
 
-        <p><span class="label">商品量:</span> <span class="value">2</span></p>
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
 
-        <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
+        <p><span class="label">商品量:</span> <span class="value">2</span></p>
 
-      </div>
+        <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
 
-      <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
+      </div>
 
-    </div>
+      <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
 
+    </div>
 
 
-    <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="10" data-scroll="0">
 
-      <div class="info">
+    <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="10" data-scroll="0">
 
-        <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
+      <div class="info">
 
-        <p><span class="label">屬性:</span></p>
+        <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
 
-        <p><span class="value">移動速度+10</span></p>
+        <p><span class="label">屬性:</span></p>
 
-        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+        <p><span class="value">移動速度+10</span></p>
 
-        <p><span class="label">商品量:</span> <span class="value">3</span></p>
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
 
-        <p><span class="label">售價:</span> <span class="value">3雪 / 180萬楓幣</span></p>
+        <p><span class="label">商品量:</span> <span class="value">3</span></p>
 
-      </div>
+        <p><span class="label">售價:</span> <span class="value">3雪 / 180萬楓幣</span></p>
 
-      <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
+      </div>
 
-    </div>
+      <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
 
+    </div>
 
 
-    <hr>
 
+    <hr>
 
 
-    <div class="product" data-name="紅色艾倫鞋" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="8" data-scroll="0">
 
-      <div class="info">
+    <div class="product" data-name="紅色艾倫鞋" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="8" data-scroll="0">
 
-        <p><span class="label-name">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
+      <div class="info">
 
-        <p><span class="label">屬性:</span></p>
+        <p><span class="label-name">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
 
-        <p><span class="value">智力+4 幸運+2</span></p>
+        <p><span class="label">屬性:</span></p>
 
-        <p><span class="value">魔攻+1 移動速度+8</span></p>
+        <p><span class="value">智力+4 幸運+2</span></p>
 
-        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+        <p><span class="value">魔攻+1 移動速度+8</span></p>
 
-        <p><span class="label">商品量:</span> <span class="value">1</span></p>
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
 
-        <p><span class="label">售價:</span> <span class="value">5雪 / 300萬楓幣</span></p>
+        <p><span class="label">商品量:</span> <span class="value">1</span></p>
 
-      </div>
+        <p><span class="label">售價:</span> <span class="value">5雪 / 300萬楓幣</span></p>
 
-      <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
+      </div>
 
-    </div>
+      <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
 
-  </div>
+    </div>
 
+  </div>
 
 
-  <script>
 
-  const originalProducts = Array.from(document.querySelectorAll(".product")).map(p => p.cloneNode(true));
+  <script>
 
-  let sortState = { price: true, snow: true };
+    const originalProducts = Array.from(document.querySelectorAll(".product")).map(p => p.cloneNode(true));
 
-  let currentSort = null;
+    let sortState = { price: true, snow: true };
 
+    let currentSort = null;
 
 
-  function getValue(id, def) {
 
-    const val = document.getElementById(id)?.value;
+    function getValue(id, def) {
 
-    return val === "" ? def : parseInt(val);
+      const val = document.getElementById(id)?.value;
 
-  }
+      return val === "" ? def : parseInt(val);
 
+    }
 
 
-  function applyCurrentSort(products) {
 
-    if (!currentSort) return products;
+    function applyCurrentSort(products) {
 
-    const { type, ascending } = currentSort;
+      if (!currentSort) return products;
 
-    return products.sort((a, b) => {
+      const { type, ascending } = currentSort;
 
-      const aVal = +a.getAttribute("data-" + type);
+      return products.sort((a, b) => {
 
-      const bVal = +b.getAttribute("data-" + type);
+        const aVal = +a.getAttribute("data-" + type);
 
-      return ascending ? aVal - bVal : bVal - aVal;
+        const bVal = +b.getAttribute("data-" + type);
 
-    });
+        return ascending ? aVal - bVal : bVal - aVal;
 
-  }
+      });
 
+    }
 
 
-  function filterProducts() {
 
-    const searchInput = document.getElementById("searchInput").value.toLowerCase();
+    function filterProducts() {
 
-    const category = document.getElementById("categorySelect").value;
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
 
+      const category = document.getElementById("categorySelect").value;
 
 
-    const filters = {
 
-      strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
+      const filters = {
 
-      dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
+        strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
 
-      intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
+        dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
 
-      lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
+        intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
 
-      atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
+        lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
 
-      matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
+        atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
 
-      hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
+        matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
 
-      mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
+        defMin: getValue("defMin", -Infinity), defMax: getValue("defMax", Infinity),
 
-      jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
+        mdefMin: getValue("mdefMin", -Infinity), mdefMax: getValue("mdefMax", Infinity),
 
-      avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
+        jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
 
-      spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
+        avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
 
-      scrollMin: getValue("scrollMin", -Infinity), scrollMax: getValue("scrollMax", Infinity)
+        spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
 
-    };
+        scrollMin: getValue("scrollMin", -Infinity), scrollMax: getValue("scrollMax", Infinity)
 
+      };
 
 
-    const allProducts = Array.from(document.querySelectorAll(".product"));
 
-    const filtered = allProducts.filter((product) => {
+      const allProducts = Array.from(document.querySelectorAll(".product"));
 
-      const name = product.getAttribute("data-name")?.toLowerCase() || "";
+      const filtered = allProducts.filter((product) => {
 
-      const type = product.getAttribute("data-type") || "";
+        const name = product.getAttribute("data-name")?.toLowerCase() || "";
 
-      const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","scroll"];
+        const type = product.getAttribute("data-type") || "";
 
+        const attrs = ["str","dex","int","luk","atk","matk","def","mdef","jump","avoid","spd","scroll"];
 
 
-      return (
 
-        name.includes(searchInput) &&
+        return (
 
-        (category === "all" || type === category) &&
+          name.includes(searchInput) &&
 
-        attrs.every(attr => {
+          (category === "all" || type === category) &&
 
-          const val = +product.getAttribute("data-" + attr);
+          attrs.every(attr => {
 
-          return val >= filters[attr+"Min"] && val <= filters[attr+"Max"];
+            const val = +product.getAttribute("data-" + attr);
 
-        })
+            return val >= filters[attr+"Min"] && val <= filters[attr+"Max"];
 
-      );
+          })
 
-    });
+        );
 
+      });
 
 
-    const sorted = applyCurrentSort(filtered);
 
-    const container = document.querySelector(".product-list");
+      const sorted = applyCurrentSort(filtered);
 
-    container.innerHTML = "";
+      const container = document.querySelector(".product-list");
 
-    sorted.forEach(p => container.appendChild(p));
+      container.innerHTML = "";
 
-  }
+      sorted.forEach(p => container.appendChild(p));
 
+    }
 
 
-  function sortBy(type) {
 
-    const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
+    function sortBy(type) {
 
-    sortState[type] = ascending;
+      const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
 
-    document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
+      sortState[type] = ascending;
 
-    currentSort = { type, ascending };
+      document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
 
-    filterProducts();
+      currentSort = { type, ascending };
 
-  }
+      filterProducts();
 
+    }
 
 
-  function resetFilters() {
 
-    document.getElementById("searchInput").value = "";
+    function resetFilters() {
 
-    document.getElementById("categorySelect").value = "all";
+      document.getElementById("searchInput").value = "";
 
-    document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
+      document.getElementById("categorySelect").value = "all";
 
-    sortState = { price: true, snow: true };
+      document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
 
-    currentSort = null;
+      sortState = { price: true, snow: true };
 
-    document.getElementById("priceSort").innerText = "楓幣 ⬆";
+      currentSort = null;
 
-    document.getElementById("snowSort").innerText = "雪 ⬆";
+      document.getElementById("priceSort").innerText = "楓幣 ⬆";
 
+      document.getElementById("snowSort").innerText = "雪 ⬆";
 
 
-    const container = document.querySelector(".product-list");
 
-    container.innerHTML = "";
+      const container = document.querySelector(".product-list");
 
-    originalProducts.forEach(p => container.appendChild(p.cloneNode(true)));
+container.innerHTML = "";
 
-    filterProducts();
+originalProducts.forEach(p => container.appendChild(p.cloneNode(true)));
 
-  }
+filterProducts();
 
 
 
-  document.getElementById("searchInput").addEventListener("input", filterProducts);
+    }
 
-  document.getElementById("categorySelect").addEventListener("change", filterProducts);
 
-  document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
 
-  document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
+    document.getElementById("searchInput").addEventListener("input", filterProducts);
 
+    document.getElementById("categorySelect").addEventListener("change", filterProducts);
 
+    document.querySelectorAll(".advanced-grid input").forEach(input => input.addEventListener("input", filterProducts));
 
-  window.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
 
-    document.querySelectorAll(".advanced-grid input").forEach(input => {
+    document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
 
-      input.addEventListener("input", filterProducts);
-
-      input.addEventListener("change", filterProducts);
-
-    });
-
-  });
-
-</script>
+  </script>
 
 </body>
 
 </html>
-幫我全部一起更改 我在做輸入篩選時都會遇到資料不見的問題 請幫我解決
