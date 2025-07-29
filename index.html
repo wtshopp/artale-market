@@ -201,101 +201,76 @@
   </div>
 
   <script>
-    
+    let sortState = { price: true, snow: true };
+
     function getValue(id, def) {
       return parseInt(document.getElementById(id)?.value) || def;
     }
-    let currentSort = {
-    price: 'asc',
-    snow: 'asc'
-  };
-
-  function sortBy(key) {
-    const productList = document.getElementById("productList");
-    const products = Array.from(productList.getElementsByClassName("product"));
-
-    products.sort((a, b) => {
-      const aValue = parseInt(a.dataset[key]) || 0;
-      const bValue = parseInt(b.dataset[key]) || 0;
-      return currentSort[key] === 'asc' ? aValue - bValue : bValue - aValue;
-    });
-
-    products.forEach(p => productList.appendChild(p));
-
-    currentSort[key] = currentSort[key] === 'asc' ? 'desc' : 'asc';
-    const button = document.getElementById(key === 'price' ? 'priceSort' : 'snowSort');
-    button.textContent = (key === 'price' ? '楓幣 ' : '雪 ') + (currentSort[key] === 'asc' ? '⬆' : '⬇');
-  }
-
-  // resetFilters() 時也要重設排序狀態與按鈕
-  function resetFilters() {
-    document.getElementById("searchInput").value = "";
-    document.getElementById("categorySelect").value = "all";
-
-    document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
-
-    currentSort = { price: 'asc', snow: 'asc' };
-    document.getElementById("priceSort").textContent = "楓幣 ⬆";
-    document.getElementById("snowSort").textContent = "雪 ⬆";
-
-    filterProducts();
-  }
 
     function filterProducts() {
-      const search = document.getElementById("searchInput").value.toLowerCase();
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
       const category = document.getElementById("categorySelect").value;
-      const filters = [
-        { key: 'str', min: getValue('strMin', -Infinity), max: getValue('strMax', Infinity) },
-        { key: 'dex', min: getValue('dexMin', -Infinity), max: getValue('dexMax', Infinity) },
-        { key: 'int', min: getValue('intMin', -Infinity), max: getValue('intMax', Infinity) },
-        { key: 'luk', min: getValue('lukMin', -Infinity), max: getValue('lukMax', Infinity) },
-        { key: 'atk', min: getValue('atkMin', -Infinity), max: getValue('atkMax', Infinity) },
-        { key: 'matk', min: getValue('matkMin', -Infinity), max: getValue('matkMax', Infinity) },
-        { key: 'def', min: getValue('defMin', -Infinity), max: getValue('defMax', Infinity) },
-        { key: 'mdef', min: getValue('mdefMin', -Infinity), max: getValue('mdefMax', Infinity) },
-        { key: 'jump', min: getValue('jumpMin', -Infinity), max: getValue('jumpMax', Infinity) },
-        { key: 'avoid', min: getValue('avoidMin', -Infinity), max: getValue('avoidMax', Infinity) },
-        { key: 'spd', min: getValue('spdMin', -Infinity), max: getValue('spdMax', Infinity) },
-        { key: 'scroll', min: getValue('scrollMin', -Infinity), max: getValue('scrollMax', Infinity) },
-      ];
 
-      document.querySelectorAll('.product').forEach(p => {
-        const name = p.querySelector(".value").textContent.toLowerCase();
-        const cat = p.dataset.type || '';
-        let visible = name.includes(search) && (category === 'all' || category === cat);
+      const filters = {
+        strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
+        dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
+        intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
+        lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
+        atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
+        matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
+        defMin: getValue("defMin", -Infinity), defMax: getValue("defMax", Infinity),
+        mdefMin: getValue("mdefMin", -Infinity), mdefMax: getValue("mdefMax", Infinity),
+        jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
+        avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
+        spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
+        scrollMin: getValue("scrollMin", -Infinity), scrollMax: getValue("scrollMax", Infinity)
+      };
 
-        filters.forEach(f => {
-          const val = parseInt(p.dataset[f.key]) || 0;
-          if (val < f.min || val > f.max) visible = false;
-        });
+      document.querySelectorAll(".product").forEach((product) => {
+        const name = product.getAttribute("data-name").toLowerCase();
+        const type = product.getAttribute("data-type");
+        const attrs = ["str","dex","int","luk","atk","matk","def","mdef","jump","avoid","spd","scroll"];
 
-        p.style.display = visible ? 'flex' : 'none';
+        const match =
+          name.includes(searchInput) &&
+          (category === "all" || type === category) &&
+          attrs.every(attr => {
+            const val = +product.getAttribute("data-" + attr);
+            return val >= filters[attr+"Min"] && val <= filters[attr+"Max"];
+          });
+
+        product.style.display = match ? "flex" : "none";
       });
+    }
+
+    function sortBy(type) {
+      const ascending = sortState[type];
+      sortState[type] = !ascending;
+
+      const icon = ascending ? "⬆" : "⬇";
+      document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + icon;
+
+      const products = Array.from(document.querySelectorAll(".product"));
+      const container = document.querySelector(".product-list");
+      products.sort((a, b) => {
+        const aVal = +a.getAttribute("data-" + type);
+        const bVal = +b.getAttribute("data-" + type);
+        return ascending ? aVal - bVal : bVal - aVal;
+      });
+      products.forEach(p => container.appendChild(p));
     }
 
     function resetFilters() {
       document.getElementById("searchInput").value = "";
       document.getElementById("categorySelect").value = "all";
-      ["str","dex","int","luk","atk","matk","def","mdef","jump","avoid","spd","scroll"].forEach(k => {
-        document.getElementById(k+"Min").value = "";
-        document.getElementById(k+"Max").value = "";
-      });
-      products.sort((a, b) => {
-  const dir = currentSort.price === 'asc' ? 1 : -1;
-  return (a.price - b.price) * dir;
-});
-      document.getElementById("priceSort").textContent = "楓幣 ⬆";
-      document.getElementById("snowSort").textContent = "雪 ⬆";
-      priceAsc = true;
-      snowAsc = true;
+      document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
+      sortState = { price: true, snow: true };
+      document.getElementById("priceSort").innerText = "楓幣 ⬆";
+      document.getElementById("snowSort").innerText = "雪 ⬆";
       filterProducts();
     }
 
     document.getElementById("searchInput").addEventListener("input", filterProducts);
-    document.getElementById("categorySelect").addEventListener("change", filterProducts);
-    document.querySelectorAll("input[type='number']").forEach(input => {
-      input.addEventListener("input", filterProducts);
-    });
   </script>
 </body>
 </html>
