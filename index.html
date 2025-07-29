@@ -282,6 +282,7 @@
       const allProducts = Array.from(document.querySelectorAll(".product"));
       container.innerHTML = "";
       allProducts.forEach(p => container.appendChild(p));
+      filterProducts();
     }
 
     document.getElementById("searchInput").addEventListener("input", filterProducts);
