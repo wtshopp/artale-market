@@ -31,23 +31,23 @@
       padding: 5px 10px;
       border-radius: 5px;
       border: 1px solid #aaa;
-      background-color: #f7f7f7;
+      background-color: #f5f5f5;
     }
     .controls button:hover {
       cursor: pointer;
     }
     .reset-button {
-      background-color: #ffeaea;
+      background-color: #ffe5e5;
     }
     details summary {
       cursor: pointer;
       padding: 5px 10px;
       border-radius: 5px;
       border: 1px solid #aaa;
-      background-color: #f7f7f7;
+      background-color: #f5f5f5;
     }
     details[open] summary {
-      background-color: #e0e0e0;
+      background-color: #e5e5e5;
     }
     .product-list {
       display: flex;
@@ -58,13 +58,13 @@
       background-color: #bfbfbf;
       padding: 15px;
       border-radius: 10px;
-      width: calc(50% - 20px);
+      width: calc(33.33% - 20px);
       display: flex;
-      gap: 15px;
       box-sizing: border-box;
+      gap: 15px;
     }
     .product img {
-      width: 250px;
+      width: 260px;
       height: auto;
       object-fit: contain;
     }
@@ -72,6 +72,16 @@
       border: 1px solid #bbb;
       width: 100%;
       margin: 30px 0;
+    }
+    .info p {
+      margin: 4px 0;
+    }
+    .info p.attr,
+    .info p.scrolls,
+    .info p.amount,
+    .info p.price {
+      color: red;
+      font-weight: normal;
     }
   </style>
 </head>
@@ -98,5 +108,87 @@
 
     <details>
       <summary>進階篩選</summary>
-      <div style="margin-top: 10px;">
-        <div><label>力量：</label><
+      <div style="margin-top: 10px; display: flex; flex-wrap: wrap; gap: 10px;">
+        <div><label>力量：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>敏捷：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>智力：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>幸運：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>物攻：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>魔攻：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>物防：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>魔防：</label><input type=" nplaceholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>跳躍：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>迴避：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>移動速度：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+        <div><label>剩餘卷軸數：</label><input type="number" placeholder="最小" style="width: 60px;"><input type="number" placeholder="最大" style="width: 60px;"></div>
+      </div>
+    </details>
+  </div>
+
+  <div class="product-list" id="productList">
+    <div class="product" data-price="1800000" data-snow="3">
+      <div class="info">
+        <p>商品名: 藍雪鞋</p>
+        <p class="attr">屬性:</p>
+        <p>移動速度+10</p>
+        <p class="scrolls">剩餘卷軸數: 0</p>
+        <p class="amount">商品量: 3</p>
+        <p class="price">售價: 3雪 / 180萬楓幣</p>
+      </div>
+      <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
+    </div>
+
+    <div class="product" data-price="3000000" data-snow="5">
+      <div class="info">
+        <p>商品名: 紅色艾倫鞋</p>
+        <p class="attr">屬性:</p>
+        <p>智力+4 幸運+2</p>
+        <p>魔攻+1 移動速度+8</p>
+        <p class="scrolls">剩餘卷軸數: 0</p>
+        <p class="amount">商品量: 1</p>
+        <p class="price">售價: 5雪 / 300萬楓幣</p>
+      </div>
+      <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
+    </div>
+
+    <div class="product" data-price="2500000" data-snow="4">
+      <div class="info">
+        <p>商品名: 藍雪鞋</p>
+        <p class="attr">屬性:</p>
+        <p>移動速度+12</p>
+        <p class="scrolls">剩餘卷軸數: 0</p>
+        <p class="amount">商品量: 1</p>
+        <p class="price">售價: 4雪 / 250萬楓幣</p>
+      </div>
+      <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
+    </div>
+  </div>
+
+  <script>
+    let priceAsc = true;
+    let snowAsc = true;
+
+    function sortBy(type) {
+      const list = document.getElementById("productList");
+      const items = Array.from(list.children).filter(e => e.classList.contains("product"));
+
+      items.sort((a, b) => {
+        const aVal = parseInt(a.dataset[type]);
+        const bVal = parseInt(b.dataset[type]);
+        return (type === "price" ? priceAsc : snowAsc) ? aVal - bVal : bVal - aVal;
+      });
+
+      items.forEach(item => list.appendChild(item));
+
+      if (type === "price") {
+        priceAsc = !priceAsc;
+        document.getElementById("priceSort").textContent = `楓幣 ${priceAsc ? '⬆' : '⬇'}`;
+      } else {
+        snowAsc = !snowAsc;
+        document.getElementById("snowSort").textContent = `雪 ${snowAsc ? '⬆' : '⬇'}`;
+      }
+    }
+  </script>
+
+</body>
+</html>
