@@ -99,7 +99,7 @@
       flex-direction: column;
     }
     .advanced-grid input {
-      width: 60px;
+      width: 50%;
     }
     .break-row {
       grid-column: 1 / -1;
@@ -138,7 +138,7 @@
       <option value="特殊部位飾品">特殊部位飾品</option>
     </select>
     <button id="priceSort">楓幣 ⬆</button>
-    <button id="snowSort">雪 ⬆</button>
+    <button id="snowSort">雪⬆</button>
     <details>
       <summary>進階篩選</summary>
       <div style="margin-top: 10px;">
@@ -151,78 +151,13 @@
 
   <script>
     const attributes = [
-      "str", "dex", "int", "luk", "atk", "matk",
-      "hp", "mp", "jump", "avoid", "spd", "scroll"
+      "str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "scroll"
     ];
 
-    // 建立商品範例(正式用時請用你自己的商品 HTML 並放進 products 陣列)
-    const productsData = [
-      {
-        name: "藍雪鞋",
-        type: "鞋子",
-        price: 9000000,
-        snow: 15,
-        str: 0, dex: 0, int: 0, luk: 0,
-        atk: 0, matk: 0, hp: 0, mp: 0,
-        jump: 0, avoid: 0, spd: 12, scroll: 0,
-        quantity: 2,
-        img: "12速藍雪鞋.png"
-      },
-      {
-        name: "藍雪鞋",
-        type: "鞋子",
-        price: 3000000,
-        snow: 5,
-        str: 0, dex: 0, int: 0, luk: 0,
-        atk: 0, matk: 0, hp: 0, mp: 0,
-        jump: 0, avoid: 0, spd: 10, scroll: 0,
-        quantity: 3,
-        img: "10速藍雪鞋.png"
-      },
-      {
-        name: "紅色艾倫鞋",
-        type: "鞋子",
-        price: 3000000,
-        snow: 5,
-        str: 0, dex: 0, int: 4, luk: 2,
-        atk: 0, matk: 1, hp: 0, mp: 0,
-        jump: 0, avoid: 0, spd: 8, scroll: 0,
-        quantity: 1,
-        img: "8速7屬艾倫鞋.png"
-      }
-    ];
-
+    const products = [...document.querySelectorAll(".product")].map(p => p.cloneNode(true));
     const productContainer = document.getElementById("productContainer");
+    products.forEach(p => productContainer.appendChild(p));
 
-    // 將物件轉成 DOM 元素
-    function createProductElement(product) {
-      const div = document.createElement("div");
-      div.className = "product";
-      div.setAttribute("data-name", product.name);
-      div.setAttribute("data-type", product.type);
-      div.setAttribute("data-price", product.price);
-      div.setAttribute("data-snow", product.snow);
-      attributes.forEach(attr => {
-        div.setAttribute(`data-${attr}`, product[attr]);
-      });
-      div.innerHTML = `
-        <div class="info">
-          <p><span class="label-name">商品名:</span> <span class="value">${product.name}</span></p>
-          <p><span class="label">屬性:</span></p>
-          <p><span class="value">${attributes.filter(a => product[a] > 0).map(a => `${a.toUpperCase()}+${product[a]}`).join(" ")}</span></p>
-          <p><span class="label">剩餘卷軸數:</span> <span class="value">${product.scroll}</span></p>
-          <p><span class="label">商品量:</span> <span class="value">${product.quantity}</span></p>
-          <p><span class="label">售價:</span> <span class="value">${product.snow}雪 / ${Math.floor(product.price/10000)}萬楓幣</span></p>
-        </div>
-        <img src="${product.img}" alt="${product.name}">
-      `;
-      return div;
-    }
-
-    // 產生所有商品 DOM
-    let products = productsData.map(createProductElement);
-
-    // 產生進階篩選輸入框
     function createAdvancedInputs() {
       const container = document.getElementById("advancedInputs");
       attributes.forEach(attr => {
@@ -248,18 +183,6 @@
       return el && el.value !== "" ? parseInt(el.value, 10) : def;
     }
 
-    let currentSort = null;
-
-    function applyCurrentSort(list) {
-      if (!currentSort) return list;
-      const { type, ascending } = currentSort;
-      return list.slice().sort((a, b) => {
-        const aVal = parseInt(a.getAttribute(`data-${type}`));
-        const bVal = parseInt(b.getAttribute(`data-${type}`));
-        return ascending ? aVal - bVal : bVal - aVal;
-      });
-    }
-
     function filterProducts() {
       const search = document.getElementById("searchInput").value.toLowerCase();
       const category = document.getElementById("categorySelect").value;
@@ -268,7 +191,7 @@
         const type = product.getAttribute("data-type");
         if (!(name.includes(search) && (category === "all" || category === type))) return false;
         return attributes.every(attr => {
-          const val = parseInt(product.getAttribute(`data-${attr}`), 10) || 0;
+          const val = parseInt(product.getAttribute(`data-${attr}`), 10);
           const min = getValue(`${attr}Min`, -Infinity);
           const max = getValue(`${attr}Max`, Infinity);
           return val >= min && val <= max;
@@ -276,6 +199,17 @@
       });
       productContainer.innerHTML = "";
       applyCurrentSort(filtered).forEach(p => productContainer.appendChild(p.cloneNode(true)));
+    }
+
+    let currentSort = null;
+    function applyCurrentSort(list) {
+      if (!currentSort) return list;
+      const { type, ascending } = currentSort;
+      return list.slice().sort((a, b) => {
+        const aVal = parseInt(a.getAttribute(`data-${type}`));
+        const bVal = parseInt(b.getAttribute(`data-${type}`));
+        return ascending ? aVal - bVal : bVal - aVal;
+      });
     }
 
     function sortBy(type) {
@@ -301,7 +235,6 @@
       filterProducts();
     }
 
-    // 事件綁定
     document.getElementById("searchInput").addEventListener("input", filterProducts);
     document.getElementById("categorySelect").addEventListener("change", filterProducts);
     document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
@@ -313,7 +246,6 @@
         document.getElementById(`${attr}Min`).addEventListener("input", filterProducts);
         document.getElementById(`${attr}Max`).addEventListener("input", filterProducts);
       });
-      // 預設顯示所有商品
       filterProducts();
     });
   </script>
