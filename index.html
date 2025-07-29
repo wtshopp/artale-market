@@ -202,6 +202,7 @@
   </div>
 
   <script>
+    const originalProducts = Array.from(document.querySelectorAll(".product")).map(p => p.cloneNode(true));
     let sortState = { price: true, snow: true };
     let currentSort = null;
 
@@ -279,10 +280,10 @@
       document.getElementById("snowSort").innerText = "雪 ⬆";
 
       const container = document.querySelector(".product-list");
-      const allProducts = Array.from(document.querySelectorAll(".product"));
-      container.innerHTML = "";
-      allProducts.forEach(p => container.appendChild(p));
-      filterProducts();
+container.innerHTML = "";
+originalProducts.forEach(p => container.appendChild(p.cloneNode(true)));
+filterProducts();
+
     }
 
     document.getElementById("searchInput").addEventListener("input", filterProducts);
