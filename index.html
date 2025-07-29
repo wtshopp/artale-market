@@ -137,17 +137,17 @@
       <div style="margin-top: 10px;">
         <label>屬性多選：</label>
         <div>
-          <label>力量<input type="number" id="strMin" placeholder="最小"> ~ <input type="number" id="strMax" placeholder="最大"></label>
-          <label>敏捷<input type="number" id="dexMin" placeholder="最小"> ~ <input type="number" id="dexMax" placeholder="最大"></label>
-          <label>智力<input type="number" id="intMin" placeholder="最小"> ~ <input type="number" id="intMax" placeholder="最大"></label>
-          <label>幸運<input type="number" id="lukMin" placeholder="最小"> ~ <input type="number" id="lukMax" placeholder="最大"></label>
-          <label>物攻<input type="number" id="atkMin" placeholder="最小"> ~ <input type="number" id="atkMax" placeholder="最大"></label>
-          <label>魔攻<input type="number" id="matkMin" placeholder="最小"> ~ <input type="number" id="matkMax" placeholder="最大"></label>
-          <label>物防<input type="number" id="defMin" placeholder="最小"> ~ <input type="number" id="defMax" placeholder="最大"></label>
-          <label>魔防<input type="number" id="mdefMin" placeholder="最小"> ~ <input type="number" id="mdefMax" placeholder="最大"></label>
-          <label>跳躍<input type="number" id="jumpMin" placeholder="最小"> ~ <input type="number" id="jumpMax" placeholder="最大"></label>
-          <label>迴避<input type="number" id="avoidMin" placeholder="最小"> ~ <input type="number" id="avoidMax" placeholder="最大"></label>
-          <label>移動速度<input type="number" id="spdMin" placeholder="最小"> ~ <input type="number" id="spdMax" placeholder="最大"></label>
+          <label>力量<input type="number" id="strMin" placeholder="最小"> ~ <input type="number" id="strMax" placeholder="最大" style="width: 60px;"></label>
+          <label>敏捷<input type="number" id="dexMin" placeholder="最小"> ~ <input type="number" id="dexMax" placeholder="最大" style="width: 60px;"></label>
+          <label>智力<input type="number" id="intMin" placeholder="最小"> ~ <input type="number" id="intMax" placeholder="最大" style="width: 60px;"></label>
+          <label>幸運<input type="number" id="lukMin" placeholder="最小"> ~ <input type="number" id="lukMax" placeholder="最大" style="width: 60px;"></label>
+          <label>物攻<input type="number" id="atkMin" placeholder="最小"> ~ <input type="number" id="atkMax" placeholder="最大" style="width: 60px;"></label>
+          <label>魔攻<input type="number" id="matkMin" placeholder="最小"> ~ <input type="number" id="matkMax" placeholder="最大" style="width: 60px;"></label>
+          <label>物防<input type="number" id="defMin" placeholder="最小"> ~ <input type="number" id="defMax" placeholder="最大" style="width: 60px;"></label>
+          <label>魔防<input type="number" id="mdefMin" placeholder="最小"> ~ <input type="number" id="mdefMax" placeholder="最大" style="width: 60px;"></label>
+          <label>跳躍<input type="number" id="jumpMin" placeholder="最小"> ~ <input type="number" id="jumpMax" placeholder="最大" style="width: 60px;"></label>
+          <label>迴避<input type="number" id="avoidMin" placeholder="最小"> ~ <input type="number" id="avoidMax" placeholder="最大" style="width: 60px;"></label>
+          <label>移動速度<input type="number" id="spdMin" placeholder="最小"> ~ <input type="number" id="spdMax" placeholder="最大" style="width: 60px;"></label>
           <label>剩餘卷軸數<input type="number" id="scrollMin" placeholder="最小"> ~ <input type="number" id="scrollMax" placeholder="最大"></label>
         </div>
       </div>
@@ -200,6 +200,41 @@
     function getValue(id, def) {
       return parseInt(document.getElementById(id)?.value) || def;
     }
+    let currentSort = {
+    price: 'asc',
+    snow: 'asc'
+  };
+
+  function sortBy(key) {
+    const productList = document.getElementById("productList");
+    const products = Array.from(productList.getElementsByClassName("product"));
+
+    products.sort((a, b) => {
+      const aValue = parseInt(a.dataset[key]) || 0;
+      const bValue = parseInt(b.dataset[key]) || 0;
+      return currentSort[key] === 'asc' ? aValue - bValue : bValue - aValue;
+    });
+
+    products.forEach(p => productList.appendChild(p));
+
+    currentSort[key] = currentSort[key] === 'asc' ? 'desc' : 'asc';
+    const button = document.getElementById(key === 'price' ? 'priceSort' : 'snowSort');
+    button.textContent = (key === 'price' ? '楓幣 ' : '雪 ') + (currentSort[key] === 'asc' ? '⬆' : '⬇');
+  }
+
+  // resetFilters() 時也要重設排序狀態與按鈕
+  function resetFilters() {
+    document.getElementById("searchInput").value = "";
+    document.getElementById("categorySelect").value = "all";
+
+    document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
+
+    currentSort = { price: 'asc', snow: 'asc' };
+    document.getElementById("priceSort").textContent = "楓幣 ⬆";
+    document.getElementById("snowSort").textContent = "雪 ⬆";
+
+    filterProducts();
+  }
 
     function filterProducts() {
       const search = document.getElementById("searchInput").value.toLowerCase();
@@ -240,47 +275,16 @@
         document.getElementById(k+"Min").value = "";
         document.getElementById(k+"Max").value = "";
       });
+      products.sort((a, b) => {
+  const dir = currentSort.price === 'asc' ? 1 : -1;
+  return (a.price - b.price) * dir;
+});
       document.getElementById("priceSort").textContent = "楓幣 ⬆";
       document.getElementById("snowSort").textContent = "雪 ⬆";
       priceAsc = true;
       snowAsc = true;
       filterProducts();
     }
-    let currentSort = {
-    price: 'asc',
-    snow: 'asc'
-  };
-
-  function sortBy(key) {
-    const productList = document.getElementById("productList");
-    const products = Array.from(productList.getElementsByClassName("product"));
-
-    products.sort((a, b) => {
-      const aValue = parseInt(a.dataset[key]) || 0;
-      const bValue = parseInt(b.dataset[key]) || 0;
-      return currentSort[key] === 'asc' ? aValue - bValue : bValue - aValue;
-    });
-
-    products.forEach(p => productList.appendChild(p));
-
-    currentSort[key] = currentSort[key] === 'asc' ? 'desc' : 'asc';
-    const button = document.getElementById(key === 'price' ? 'priceSort' : 'snowSort');
-    button.textContent = (key === 'price' ? '楓幣 ' : '雪 ') + (currentSort[key] === 'asc' ? '⬆' : '⬇');
-  }
-
-  // resetFilters() 時也要重設排序狀態與按鈕
-  function resetFilters() {
-    document.getElementById("searchInput").value = "";
-    document.getElementById("categorySelect").value = "all";
-
-    document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
-
-    currentSort = { price: 'asc', snow: 'asc' };
-    document.getElementById("priceSort").textContent = "楓幣 ⬆";
-    document.getElementById("snowSort").textContent = "雪 ⬆";
-
-    filterProducts();
-  }
 
     document.getElementById("searchInput").addEventListener("input", filterProducts);
     document.getElementById("categorySelect").addEventListener("change", filterProducts);
