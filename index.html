@@ -138,7 +138,6 @@
     <button id="priceSort">楓幣 ⬆</button>
     <button id="snowSort">雪⬆</button>
     <details>
-      <summary>進階篩選</summary>
       <div style="margin-top: 10px;">
         <label>屬性多選：</label>
         <div class="advanced-grid">
@@ -148,8 +147,8 @@
           <label>幸運<input type="number" id="lukMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="lukMax" placeholder="最大" style="width: 60px;"></label>
           <label>物攻<input type="number" id="atkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="atkMax" placeholder="最大" style="width: 60px;"></label>
           <label>魔攻<input type="number" id="matkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="matkMax" placeholder="最大" style="width: 60px;"></label>
-          <label>物防<input type="number" id="defMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="defMax" placeholder="最大" style="width: 60px;"></label>
-          <label>魔防<input type="number" id="mdefMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="mdefMax" placeholder="最大" style="width: 60px;"></label>
+          <label>Hp<input type="number" id="hpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="hpMax" placeholder="最大" style="width: 60px;"></label>
+          <label>Mp<input type="number" id="mpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="mpMax" placeholder="最大" style="width: 60px;"></label>
           <div class="break-row"></div>
           <label>跳躍<input type="number" id="jumpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="jumpMax" placeholder="最大" style="width: 60px;"></label>
           <label>迴避<input type="number" id="avoidMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="avoidMax" placeholder="最大" style="width: 60px;"></label>
@@ -161,7 +160,7 @@
   </div>
 
   <div class="product-list">
-      <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="9000000" data-snow="15" data-type="鞋子" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="12" data-scroll="0">
+      <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="9000000" data-snow="15" data-type="鞋子" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="12" data-scroll="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
         <p><span class="label">屬性:</span></p>
@@ -173,7 +172,7 @@
       <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
     </div>
 
-    <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="10" data-scroll="0">
+    <div class="product" data-name="藍雪鞋" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="10" data-scroll="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
         <p><span class="label">屬性:</span></p>
@@ -187,7 +186,7 @@
 
     <hr>
 
-    <div class="product" data-name="紅色艾倫鞋" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="8" data-scroll="0">
+    <div class="product" data-name="紅色艾倫鞋" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="8" data-scroll="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
         <p><span class="label">屬性:</span></p>
@@ -232,8 +231,8 @@
         lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
         atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
         matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
-        defMin: getValue("defMin", -Infinity), defMax: getValue("defMax", Infinity),
-        mdefMin: getValue("mdefMin", -Infinity), mdefMax: getValue("mdefMax", Infinity),
+        defMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
+        mdefMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
         jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
         avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
         spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
@@ -244,7 +243,7 @@
       const filtered = allProducts.filter((product) => {
         const name = product.getAttribute("data-name")?.toLowerCase() || "";
         const type = product.getAttribute("data-type") || "";
-        const attrs = ["str","dex","int","luk","atk","matk","def","mdef","jump","avoid","spd","scroll"];
+        const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","scroll"];
 
         return (
           name.includes(searchInput) &&
