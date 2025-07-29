@@ -141,9 +141,9 @@
       </div>
     </details>
   </div>
-  
+
   <div class="product-list">
-    <div class="product" data-type="鞋子">
+    <div class="product" data-type="鞋子" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="12" data-scroll="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
         <p><span class="label">屬性:</span></p>
@@ -155,7 +155,7 @@
       <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
     </div>
 
-    <div class="product" data-type="鞋子">
+    <div class="product" data-type="鞋子" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="10" data-scroll="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
         <p><span class="label">屬性:</span></p>
@@ -169,7 +169,7 @@
 
     <hr>
 
-    <div class="product" data-type="鞋子">
+    <div class="product" data-type="鞋子" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-def="0" data-mdef="0" data-jump="0" data-avoid="0" data-spd="8" data-scroll="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
         <p><span class="label">屬性:</span></p>
@@ -235,6 +235,10 @@
     }
 
     document.getElementById("searchInput").addEventListener("input", filterProducts);
+    document.getElementById("categorySelect").addEventListener("change", filterProducts);
+    document.querySelectorAll("input[type='number']").forEach(input => {
+      input.addEventListener("input", filterProducts);
+    });
   </script>
 </body>
 </html>
