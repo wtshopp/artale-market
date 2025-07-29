@@ -102,9 +102,9 @@
   </div>
 
   <div class="controls">
-    <input type="text" placeholder="搜尋商品">
-    <button class="reset-button">重置所有篩選</button>
-    <select>
+    <input type="text" id="searchInput" placeholder="搜尋商品">
+    <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
+    <select id="categorySelect" onchange="filterProducts()">
       <option value="all">所有分類</option>
       <option value="頭盔">頭盔</option>
       <option value="手套">手套</option>
@@ -118,36 +118,30 @@
       <option value="套服">套服</option>
       <option value="特殊部位飾品">特殊部位飾品</option>
     </select>
-    <button>楓幣 ⬆</button>
-    <button>雪 ⬆</button>
+    <button id="priceSort" onclick="sortBy('price')">楓幣 ⬆</button>
+    <button id="snowSort" onclick="sortBy('snow')">雪 ⬆</button>
     <details>
       <summary>進階篩選</summary>
       <div style="margin-top: 10px;">
         <label>屬性多選：</label>
         <div>
-          <label>力量<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>敏捷<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>智力<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>幸運<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>物攻<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>魔攻<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>物防<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>魔防<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>跳躍<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>迴避<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>移動速度<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
-          <label>剩餘卷軸數<input type="number" placeholder="最小"> ~ <input type="number" placeholder="最大"></label>
+          <label>力量<input type="number" id="strMin" placeholder="最小"> ~ <input type="number" id="strMax" placeholder="最大"></label>
+          <label>敏捷<input type="number" id="dexMin" placeholder="最小"> ~ <input type="number" id="dexMax" placeholder="最大"></label>
+          <label>智力<input type="number" id="intMin" placeholder="最小"> ~ <input type="number" id="intMax" placeholder="最大"></label>
+          <label>幸運<input type="number" id="lukMin" placeholder="最小"> ~ <input type="number" id="lukMax" placeholder="最大"></label>
+          <label>物攻<input type="number" id="atkMin" placeholder="最小"> ~ <input type="number" id="atkMax" placeholder="最大"></label>
+          <label>魔攻<input type="number" id="matkMin" placeholder="最小"> ~ <input type="number" id="matkMax" placeholder="最大"></label>
+          <label>物防<input type="number" id="defMin" placeholder="最小"> ~ <input type="number" id="defMax" placeholder="最大"></label>
+          <label>魔防<input type="number" id="mdefMin" placeholder="最小"> ~ <input type="number" id="mdefMax" placeholder="最大"></label>
+          <label>跳躍<input type="number" id="jumpMin" placeholder="最小"> ~ <input type="number" id="jumpMax" placeholder="最大"></label>
+          <label>迴避<input type="number" id="avoidMin" placeholder="最小"> ~ <input type="number" id="avoidMax" placeholder="最大"></label>
+          <label>移動速度<input type="number" id="spdMin" placeholder="最小"> ~ <input type="number" id="spdMax" placeholder="最大"></label>
+          <label>剩餘卷軸數<input type="number" id="scrollMin" placeholder="最小"> ~ <input type="number" id="scrollMax" placeholder="最大"></label>
         </div>
       </div>
     </details>
   </div>
-
-  <script>
-    function applyFilters() {
-      console.log("執行篩選條件...");
-    }
-  </script>
-
+  
   <div class="product-list">
     <div class="product" data-type="鞋子">
       <div class="info">
@@ -188,62 +182,59 @@
       <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
     </div>
   </div>
-  
-   <script>
-    let priceAsc = true;
-    let snowAsc = true;
 
-    function sortBy(type) {
-      const list = document.getElementById("productList");
-      const items = Array.from(list.children).filter(e => e.classList.contains("product"));
-
-      items.sort((a, b) => {
-        const aVal = parseInt(a.dataset[type]);
-        const bVal = parseInt(b.dataset[type]);
-        return (type === "price" ? priceAsc : snowAsc) ? aVal - bVal : bVal - aVal;
-      });
-
-      items.forEach(item => list.appendChild(item));
-
-      if (type === "price") {
-        priceAsc = !priceAsc;
-        document.getElementById("priceSort").textContent = `楓幣 ${priceAsc ? '⬆' : '⬇'}`;
-      } else {
-        snowAsc = !snowAsc;
-        document.getElementById("snowSort").textContent = `雪 ${snowAsc ? '⬆' : '⬇'}`;
-      }
-    }
-
-    function resetFilters() {
-      document.getElementById("searchInput").value = "";
-      document.getElementById("categorySelect").value = "all";
-      document.getElementById("strMin").value = "";
-      document.getElementById("strMax").value = "";
-      filterProducts();
+  <script>
+    function getValue(id, def) {
+      return parseInt(document.getElementById(id)?.value) || def;
     }
 
     function filterProducts() {
       const search = document.getElementById("searchInput").value.toLowerCase();
       const category = document.getElementById("categorySelect").value;
-      const strMin = parseInt(document.getElementById("strMin").value) || -Infinity;
-      const strMax = parseInt(document.getElementById("strMax").value) || Infinity;
+      const filters = [
+        { key: 'str', min: getValue('strMin', -Infinity), max: getValue('strMax', Infinity) },
+        { key: 'dex', min: getValue('dexMin', -Infinity), max: getValue('dexMax', Infinity) },
+        { key: 'int', min: getValue('intMin', -Infinity), max: getValue('intMax', Infinity) },
+        { key: 'luk', min: getValue('lukMin', -Infinity), max: getValue('lukMax', Infinity) },
+        { key: 'atk', min: getValue('atkMin', -Infinity), max: getValue('atkMax', Infinity) },
+        { key: 'matk', min: getValue('matkMin', -Infinity), max: getValue('matkMax', Infinity) },
+        { key: 'def', min: getValue('defMin', -Infinity), max: getValue('defMax', Infinity) },
+        { key: 'mdef', min: getValue('mdefMin', -Infinity), max: getValue('mdefMax', Infinity) },
+        { key: 'jump', min: getValue('jumpMin', -Infinity), max: getValue('jumpMax', Infinity) },
+        { key: 'avoid', min: getValue('avoidMin', -Infinity), max: getValue('avoidMax', Infinity) },
+        { key: 'spd', min: getValue('spdMin', -Infinity), max: getValue('spdMax', Infinity) },
+        { key: 'scroll', min: getValue('scrollMin', -Infinity), max: getValue('scrollMax', Infinity) },
+      ];
 
-      const products = document.querySelectorAll(".product");
-      products.forEach(p => {
+      document.querySelectorAll('.product').forEach(p => {
         const name = p.querySelector(".value").textContent.toLowerCase();
-        const cat = p.dataset.category;
-        const str = parseInt(p.dataset.str);
+        const cat = p.dataset.type || '';
+        let visible = name.includes(search) && (category === 'all' || category === cat);
 
-        const show = (search === "" || name.includes(search)) &&
-                     (category === "all" || cat === category) &&
-                     (str >= strMin && str <= strMax);
-        p.style.display = show ? "flex" : "none";
+        filters.forEach(f => {
+          const val = parseInt(p.dataset[f.key]) || 0;
+          if (val < f.min || val > f.max) visible = false;
+        });
+
+        p.style.display = visible ? 'flex' : 'none';
       });
     }
 
+    function resetFilters() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("categorySelect").value = "all";
+      ["str","dex","int","luk","atk","matk","def","mdef","jump","avoid","spd","scroll"].forEach(k => {
+        document.getElementById(k+"Min").value = "";
+        document.getElementById(k+"Max").value = "";
+      });
+      document.getElementById("priceSort").textContent = "楓幣 ⬆";
+      document.getElementById("snowSort").textContent = "雪 ⬆";
+      priceAsc = true;
+      snowAsc = true;
+      filterProducts();
+    }
+
     document.getElementById("searchInput").addEventListener("input", filterProducts);
-    document.getElementById("strMin").addEventListener("input", filterProducts);
-    document.getElementById("strMax").addEventListener("input", filterProducts);
   </script>
 </body>
 </html>
