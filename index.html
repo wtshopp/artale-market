@@ -136,7 +136,7 @@
       <option value="特殊部位飾品">特殊部位飾品</option>
     </select>
     <button id="priceSort">楓幣 ⬆</button>
-    <button id="snowSort">雪❄️⬆</button>
+    <button id="snowSort">雪⬆</button>
     <details>
       <summary>進階篩選</summary>
       <div style="margin-top: 10px;">
@@ -262,7 +262,7 @@
     }
 
     function sortBy(type) {
-      const ascending = sortState[type];
+      const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
       sortState[type] = !ascending;
 
       document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
@@ -271,13 +271,14 @@
     }
 
     function resetFilters() {
+      document.querySelectorAll(".product").forEach(product => product.style.display = "flex");
       document.getElementById("searchInput").value = "";
       document.getElementById("categorySelect").value = "all";
       document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
       sortState = { price: true, snow: true };
       currentSort = null;
       document.getElementById("priceSort").innerText = "楓幣 ⬆";
-      document.getElementById("snowSort").innerText = "雪 ⬆";
+      document.getElementById("snowSort").innerText = "雪⬆";
       filterProducts();
     }
 
