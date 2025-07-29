@@ -201,7 +201,7 @@
     </div>
   </div>
 
-   <script>
+  <script>
     let sortState = { price: true, snow: true };
     let currentSort = null;
 
@@ -263,23 +263,25 @@
 
     function sortBy(type) {
       const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
-      sortState[type] = !ascending;
-
+      sortState[type] = ascending;
       document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
       currentSort = { type, ascending };
       filterProducts();
     }
 
     function resetFilters() {
-      document.querySelectorAll(".product").forEach(product => product.style.display = "flex");
       document.getElementById("searchInput").value = "";
       document.getElementById("categorySelect").value = "all";
       document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
       sortState = { price: true, snow: true };
       currentSort = null;
       document.getElementById("priceSort").innerText = "楓幣 ⬆";
-      document.getElementById("snowSort").innerText = "雪⬆";
-      filterProducts();
+      document.getElementById("snowSort").innerText = "雪 ⬆";
+
+      const container = document.querySelector(".product-list");
+      const allProducts = Array.from(document.querySelectorAll(".product"));
+      container.innerHTML = "";
+      allProducts.forEach(p => container.appendChild(p));
     }
 
     document.getElementById("searchInput").addEventListener("input", filterProducts);
