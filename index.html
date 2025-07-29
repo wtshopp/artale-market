@@ -29,7 +29,6 @@
     .reset-button {
       background-color: #ffeeee;
     }
-
     details summary {
       cursor: pointer;
       padding: 5px 10px;
@@ -40,14 +39,13 @@
     details[open] summary {
       background-color: #e0e0e0;
     }
-
     .product-list {
       display: flex;
       flex-wrap: wrap;
       gap: 20px;
     }
     .product {
-      background-color: #ccc;
+      background-color: #bbb;
       padding: 15px;
       border-radius: 10px;
       width: calc(50% - 20px);
@@ -70,35 +68,34 @@
 <body>
   <h2>裝備</h2>
   <div class="controls">
-    <input type="text" placeholder="搜尋商品">
-    <button class="reset-button">重置所有篩選</button>
-    <button>All</button>
-
-    <button id="priceSort">楓幣 ⬆</button>
-    <button id="snowSort">雪 ⬆</button>
-
+    <input type="text" id="searchInput" placeholder="搜尋商品">
+    <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
+    <button onclick="filterCategory('')">All</button>
+    <button onclick="filterCategory('鞋')">鞋子</button>
+    <button id="priceSort" onclick="sortProducts('price')">楓幣 ⬆</button>
+    <button id="snowSort" onclick="sortProducts('snow')">雪 ⬆</button>
     <details>
       <summary>進階篩選</summary>
       <div style="margin-top: 10px;">
         <label>屬性多選：
-          <select multiple>
-            <option>移動速度</option>
-            <option>智力</option>
-            <option>幸運</option>
-            <option>魔攻</option>
+          <select id="attributeSelect" multiple>
+            <option value="移動速度">移動速度</option>
+            <option value="智力">智力</option>
+            <option value="幸運">幸運</option>
+            <option value="魔攻">魔攻</option>
           </select>
         </label>
         <label style="margin-left: 10px;">
           屬性範圍：
-          <input type="number" placeholder="最小值" style="width: 60px;">
-          <input type="number" placeholder="最大值" style="width: 60px;">
+          <input id="minValue" type="number" placeholder="最小值" style="width: 60px;">
+          <input id="maxValue" type="number" placeholder="最大值" style="width: 60px;">
         </label>
       </div>
     </details>
   </div>
 
-  <div class="product-list">
-    <div class="product">
+  <div class="product-list" id="productList">
+    <div class="product" data-name="藍雪鞋" data-attributes="移動速度:12" data-price="900" data-snow="15" data-category="鞋">
       <div class="info">
         <p><strong>商品名:</strong> 藍雪鞋</p>
         <p style="color:red;"><strong>屬性:</strong></p>
@@ -110,7 +107,7 @@
       <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
     </div>
 
-    <div class="product">
+    <div class="product" data-name="藍雪鞋" data-attributes="移動速度:10" data-price="180" data-snow="3" data-category="鞋">
       <div class="info">
         <p><strong>商品名:</strong> 藍雪鞋</p>
         <p style="color:red;"><strong>屬性:</strong></p>
@@ -124,7 +121,7 @@
 
     <hr>
 
-    <div class="product">
+    <div class="product" data-name="紅色艾倫鞋" data-attributes="移動速度:8,智力:4,幸運:2,魔攻:1" data-price="300" data-snow="5" data-category="鞋">
       <div class="info">
         <p><strong>商品名:</strong> 紅色艾倫鞋</p>
         <p style="color:red;"><strong>屬性:</strong></p>
@@ -137,5 +134,59 @@
       <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
     </div>
   </div>
+
+  <script>
+    function resetFilters() {
+      document.getElementById('searchInput').value = '';
+      document.getElementById('attributeSelect').selectedIndex = -1;
+      document.getElementById('minValue').value = '';
+      document.getElementById('maxValue').value = '';
+      filterProducts();
+    }
+
+    function filterCategory(category) {
+      const products = document.querySelectorAll('.product');
+      products.forEach(product => {
+        const prodCategory = product.getAttribute('data-category');
+        product.style.display = (category === '' || prodCategory.includes(category)) ? 'flex' : 'none';
+      });
+    }
+
+    function filterProducts() {
+      const searchInput = document.getElementById('searchInput').value.toLowerCase();
+      const selectedAttributes = Array.from(document.getElementById('attributeSelect').selectedOptions).map(o => o.value);
+      const minValue = parseInt(document.getElementById('minValue').value) || 0;
+      const maxValue = parseInt(document.getElementById('maxValue').value) || 9999;
+
+      document.querySelectorAll('.product').forEach(product => {
+        const name = product.getAttribute('data-name').toLowerCase();
+        const attrStr = product.getAttribute('data-attributes');
+
+        const attributes = Object.fromEntries(attrStr.split(',').map(s => {
+          const [key, val] = s.split(':');
+          return [key, parseInt(val)];
+        }));
+
+        const matchesSearch = name.includes(searchInput);
+        const matchesAttributes = selectedAttributes.every(attr => attributes[attr] !== undefined && attributes[attr] >= minValue && attributes[attr] <= maxValue);
+
+        product.style.display = (matchesSearch && matchesAttributes) ? 'flex' : 'none';
+      });
+    }
+
+    document.getElementById('searchInput').addEventListener('input', filterProducts);
+    document.getElementById('attributeSelect').addEventListener('change', filterProducts);
+    document.getElementById('minValue').addEventListener('input', filterProducts);
+    document.getElementById('maxValue').addEventListener('input', filterProducts);
+
+    function sortProducts(type) {
+      const productList = document.getElementById('productList');
+      const products = Array.from(productList.querySelectorAll('.product'));
+      const sortKey = (type === 'price') ? 'data-price' : 'data-snow';
+
+      products.sort((a, b) => parseInt(a.getAttribute(sortKey)) - parseInt(b.getAttribute(sortKey)));
+      products.forEach(p => productList.appendChild(p));
+    }
+  </script>
 </body>
 </html>
