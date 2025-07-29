@@ -258,6 +258,7 @@
         return ascending ? aVal - bVal : bVal - aVal;
       });
       products.forEach(p => container.appendChild(p));
+      filterProducts();
     }
 
     function resetFilters() {
@@ -272,6 +273,9 @@
 
     document.getElementById("searchInput").addEventListener("input", filterProducts);
     document.getElementById("categorySelect").addEventListener("change", filterProducts);
+    document.querySelectorAll(".advanced-grid input").forEach(input => input.addEventListener("input", filterProducts));
+    document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
+    document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
   </script>
 </body>
 </html>
