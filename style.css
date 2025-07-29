@@ -1,8 +1,27 @@
 body {
   font-family: Arial, sans-serif;
   padding: 20px;
-  line-height: 1.6;
   background-color: #f9f9f9;
+  line-height: 1.6;
+}
+
+.item {
+  display: flex;
+  align-items: center; /* 讓文字與圖片垂直置中 */
+  margin-bottom: 40px;
+}
+
+.item img {
+  width: 200px;
+  margin-left: 20px;
+}
+
+.item-details {
+  max-width: 500px;
+  height: 150px; /* 統一左側高度，讓圖片對齊 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 h2 {
@@ -11,23 +30,7 @@ h2 {
   padding-bottom: 5px;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-}
-
-.item img {
-  width: auto;
-  height: 200px;
-  margin-left: 20px;
-}
-
-.item-details {
-  max-width: 500px;
-}
-
-.item-details h3 {
+.item-details h4 {
   margin: 0;
   color: #34495e;
 }
