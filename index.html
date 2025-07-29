@@ -2,7 +2,7 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-  <title>西龜商城🍉🐢</title>
+  <title>西龜商城</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -14,7 +14,6 @@
 
     h2 {
       color: #005ab5;
-      margin-bottom: 10px;
     }
 
     h4 {
@@ -35,24 +34,21 @@
 
     .item img {
       width: 200px;
+      margin-top: 20px; /* 圖片下移 */
     }
 
     strong {
       color: #005ab5;
     }
 
-    #searchInput {
-      padding: 8px;
-      font-size: 16px;
-      width: 250px;
+    .search-bar {
       margin-bottom: 20px;
     }
 
-    .section-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 40px;
+    .search-bar input {
+      padding: 5px;
+      width: 100%;
+      max-width: 250px;
     }
   </style>
 </head>
@@ -70,13 +66,12 @@
 
   <hr>
 
-  <!-- 標題 + 搜尋 -->
-  <div class="section-header">
-    <h2>裝備</h2>
-    <input type="text" id="searchInput" placeholder="搜尋商品名..." onkeyup="filterItems()">
+  <div class="item-details search-bar">
+    <input type="text" id="searchInput" placeholder="搜尋商品..." onkeyup="filterItems()">
   </div>
 
-  <!-- 商品清單 -->
+  <h2>裝備</h2>
+
   <div class="item">
     <div class="item-details">
       <h4>商品名: <strong>藍雪鞋</strong></h4>
@@ -101,13 +96,12 @@
 
   <script>
     function filterItems() {
-      const input = document.getElementById("searchInput");
-      const filter = input.value.toLowerCase();
-      const items = document.querySelectorAll(".item");
+      const input = document.getElementById('searchInput').value.toLowerCase();
+      const items = document.querySelectorAll('.item');
 
       items.forEach(item => {
-        const name = item.querySelector("h4").textContent.toLowerCase();
-        item.style.display = name.includes(filter) ? "" : "none";
+        const text = item.innerText.toLowerCase();
+        item.style.display = text.includes(input) ? 'flex' : 'none';
       });
     }
   </script>
