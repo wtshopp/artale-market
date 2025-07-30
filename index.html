@@ -465,6 +465,7 @@
     function resetFilters() {
       document.getElementById("searchInput").value = "";
       document.getElementById("categorySelect").value = "all";
+      document.getElementById("jobSelect").value = "all";
       document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
       currentSort = null;
       document.getElementById("priceSort").innerText = "楓幣 ⬆";
