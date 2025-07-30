@@ -278,7 +278,7 @@
       </div>
     </details>
   </div>
-  <div class="product-list">
+  <div class="product-list" id="productList">
       <div class="product" data-name="藍雪鞋" data-job="法師" data-type="鞋子" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="12" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
@@ -387,6 +387,7 @@
       </div>   
       <img src="65hp下衣(1).png" alt="65hp下衣(1)">
     </div>
+    <p id="noResults">沒有符合條件的商品</p>
   </div>
   <script>
     const originalProducts = Array.from(document.querySelectorAll(".product"));
@@ -415,45 +416,52 @@
       });
     }
 
-    function filterProducts() {
-      const searchInput = document.getElementById("searchInput").value.toLowerCase();
-      const category = document.getElementById("categorySelect").value;
-      const job = document.getElementById("jobSelect").value;
-      const filters = {
-        strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
-        dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
-        intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
-        lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
-        atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
-        matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
-        hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
-        mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
-        jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
-        avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
-        spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
-        accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
-      };
+function filterProducts() {
+  const searchInput = document.getElementById("searchInput").value.toLowerCase();
+  const category = document.getElementById("categorySelect").value;
+  const job = document.getElementById("jobSelect").value;
+  const noResultsText = document.getElementById("noResults");
 
-      const products = getFilteredProducts();
-      const filtered = products.filter((product) => {
-        const prodJob = product.getAttribute("data-job") || "";
-        const name = product.getAttribute("data-name")?.toLowerCase() || "";
-        const type = product.getAttribute("data-type") || "";
-        const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","acc"];
-        return (
-          name.includes(searchInput) &&
-          (category === "all" || type === category) && (job === "all" || prodJob === job) &&
-          attrs.every(attr => {
-            const val = +product.getAttribute("data-" + attr);
-            return val >= filters[attr+"Min"] && val <= filters[attr+"Max"];
-          })
-        );
-      });
+  const filters = {
+    strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
+    dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
+    intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
+    lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
+    atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
+    matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
+    hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
+    mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
+    jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
+    avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
+    spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
+    accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
+  };
 
-      const sorted = applyCurrentSort(filtered);
-      productList.innerHTML = "";
-      sorted.forEach(p => productList.appendChild(p));
-    }
+  const products = getFilteredProducts();
+  const filtered = products.filter((product) => {
+    const prodJob = product.getAttribute("data-job") || "";
+    const name = product.getAttribute("data-name")?.toLowerCase() || "";
+    const type = product.getAttribute("data-type") || "";
+    const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","acc"];
+
+    return (
+      name.includes(searchInput) &&
+      (category === "all" || type === category) &&
+      (job === "all" || prodJob === job) &&
+      attrs.every(attr => {
+        const val = +product.getAttribute("data-" + attr);
+        return val >= filters[attr + "Min"] && val <= filters[attr + "Max"];
+      })
+    );
+  });
+
+  const sorted = applyCurrentSort(filtered);
+
+  productList.innerHTML = "";
+  sorted.forEach(p => productList.appendChild(p));
+  
+  noResultsText.style.display = sorted.length === 0 ? "block" : "none";
+}
 
     function sortBy(type) {
       const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
