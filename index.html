@@ -955,85 +955,102 @@
   </p>
 
   <script>
-
     const originalProducts = Array.from(document.querySelectorAll(".product"));
-
     const productList = document.querySelector(".product-list");
-
     const originalHTML = productList.innerHTML;
-
     let currentSort = null;
 
-
-
     function getValue(id, hp) {
-
       const val = document.getElementById(id)?.value;
-
       return val === "" ? hp : parseInt(val);
-
     }
-
-
 
     function getFilteredProducts() {
-
       const tempContainer = document.createElement("div");
-
       tempContainer.innerHTML = originalHTML;
-
       return Array.from(tempContainer.querySelectorAll(".product"));
-
     }
-
-
 
     function applyCurrentSort(products) {
-
       if (!currentSort) return products;
-
       const { type, ascending } = currentSort;
-
       return products.sort((a, b) => {
-
         const aVal = +a.getAttribute("data-" + type);
-
         const bVal = +b.getAttribute("data-" + type);
-
         return ascending ? aVal - bVal : bVal - aVal;
-
       });
-
     }
 
-
-
 function filterProducts() {
-
   const searchInput = document.getElementById("searchInput").value.toLowerCase();
-
   const category = document.getElementById("categorySelect").value;
-
   const job = document.getElementById("jobSelect").value;
-
   const filters = {
-
     strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
-
     dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
-
     intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
-
     lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
-
     atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
-
     matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
-
     hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
-
     mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
-
     jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
+    avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
+    spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
+    accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
+  };
 
-    avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", 
+  const products = getFilteredProducts(); // 所有 DOM 中的 .product 元素
+  const filtered = products.filter((product) => {
+    const prodJob = product.getAttribute("data-job") || "";
+    const name = product.getAttribute("data-name")?.toLowerCase() || "";
+    const type = product.getAttribute("data-type") || "";
+    const attrs = ["str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "acc"];
+    return (
+      name.includes(searchInput) &&
+      (category === "all" || type === category) &&
+      (job === "all" || prodJob === job) &&
+      attrs.every(attr => {
+        const val = +product.getAttribute("data-" + attr);
+        return val >= filters[attr + "Min"] && val <= filters[attr + "Max"];
+      })
+    );
+  });
+
+  const productList = document.getElementById("productList");
+  const noResults = document.getElementById("noResults");
+  const sorted = applyCurrentSort(filtered);
+
+  productList.innerHTML = "";
+  sorted.forEach(p => productList.appendChild(p));
+
+  noResults.style.display = sorted.length === 0 ? "block" : "none";
+}
+    function sortBy(type) {
+      const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
+      document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
+      currentSort = { type, ascending };
+      filterProducts();
+    }
+
+    function resetFilters() {
+      document.getElementById("searchInput").value = "";
+      document.getElementById("categorySelect").value = "all";
+      document.getElementById("jobSelect").value = "all";
+      document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
+      currentSort = null;
+      document.getElementById("priceSort").innerText = "楓幣 ⬆";
+      document.getElementById("snowSort").innerText = "雪 ⬆";
+      filterProducts();
+    }
+
+    document.getElementById("searchInput").addEventListener("input", filterProducts);
+    document.getElementById("categorySelect").addEventListener("change", filterProducts);
+    document.getElementById("jobSelect").addEventListener("change", filterProducts);
+    document.querySelectorAll(".advanced-grid input").forEach(input => input.addEventListener("input", filterProducts));
+    document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
+    document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
+    productList.innerHTML = originalHTML;
+  </script>
+</body>
+</html>
