@@ -418,6 +418,7 @@
     function filterProducts() {
       const searchInput = document.getElementById("searchInput").value.toLowerCase();
       const category = document.getElementById("categorySelect").value;
+      const job = document.getElementById("jobSelect").value;
       const filters = {
         strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
         dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
@@ -435,7 +436,7 @@
 
       const products = getFilteredProducts();
       const filtered = products.filter((product) => {
-        const job = document.getElementById("jobSelect").value;
+        const prodJob = product.getAttribute("data-job") || "";
         const name = product.getAttribute("data-name")?.toLowerCase() || "";
         const type = product.getAttribute("data-type") || "";
         const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","acc"];
