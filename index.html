@@ -387,8 +387,10 @@
       </div>   
       <img src="65hp下衣(1).png" alt="65hp下衣(1)">
     </div>
-    <p id="noResults">沒有符合條件的商品</p>
   </div>
+  <p id="noResults" style="display: none; margin-top: 20px; font-weight: bold; color: #c2b280;">
+    沒有符合條件的商品
+  </p>
   <script>
     const originalProducts = Array.from(document.querySelectorAll(".product"));
     const productList = document.querySelector(".product-list");
@@ -420,8 +422,6 @@ function filterProducts() {
   const searchInput = document.getElementById("searchInput").value.toLowerCase();
   const category = document.getElementById("categorySelect").value;
   const job = document.getElementById("jobSelect").value;
-  const noResultsText = document.getElementById("noResults");
-
   const filters = {
     strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
     dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
@@ -437,13 +437,12 @@ function filterProducts() {
     accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
   };
 
-  const products = getFilteredProducts();
+  const products = getFilteredProducts(); // 所有 DOM 中的 .product 元素
   const filtered = products.filter((product) => {
     const prodJob = product.getAttribute("data-job") || "";
     const name = product.getAttribute("data-name")?.toLowerCase() || "";
     const type = product.getAttribute("data-type") || "";
-    const attrs = ["str","dex","int","luk","atk","matk","hp","mp","jump","avoid","spd","acc"];
-
+    const attrs = ["str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "acc"];
     return (
       name.includes(searchInput) &&
       (category === "all" || type === category) &&
@@ -455,14 +454,15 @@ function filterProducts() {
     );
   });
 
+  const productList = document.getElementById("productList");
+  const noResults = document.getElementById("noResults");
   const sorted = applyCurrentSort(filtered);
 
   productList.innerHTML = "";
   sorted.forEach(p => productList.appendChild(p));
-  
-  noResultsText.style.display = sorted.length === 0 ? "block" : "none";
-}
 
+  noResults.style.display = sorted.length === 0 ? "block" : "none";
+}
     function sortBy(type) {
       const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
       document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
