@@ -100,23 +100,24 @@
 
     }
 
-    .product-list {
+.product-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between; /* 讓每行兩個均分寬度 */
+  justify-content: space-between;
   gap: 20px;
 }
 
 .product {
-  width: calc(50% - 10px); /* 保留 gap */
+  width: calc(50% - 10px);
   background-color: #a0a0a0;
   padding: 15px;
   border-radius: 10px;
   display: flex;
   flex-direction: row;
-  box-sizing: border-box;
   gap: 15px;
-  align-items: flex-start; /* 上對齊 */
+  box-sizing: border-box;
+  align-items: flex-start;
+  min-height: 160px; /* ✅ 加這行，讓每格高度一致 */
 }
     .product img {
 
