@@ -506,10 +506,20 @@
 
 function filterProducts() {
   const searchInput = document.getElementById("searchInput").value.toLowerCase();
-  const type = document.getElementById("categorySelect").value;
-if (type !== "all" && !product.getAttribute("data-type").includes(type)) return false;
-  const job = document.getElementById("jobSelect").value;
-  if (job !== "all" && !product.getAttribute("data-job").includes(job)) return false;
+ const type = document.getElementById("categorySelect").value;
+   const job = document.getElementById("jobSelect").value;
+   const products = document.querySelectorAll(".product");
+
+      products.forEach(product => {
+        const typeList = (product.getAttribute("data-type") || "").split(",");
+        const jobList = (product.getAttribute("data-job") || "").split(",");
+
+        const matchType = type === "all" || typeList.includes(type);
+        const matchJob = job === "all" || jobList.includes(job);
+
+        product.style.display = (matchType && matchJob) ? "block" : "none";
+      });
+  }
   const filters = {
     strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
     dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
