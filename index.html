@@ -1,592 +1,1039 @@
 <!DOCTYPE html>
 
+
+
 <html lang="zh-Hant">
+
+
 
 <head>
 
+
+
   <meta charset="UTF-8">
+
+
 
   <title>西龜商城 🍉🐢</title>
 
+
+
   <style>
+
+
 
     body {
 
+
+
       background-color: #d0d0d0;
+
+
 
       font-family: Arial, sans-serif;
 
+
+
       padding: 20px;
 
+
+
     }
+
+
 
     h2 {
 
+
+
       color: #005ab5;
 
+
+
     }
+
+
 
     h4 {
 
+
+
       color: #333;
 
+
+
     }
+
+
 
     .contact {
 
+
+
       margin-bottom: 20px;
 
+
+
     }
+
+
 
     .controls {
 
+
+
       display: flex;
 
+
+
       align-items: flex-start;
+
+
 
       flex-wrap: wrap;
 
+
+
       margin-bottom: 20px;
+
+
 
       gap: 10px;
 
+
+
     }
+
+
 
     .controls input,
 
+
+
     .controls select,
+
+
 
     .controls button {
 
+
+
       padding: 5px 10px;
+
+
 
       border-radius: 5px;
 
+
+
       border: 1px solid #aaa;
+
+
 
       background-color: #eeeeee;
 
+
+
     }
+
+
 
     .controls button:hover {
 
+
+
       cursor: pointer;
 
+
+
     }
+
+
 
     .reset-button {
 
+
+
       background-color: #ffdddd;
 
+
+
     }
+
+
 
     details summary {
 
+
+
       cursor: pointer;
+
+
 
       padding: 5px 10px;
 
+
+
       border-radius: 5px;
+
+
 
       border: 1px solid #aaa;
 
+
+
       background-color: #eeeeee;
 
+
+
     }
+
+
 
     details[open] summary {
 
+
+
       background-color: #e0e0e0;
+
+
 
     }
 
+
+
 .product-list {
+
   display: flex;
+
   flex-wrap: wrap;
+
   gap: 20px;
+
   justify-content: flex-start;
+
 }
+
+
 
 .product {
+
   width: calc(50% - 10px); /* 每列兩格，留間距 */
+
   background-color: #aaa;
+
   display: flex;
+
   padding: 10px;
+
   border-radius: 8px;
+
   min-height: 160px;
+
   align-items: center;
+
   box-sizing: border-box;
+
 }
 
+
+
 .product img {
+
   width: 140px;
+
   height: 140px;
+
   object-fit: cover;
+
   margin-left: auto;
+
   margin-right: 20px;
+
   border-radius: 8px;
+
 }
+
 .product-text {
+
   font-size: 14px;
+
   line-height: 1.4;
+
 }
+
     hr {
+
+
 
       border: 1px solid #bbb;
 
+
+
       width: 100%;
+
+
 
       margin: 30px 0;
 
+
+
     }
+
+
 
     .info p {
 
+
+
       margin: 4px 0;
 
+
+
     }
+
+
 
     .info p span.label {
 
+
+
       color: red;
+
+
 
       font-weight: normal;
 
+
+
     }
+
+
 
     .info p span.label-name {
 
+
+
       color: darkgreen;
+
+
 
       font-weight: normal;
 
+
+
     }
+
+
 
     .info p span.value {
 
+
+
       color: black;
 
+
+
     }
+
+
 
     .advanced-grid {
 
+
+
       display: grid;
+
+
 
       grid-template-columns: repeat(4, 1fr);
 
+
+
       gap: 10px;
 
+
+
     }
+
+
 
     .advanced-grid label {
 
+
+
       display: flex;
+
+
 
       align-items: flex-start;
 
+
+
       flex-direction: column;
 
+
+
     }
+
+
 
     .advanced-grid input {
 
+
+
       width: 50%;
 
+
+
     }
+
+
 
     .break-row {
 
+
+
       grid-column: 1 / -1;
+
+
 
       height: 0;
 
+
+
     }
+
+
 
   </style>
 
+
+
 </head>
+
+
 
 <body>
 
+
+
   <h2>西龜商城 🍉🐢</h2>
+
+
 
   <div class="contact">
 
+
+
     <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
+
     <p>
+
       Discord: jun_.0605 |
+
       Artale: Lin凜#5YfsH | FB: Weijun | Instagram: wei_.0605_
+
     </p>
+
   </div>
+
+
+
+
 
 
 
   <div class="controls">
 
+
+
     <input type="text" id="searchInput" placeholder="搜尋商品">
+
+
 
     <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
 
+
+
     <select id="categorySelect">
+
       <option value="all">所有分類</option>
+
       <option value="頭盔">頭盔</option>
+
       <option value="手套">手套</option>
+
       <option value="鞋子">鞋子</option>
+
       <option value="盾牌">盾牌</option>
+
       <option value="耳環">耳環</option>
+
       <option value="披風">披風</option>
+
       <option value="武器">武器</option>
+
       <option value="上衣">上衣</option>
+
       <option value="下衣">下衣</option>
+
       <option value="套服">套服</option>
-      <option value="血裝">血裝</option>
+
       <option value="特殊部位飾品">特殊部位飾品</option>
+
     </select>
 
+
+
   <select id="jobSelect">
+
     <option value="all">所有職業</option>
+
     <option value="通用">通用</option>
+
     <option value="劍士">劍士</option>
+
     <option value="法師">法師</option>
+
     <option value="弓箭手">弓箭手</option>
+
     <option value="盜賊">盜賊</option>
+
     <option value="海盜">海盜</option>
+
    </select>
+
+
 
     <button id="priceSort">楓幣 ⬆</button>
 
+
+
     <button id="snowSort">雪⬆</button>
+
+
 
     <details>
 
+
+
       <summary>進階篩選</summary>
+
       <div style="margin-top: 10px;">
+
         <div class="advanced-grid">
+
           <label>力量<input type="number" id="strMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="strMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>敏捷<input type="number" id="dexMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="dexMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>智力<input type="number" id="intMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="intMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>幸運<input type="number" id="lukMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="lukMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>物攻<input type="number" id="atkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="atkMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>魔攻<input type="number" id="matkMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="matkMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>Hp<input type="number" id="hpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="hpMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>Mp<input type="number" id="mpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="mpMax" placeholder="最大" style="width: 60px;"></label>
+
           <div class="break-row"></div>
+
           <label>命中<input type="number" id="accMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="accMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>跳躍<input type="number" id="jumpMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="jumpMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>迴避<input type="number" id="avoidMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="avoidMax" placeholder="最大" style="width: 60px;"></label>
+
           <label>移動速度<input type="number" id="spdMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="spdMax" placeholder="最大" style="width: 60px;"></label>
+
         </div>
+
       </div>
+
     </details>
+
   </div>
+
   <div class="product-list" id="productList">
+
       <div class="product" data-name="藍雪鞋" data-job="法師" data-type="鞋子" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="12" data-acc="0">
+
       <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">移動速度+12</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">2</span></p>
+
         <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
+
       </div>
+
        
+
       <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
+
     </div>
+
+
+
+
 
 
 
     <div class="product" data-name="藍雪鞋" data-job="法師" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="10" data-acc="0">
 
+
+
       <div class="info">
+
+
 
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
 
+
+
         <p><span class="label">屬性:</span></p>
+
+
 
         <p><span class="value">移動速度+10</span></p>
 
+
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
+
 
         <p><span class="label">商品量:</span> <span class="value">3</span></p>
 
+
+
         <p><span class="label">售價:</span> <span class="value">3雪 / 180萬楓幣</span></p>
 
+
+
       </div>
+
        
+
       <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
 
+
+
     </div>
+
+
 
     <div class="product" data-name="紅色艾倫鞋" data-job="法師" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="8" data-acc="0">
 
+
+
       <div class="info">
+
+
 
         <p><span class="label-name">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
 
+
+
         <p><span class="label">屬性:</span></p>
+
+
 
         <p><span class="value">智力+4 幸運+2</span></p>
 
+
+
         <p><span class="value">魔攻+1 移動速度+8</span></p>
 
+
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
+
 
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
 
+
+
         <p><span class="label">售價:</span> <span class="value">5雪 / 300萬楓幣</span></p>
+
       </div>
+
        
+
       <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
+
     </div>
+
     
+
       <div class="product" data-name="銀龍槍" data-job="劍士" data-type="武器" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="10" data-atk="93" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="19">
+
       <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">銀龍槍</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">敏捷+10 物攻+93</span></p>
+
         <p><span class="value">命中+19</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">10雪 / 600萬楓幣</span></p>
+
       </div>
+
       <img src="19命中+5銀龍槍.png" alt="銀龍槍(+5)">
+
     </div>
+
     
+
         <div class="product" data-name="霸王劍" data-job="劍士" data-type="武器" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="0" data-atk="95" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
         <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">霸王劍</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">力量+5 物攻+95</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">7雪 / 420萬楓幣</span></p>
+
       </div>   
+
       <img src="95ad+5霸王劍.png" alt="霸王劍(+5)">
+
     </div>
+
     
-    <div class="product" data-name="紅色艾姆普里斯戰甲" data-job="劍士,法師" data-type="套服" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="15" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="9">
+
+    <div class="product" data-name="紅色艾姆普里斯戰甲" data-job="劍士" data-type="套服" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="15" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="9">
+
       <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">紅色艾姆普里斯戰甲</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">力量+5 敏捷+15</span></p>
+
         <p><span class="value">命中+9</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">7雪 / 420萬楓幣</span></p>
+
       </div>
+
       <img src="劍士29屬套服(紅).png" alt="29屬套服(lv.80/紅/+6)">
+
     </div>
 
-    <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="血裝,下衣" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="65" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
+
+    <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="下衣" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="65" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
         <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">粉紅優雅緊身裙</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">Hp+65</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">5雪 / 300萬楓幣</span></p>
+
       </div>   
+
       <img src="65hp下衣(1).png" alt="65hp下衣(1)">
+
     </div>
 
-    <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="血裝,下衣" data-price="45000000" data-snow="75" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="110" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
+
+    <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="下衣" data-price="45000000" data-snow="75" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="110" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
         <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">粉紅優雅緊身裙</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">Hp+110</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">75雪 / 4500萬楓幣</span></p>
+
       </div>   
+
       <img src="下衣(1)110hp.png" alt="下衣(1)110hp">
+
     </div>
+
     
-    <div class="product" data-name="粉紅優雅緊身衣" data-job="法師" data-type="血裝,上衣" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="100" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
+    <div class="product" data-name="粉紅優雅緊身衣" data-job="法師" data-type="上衣" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="100" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
         <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">粉紅優雅緊身衣</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">Hp+100</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">30雪 / 1800萬楓幣</span></p>
+
       </div>   
+
       <img src="100hp上衣(1).png" alt="100hp上衣(1)">
+
     </div>
 
-    <div class="product" data-name="方形木盾" data-job="通用" data-type="血裝,盾牌" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="105" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
+
+    <div class="product" data-name="方形木盾" data-job="通用" data-type="盾牌" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="105" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
         <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">方形木盾</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">Hp+105</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">30雪 / 1800萬楓幣</span></p>
+
       </div>   
+
       <img src="105hp木盾(1).png" alt="105hp木盾(1)">
+
     </div>
 
-    <div class="product" data-name="黑色魔法披風" data-job="通用" data-type="血裝,披風" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="50" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
+
+    <div class="product" data-name="黑色魔法披風" data-job="通用" data-type="披風" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="50" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
         <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">黑色魔法披風</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">Hp+50</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
+
       </div>   
+
       <img src="50hp黑色魔法披風(1).png" alt="50hp黑色魔法披風(1)">
+
     </div>
 
-    <div class="product" data-name="紫水晶耳環" data-job="通用" data-type="血裝,耳環" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
+
+    <div class="product" data-name="紫水晶耳環" data-job="通用" data-type="耳環" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
         <div class="info">
+
         <p><span class="label-name">商品名:</span> <span class="value">紫水晶耳環</span></p>
+
         <p><span class="label">屬性:</span></p>
+
         <p><span class="value">Hp+60</span></p>
+
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
         <p><span class="label">售價:</span> <span class="value">10雪 / 600萬楓幣</span></p>
+
       </div>   
+
       <img src="60hp紫水晶耳環(1).png" alt="60hp紫水晶耳環(1)">
-    </div>
-    
-    <div class="product" data-name="愛心耳環" data-job="通用" data-type="血裝,耳環" data-price="15000000" data-snow="25" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-        <div class="info">
-        <p><span class="label-name">商品名:</span> <span class="value">愛心耳環</span></p>
-        <p><span class="label">屬性:</span></p>
-        <p><span class="value">Hp+75</span></p>
-        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-        <p><span class="label">商品量:</span> <span class="value">1</span></p>
-        <p><span class="label">售價:</span> <span class="value">25雪 / 1500萬楓幣</span></p>
-      </div>   
-      <img src="75hp愛心耳環(1).png" alt="75hp愛心耳環(1)">
+
     </div>
 
-    <div class="product" data-name="工地手套" data-job="通用" data-type="血裝,手套" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-        <div class="info">
-        <p><span class="label-name">商品名:</span> <span class="value">工地手套</span></p>
-        <p><span class="label">屬性:</span></p>
-        <p><span class="value">Hp+75</span></p>
-        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-        <p><span class="label">商品量:</span> <span class="value">1</span></p>
-        <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
-      </div>   
-      <img src="工地手套75hp.png" alt="工地手套75hp">
-    </div>
     
+
+    <div class="product" data-name="愛心耳環" data-job="通用" data-type="耳環" data-price="15000000" data-snow="25" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
+        <div class="info">
+
+        <p><span class="label-name">商品名:</span> <span class="value">愛心耳環</span></p>
+
+        <p><span class="label">屬性:</span></p>
+
+        <p><span class="value">Hp+75</span></p>
+
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
+        <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
+        <p><span class="label">售價:</span> <span class="value">25雪 / 1500萬楓幣</span></p>
+
+      </div>   
+
+      <img src="75hp愛心耳環(1).png" alt="75hp愛心耳環(1)">
+
+    </div>
+
+
+
+    <div class="product" data-name="工地手套" data-job="通用" data-type="手套" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+
+        <div class="info">
+
+        <p><span class="label-name">商品名:</span> <span class="value">工地手套</span></p>
+
+        <p><span class="label">屬性:</span></p>
+
+        <p><span class="value">Hp+75</span></p>
+
+        <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
+
+        <p><span class="label">商品量:</span> <span class="value">1</span></p>
+
+        <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
+
+      </div>   
+
+      <img src="工地手套75hp.png" alt="工地手套75hp">
+
+    </div>
+
+    
+
   </div>
+
   <p id="noResults" style="display: none; margin-top: 20px; font-weight: bold; color: #a89f74;">
+
     沒有符合條件的商品
+
   </p>
+
   <script>
+
     const originalProducts = Array.from(document.querySelectorAll(".product"));
+
     const productList = document.querySelector(".product-list");
+
     const originalHTML = productList.innerHTML;
+
     let currentSort = null;
 
+
+
     function getValue(id, hp) {
+
       const val = document.getElementById(id)?.value;
+
       return val === "" ? hp : parseInt(val);
+
     }
+
+
 
     function getFilteredProducts() {
+
       const tempContainer = document.createElement("div");
+
       tempContainer.innerHTML = originalHTML;
+
       return Array.from(tempContainer.querySelectorAll(".product"));
+
     }
+
+
 
     function applyCurrentSort(products) {
+
       if (!currentSort) return products;
+
       const { type, ascending } = currentSort;
+
       return products.sort((a, b) => {
+
         const aVal = +a.getAttribute("data-" + type);
+
         const bVal = +b.getAttribute("data-" + type);
+
         return ascending ? aVal - bVal : bVal - aVal;
+
       });
+
     }
+
+
 
 function filterProducts() {
+
   const searchInput = document.getElementById("searchInput").value.toLowerCase();
- const type = document.getElementById("categorySelect").value;
-   const job = document.getElementById("jobSelect").value;
-   const products = document.querySelectorAll(".product");
 
-      products.forEach(product => {
-        const typeList = (product.getAttribute("data-type") || "").split(",");
-        const jobList = (product.getAttribute("data-job") || "").split(",");
+  const category = document.getElementById("categorySelect").value;
 
-        const matchType = type === "all" || typeList.includes(type);
-        const matchJob = job === "all" || jobList.includes(job);
+  const job = document.getElementById("jobSelect").value;
 
-        product.style.display = (matchType && matchJob) ? "block" : "none";
-      });
-  }
   const filters = {
+
     strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
+
     dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
+
     intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
+
     lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
+
     atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
+
     matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
+
     hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
+
     mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
+
     jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
-    avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
-    spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
-    accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
-  };
 
-  const products = getFilteredProducts(); // 所有 DOM 中的 .product 元素
-  const filtered = products.filter((product) => {
-    const prodJob = product.getAttribute("data-job") || "";
-    const name = product.getAttribute("data-name")?.toLowerCase() || "";
-    const type = product.getAttribute("data-type") || "";
-    const attrs = ["str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "acc"];
-    return (
-      name.includes(searchInput) &&
-      (category === "all" || type === category) &&
-      (job === "all" || prodJob === job) &&
-      attrs.every(attr => {
-        const val = +product.getAttribute("data-" + attr);
-        return val >= filters[attr + "Min"] && val <= filters[attr + "Max"];
-      })
-    );
-  });
-
-  const productList = document.getElementById("productList");
-  const noResults = document.getElementById("noResults");
-  const sorted = applyCurrentSort(filtered);
-
-  productList.innerHTML = "";
-  sorted.forEach(p => productList.appendChild(p));
-
-  noResults.style.display = sorted.length === 0 ? "block" : "none";
-}
-    function sortBy(type) {
-      const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
-      document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
-      currentSort = { type, ascending };
-      filterProducts();
-    }
-
-    function resetFilters() {
-      document.getElementById("searchInput").value = "";
-      document.getElementById("categorySelect").value = "all";
-      document.getElementById("jobSelect").value = "all";
-      document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
-      currentSort = null;
-      document.getElementById("priceSort").innerText = "楓幣 ⬆";
-      document.getElementById("snowSort").innerText = "雪 ⬆";
-      filterProducts();
-    }
-
-    document.getElementById("searchInput").addEventListener("input", filterProducts);
-    document.getElementById("categorySelect").addEventListener("change", filterProducts);
-    document.getElementById("jobSelect").addEventListener("change", filterProducts);
-    document.querySelectorAll(".advanced-grid input").forEach(input => input.addEventListener("input", filterProducts));
-    document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
-    document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
-    productList.innerHTML = originalHTML;
-  </script>
-</body>
-</html>
-
+    avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", 
