@@ -375,191 +375,95 @@
     </div>
 
   </div>
-
-
-
   <script>
-
-    const originalProducts = Array.from(document.querySelectorAll(".product")).map(p => p.cloneNode(true));
-
-    let sortState = { price: true, snow: true };
-
+    const originalProducts = Array.from(document.querySelectorAll(".product"));
+    const productList = document.querySelector(".product-list");
+    const originalHTML = productList.innerHTML;
     let currentSort = null;
 
-
-
     function getValue(id, def) {
-
       const val = document.getElementById(id)?.value;
-
       return val === "" ? def : parseInt(val);
-
     }
 
-
+    function getFilteredProducts() {
+      const tempContainer = document.createElement("div");
+      tempContainer.innerHTML = originalHTML;
+      return Array.from(tempContainer.querySelectorAll(".product"));
+    }
 
     function applyCurrentSort(products) {
-
       if (!currentSort) return products;
-
       const { type, ascending } = currentSort;
-
       return products.sort((a, b) => {
-
         const aVal = +a.getAttribute("data-" + type);
-
         const bVal = +b.getAttribute("data-" + type);
-
         return ascending ? aVal - bVal : bVal - aVal;
-
       });
-
     }
-
-
 
     function filterProducts() {
-
       const searchInput = document.getElementById("searchInput").value.toLowerCase();
-
       const category = document.getElementById("categorySelect").value;
-
-
-
       const filters = {
-
         strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
-
         dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
-
         intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
-
         lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
-
         atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
-
         matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
-
         defMin: getValue("defMin", -Infinity), defMax: getValue("defMax", Infinity),
-
         mdefMin: getValue("mdefMin", -Infinity), mdefMax: getValue("mdefMax", Infinity),
-
         jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
-
         avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
-
         spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
-
         scrollMin: getValue("scrollMin", -Infinity), scrollMax: getValue("scrollMax", Infinity)
-
       };
 
-
-
-      const allProducts = Array.from(document.querySelectorAll(".product"));
-
-      const filtered = allProducts.filter((product) => {
-
+      const products = getFilteredProducts();
+      const filtered = products.filter((product) => {
         const name = product.getAttribute("data-name")?.toLowerCase() || "";
-
         const type = product.getAttribute("data-type") || "";
-
         const attrs = ["str","dex","int","luk","atk","matk","def","mdef","jump","avoid","spd","scroll"];
-
-
-
         return (
-
           name.includes(searchInput) &&
-
           (category === "all" || type === category) &&
-
           attrs.every(attr => {
-
             const val = +product.getAttribute("data-" + attr);
-
             return val >= filters[attr+"Min"] && val <= filters[attr+"Max"];
-
           })
-
         );
-
       });
 
-
-
       const sorted = applyCurrentSort(filtered);
-
-      const container = document.querySelector(".product-list");
-
-      container.innerHTML = "";
-
-      sorted.forEach(p => container.appendChild(p));
-
+      productList.innerHTML = "";
+      sorted.forEach(p => productList.appendChild(p));
     }
-
-
 
     function sortBy(type) {
-
       const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
-
-      sortState[type] = ascending;
-
       document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
-
       currentSort = { type, ascending };
-
       filterProducts();
-
     }
-
-
 
     function resetFilters() {
-
       document.getElementById("searchInput").value = "";
-
       document.getElementById("categorySelect").value = "all";
-
       document.querySelectorAll(".advanced-grid input").forEach(input => input.value = "");
-
-      sortState = { price: true, snow: true };
-
       currentSort = null;
-
       document.getElementById("priceSort").innerText = "楓幣 ⬆";
-
       document.getElementById("snowSort").innerText = "雪 ⬆";
-
-
-
-      const container = document.querySelector(".product-list");
-
-container.innerHTML = "";
-
-originalProducts.forEach(p => container.appendChild(p.cloneNode(true)));
-
-filterProducts();
-
-
-
+      filterProducts();
     }
 
-
-
     document.getElementById("searchInput").addEventListener("input", filterProducts);
-
     document.getElementById("categorySelect").addEventListener("change", filterProducts);
-
     document.querySelectorAll(".advanced-grid input").forEach(input => input.addEventListener("input", filterProducts));
-
     document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
-
     document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
-
+    productList.innerHTML = originalHTML;
   </script>
-
 </body>
-
 </html>
+
