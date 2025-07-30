@@ -104,35 +104,30 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 .product {
-  width: calc(50% - 10px); /* 兩欄排版 */
-  background-color: #a0a0a0;
-  border-radius: 10px;
+  width: calc(50% - 10px); /* 每列兩格，留間距 */
+  background-color: #aaa;
   display: flex;
-  flex-direction: row;
-  padding: 15px;
+  padding: 10px;
+  border-radius: 8px;
+  min-height: 160px;
   box-sizing: border-box;
-  align-items: flex-start;
-  min-height: 160px; /* ✅ 統一卡片高度，防止跳行 */
 }
 
 .product img {
   width: 140px;
   height: 140px;
   object-fit: contain;
-  margin-right: 10px;
-  flex-shrink: 0;
+  margin-right: 12px;
 }
 
 .product-text {
-  flex: 1;
   font-size: 14px;
-  line-height: 1.5;
+  line-height: 1.4;
 }
-
     hr {
 
       border: 1px solid #bbb;
