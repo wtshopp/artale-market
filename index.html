@@ -1,206 +1,100 @@
 <!DOCTYPE html>
-
-
-
 <html lang="zh-Hant">
-
-
-
 <head>
-
-
-
   <meta charset="UTF-8">
-
-
 
   <title>西龜商城 🍉🐢</title>
 
-
-
   <style>
-
-
 
     body {
 
-
-
       background-color: #d0d0d0;
-
-
 
       font-family: Arial, sans-serif;
 
-
-
       padding: 20px;
 
-
-
     }
-
-
 
     h2 {
 
-
-
       color: #005ab5;
 
-
-
     }
-
-
 
     h4 {
 
-
-
       color: #333;
 
-
-
     }
-
-
 
     .contact {
 
-
-
       margin-bottom: 20px;
 
-
-
     }
-
-
 
     .controls {
 
-
-
       display: flex;
-
-
 
       align-items: flex-start;
 
-
-
       flex-wrap: wrap;
-
-
 
       margin-bottom: 20px;
 
-
-
       gap: 10px;
 
-
-
     }
-
-
 
     .controls input,
 
-
-
     .controls select,
-
-
 
     .controls button {
 
-
-
       padding: 5px 10px;
-
-
 
       border-radius: 5px;
 
-
-
       border: 1px solid #aaa;
-
-
 
       background-color: #eeeeee;
 
-
-
     }
-
-
 
     .controls button:hover {
 
-
-
       cursor: pointer;
 
-
-
     }
-
-
 
     .reset-button {
 
-
-
       background-color: #ffdddd;
 
-
-
     }
-
-
 
     details summary {
 
-
-
       cursor: pointer;
-
-
 
       padding: 5px 10px;
 
-
-
       border-radius: 5px;
-
-
 
       border: 1px solid #aaa;
 
-
-
       background-color: #eeeeee;
 
-
-
     }
-
-
-
     details[open] summary {
-
-
 
       background-color: #e0e0e0;
 
-
-
     }
-
-
 
 .product-list {
 
@@ -280,151 +174,77 @@
 
     }
 
-
-
     .info p {
-
-
 
       margin: 4px 0;
 
-
-
     }
-
-
 
     .info p span.label {
 
-
-
       color: red;
-
-
 
       font-weight: normal;
 
-
-
     }
-
-
 
     .info p span.label-name {
 
-
-
       color: darkgreen;
-
-
 
       font-weight: normal;
 
-
-
     }
-
-
 
     .info p span.value {
 
-
-
       color: black;
 
-
-
     }
-
-
 
     .advanced-grid {
 
-
-
       display: grid;
-
-
 
       grid-template-columns: repeat(4, 1fr);
 
-
-
       gap: 10px;
 
-
-
     }
-
-
 
     .advanced-grid label {
 
-
-
       display: flex;
-
-
 
       align-items: flex-start;
 
-
-
       flex-direction: column;
 
-
-
     }
-
-
 
     .advanced-grid input {
 
-
-
       width: 50%;
 
-
-
     }
-
-
 
     .break-row {
 
-
-
       grid-column: 1 / -1;
-
-
 
       height: 0;
 
-
-
     }
-
-
 
   </style>
 
-
-
 </head>
-
-
 
 <body>
 
-
-
   <h2>西龜商城 🍉🐢</h2>
 
-
-
   <div class="contact">
-
-
 
     <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
 
@@ -438,27 +258,16 @@
 
   </div>
 
-
-
-
-
-
-
   <div class="controls">
-
-
 
     <input type="text" id="searchInput" placeholder="搜尋商品">
 
-
-
     <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
-
-
 
     <select id="categorySelect">
 
       <option value="all">所有分類</option>
+      <option value="卷軸&消耗品">卷軸&消耗品</option>
 
       <option value="頭盔">頭盔</option>
 
