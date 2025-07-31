@@ -7,6 +7,60 @@
   <link rel="icon" href="favicon.png" type="image/png">
   <style>
 
+    /* 管理員登入按鈕 - 右上角固定 */
+#admin-login-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 999;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+#admin-login-button:hover {
+  background-color: #0056b3;
+}
+
+/* 商品售出樣式 */
+.sold {
+  background-color: #ccc !important;
+  opacity: 0.6;
+  border: 2px dashed red;
+  position: relative;
+}
+
+/* 售出標籤 */
+.sold-label {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: red;
+  color: white;
+  padding: 2px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  font-weight: bold;
+  pointer-events: none;
+}
+
+/* 狀態下拉選單（管理員才看得到） */
+.status-select {
+  margin-left: auto;
+  padding: 4px 8px;
+  border-radius: 5px;
+  border: 1px solid #aaa;
+  font-size: 14px;
+  position: absolute; /* 方便放在商品右下角 */
+  bottom: 10px;
+  right: 10px;
+  display: none; /* 預設隱藏，只有管理員登入後 JS 顯示 */
+}
+
+
     body {
 
       background-color: #d0d0d0;
@@ -862,6 +916,95 @@
   </p>
 
   <script>
+    // 先取得登入狀態
+const isAdmin = localStorage.getItem("isAdmin") === "true";
+
+// 新增：初始化商品狀態選單與售出標籤
+function initProductStatusControls() {
+  originalProducts.forEach(product => {
+    // 不重複加入狀態選單
+    if (product.querySelector(".status-select")) return;
+
+    // 建立狀態下拉選單
+    const select = document.createElement("select");
+    select.className = "status-select";
+    select.style.display = isAdmin ? "inline-block" : "none"; // 非管理員隱藏
+
+    // 加入選項
+    const optionOnSale = document.createElement("option");
+    optionOnSale.value = "on-sale";
+    optionOnSale.textContent = "上架中";
+    const optionSoldOut = document.createElement("option");
+    optionSoldOut.value = "sold-out";
+    optionSoldOut.textContent = "已售出";
+    select.appendChild(optionOnSale);
+    select.appendChild(optionSoldOut);
+
+    // 讀取存儲的狀態
+    const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
+    select.value = savedStatus;
+
+    // 根據狀態設定外觀
+    updateProductStatusVisual(product, savedStatus);
+
+    // 狀態變更監聽
+    select.addEventListener("change", e => {
+      const status = e.target.value;
+      localStorage.setItem("product-status-" + product.id, status);
+      updateProductStatusVisual(product, status);
+    });
+
+    // 狀態選單放在商品內右下角（視需求調整位置）
+    product.style.position = "relative"; // 確保相對定位
+    select.style.position = "absolute";
+    select.style.bottom = "10px";
+    select.style.right = "10px";
+    product.appendChild(select);
+  });
+}
+
+// 根據狀態更新商品外觀和標籤
+function updateProductStatusVisual(product, status) {
+  if (status === "sold-out") {
+    product.classList.add("sold");
+    // 如果還沒標籤，新增
+    if (!product.querySelector(".sold-label")) {
+      const label = document.createElement("div");
+      label.className = "sold-label";
+      label.textContent = "已售出";
+      product.appendChild(label);
+    }
+  } else {
+    product.classList.remove("sold");
+    // 移除標籤
+    const label = product.querySelector(".sold-label");
+    if (label) label.remove();
+  }
+}
+
+// 你原本的 filterProducts 呼叫時，先初始化狀態控制
+filterProducts = (function(originalFilter) {
+  return function() {
+    // 先恢復商品原始狀態
+    productList.innerHTML = originalHTML;
+    // 更新 originalProducts 參考（篩選後需重新取得）
+    originalProducts.length = 0;
+    originalProducts.push(...Array.from(document.querySelectorAll(".product")));
+
+    // 呼叫原本的 filterProducts 功能
+    originalFilter();
+
+    // 篩選完後，初始化狀態控制和售出標籤
+    initProductStatusControls();
+  };
+})(filterProducts);
+
+// 頁面一載入，呼叫一次初始化
+window.addEventListener("load", () => {
+  // 先初始化商品狀態控制（會根據登入狀態決定是否顯示）
+  initProductStatusControls();
+});
+
     const originalProducts = Array.from(document.querySelectorAll(".product"));
     const productList = document.querySelector(".product-list");
     const originalHTML = productList.innerHTML;
