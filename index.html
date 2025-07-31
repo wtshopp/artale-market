@@ -418,6 +418,20 @@
     </details>
 
     <button id="admin-login-button">管理員登入</button>
+    <div id="admin-control-panel" style="display:none; position: fixed; top: 100px; right: 10px; background: #f0f0f0; border: 1px solid #ccc; padding: 10px;">
+  <label>選擇商品 ID（可複選）：</label><br>
+  <select id="product-id-select" multiple size="5" style="width: 100%;">
+    <!-- 動態插入 -->
+  </select><br><br>
+  
+  <label>設定狀態：</label><br>
+  <select id="status-select">
+    <option value="上架中">上架中</option>
+    <option value="已售出">已售出</option>
+  </select><br><br>
+  
+  <button onclick="updateStatus()">確認變更</button>
+    </div>
 
 <!-- 管理員操作區（預設隱藏） -->
 <div id="admin-control" style="display:none; margin:20px 0; background:#fff; padding:10px; border-radius:8px; box-shadow: 0 0 8px rgba(0,0,0,0.15);">
@@ -1043,6 +1057,7 @@
             isAdmin = true;
             localStorage.setItem("isAdmin", "true");
             alert("登入成功！");
+            createAdminControlPanel();
           } else {
             alert("密碼錯誤，無法登入！");
             return; // 不改變狀態
@@ -1142,6 +1157,69 @@
       filterProducts();
     }
 
+    // 建立商品狀態控制台（只給管理員）
+function createAdminControlPanel() {
+  if (!isAdmin) return;
+
+  let panel = document.getElementById("admin-control-panel");
+  if (panel) return; // 已建立過就跳過
+
+  panel = document.createElement("div");
+  panel.id = "admin-control-panel";
+  panel.style.position = "fixed";
+  panel.style.top = "60px";
+  panel.style.right = "10px";
+  panel.style.padding = "10px";
+  panel.style.border = "1px solid #ccc";
+  panel.style.backgroundColor = "#f9f9f9";
+  panel.style.zIndex = 9999;
+  panel.style.width = "220px";
+
+  panel.innerHTML = `
+    <label style="font-weight:bold;">選擇商品 ID（可複選）</label><br>
+    <select id="admin-product-select" multiple size="6" style="width: 100%; margin-top: 5px;"></select>
+    <br><br>
+    <label style="font-weight:bold;">設定狀態</label><br>
+    <select id="admin-status-select" style="width: 100%; margin-top: 5px;">
+      <option value="on-sale">上架中</option>
+      <option value="sold-out">已售出</option>
+    </select>
+    <br><br>
+    <button id="admin-update-btn" style="width:100%; padding:6px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer;">確認變更</button>
+  `;
+
+  document.body.appendChild(panel);
+
+  // 載入商品 ID
+  const productOptions = document.querySelectorAll(".product[id]");
+  const selectEl = document.getElementById("admin-product-select");
+  productOptions.forEach(product => {
+    const option = document.createElement("option");
+    option.value = product.id;
+    option.textContent = product.id;
+    selectEl.appendChild(option);
+  });
+
+  // 綁定按鈕功能
+  document.getElementById("admin-update-btn").addEventListener("click", () => {
+    const selectedIds = Array.from(selectEl.selectedOptions).map(opt => opt.value);
+    const status = document.getElementById("admin-status-select").value;
+
+    selectedIds.forEach(id => {
+      const product = document.getElementById(id);
+      if (product) {
+        localStorage.setItem("product-status-" + id, status);
+        updateProductStatusVisual(product, status);
+        const select = product.querySelector(".status-select");
+        if (select) select.value = status;
+      }
+    });
+
+    alert("商品狀態已更新！");
+  });
+}
+
+    
     function resetFilters() {
       document.getElementById("searchInput").value = "";
       document.getElementById("categorySelect").value = "all";
@@ -1160,6 +1238,7 @@
     document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
     document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
     productList.innerHTML = originalHTML;
+    if (isAdmin) createAdminControlPanel();
 </script>
 </body>
 </html>
