@@ -1058,6 +1058,7 @@
           if (pwd === "0000") {
             isAdmin = true;
             localStorage.setItem("isAdmin", "true");
+            document.getElementById("admin-control-panel").style.display = "block";
             alert("登入成功！");
             createAdminControlPanel();
           } else {
