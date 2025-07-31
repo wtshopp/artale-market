@@ -1270,10 +1270,25 @@
 
 
    window.addEventListener("load", () => {
+  // 建立一個顯示訊息的區塊
+  const logDiv = document.createElement("div");
+  logDiv.style.position = "fixed";
+  logDiv.style.bottom = "10px";
+  logDiv.style.left = "10px";
+  logDiv.style.backgroundColor = "rgba(0,0,0,0.7)";
+  logDiv.style.color = "white";
+  logDiv.style.padding = "10px";
+  logDiv.style.maxHeight = "200px";
+  logDiv.style.overflowY = "auto";
+  logDiv.style.zIndex = 10000;
+  logDiv.style.fontSize = "12px";
+  logDiv.style.fontFamily = "monospace";
+  document.body.appendChild(logDiv);
+
   const products = document.querySelectorAll(".product[id]");
-  console.log("找到的商品數量：", products.length);
+  logDiv.innerHTML += `找到的商品數量：${products.length}<br>`;
   products.forEach((p, i) => {
-    console.log(`第${i+1}個商品ID:`, p.id);
+    logDiv.innerHTML += `第${i + 1}個商品ID: ${p.id}<br>`;
   });
 
   const selectEl = document.getElementById("admin-product-select");
@@ -1285,9 +1300,9 @@
       opt.textContent = p.id;
       selectEl.appendChild(opt);
     });
-    console.log("下拉選單選項數量：", selectEl.options.length);
+    logDiv.innerHTML += `下拉選單選項數量：${selectEl.options.length}<br>`;
   } else {
-    console.warn("找不到下拉選單 #admin-product-select");
+    logDiv.innerHTML += `找不到下拉選單 #admin-product-select<br>`;
   }
 });
 
