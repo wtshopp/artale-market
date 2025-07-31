@@ -1265,6 +1265,33 @@
     // 初始執行商品狀態控制和管理員控制台（如果登入）
     initProductStatusControls();
     if (isAdmin) fillAdminProductSelect();
+
+
+
+
+   window.addEventListener("load", () => {
+  const products = document.querySelectorAll(".product[id]");
+  console.log("找到的商品數量：", products.length);
+  products.forEach((p, i) => {
+    console.log(`第${i+1}個商品ID:`, p.id);
+  });
+
+  const selectEl = document.getElementById("admin-product-select");
+  if (selectEl) {
+    selectEl.innerHTML = "";
+    products.forEach(p => {
+      const opt = document.createElement("option");
+      opt.value = p.id;
+      opt.textContent = p.id;
+      selectEl.appendChild(opt);
+    });
+    console.log("下拉選單選項數量：", selectEl.options.length);
+  } else {
+    console.warn("找不到下拉選單 #admin-product-select");
+  }
+});
+
+   
 </script>
 </body>
 </html>
