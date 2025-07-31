@@ -417,11 +417,22 @@
 
     </details>
 
+    <button id="admin-login-button">管理員登入</button>
+
+<!-- 管理員操作區（預設隱藏） -->
+<div id="admin-control" style="display:none; margin:20px 0; background:#fff; padding:10px; border-radius:8px; box-shadow: 0 0 8px rgba(0,0,0,0.15);">
+  <label for="admin-product-select">選擇商品（可多選）:</label><br>
+  <select id="admin-product-select" multiple size="10" style="width: 100%; max-width: 500px;"></select>
+  <br><br>
+  <button id="mark-sold-button">標記為已售出</button>
+  <button id="mark-available-button">標記為可販售</button>
+</div>
+
   </div>
 
   <div class="product-list" id="productList">
 
-       <div class="product" data-name="藍月耳環" data-job="法師" data-type="耳環" data-price="12000000" data-snow="20" data-int="4" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="8" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+       <div class="product" id="12ap藍月耳環(1)" data-name="藍月耳環" data-job="法師" data-type="耳環" data-price="12000000" data-snow="20" data-int="4" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="8" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍月耳環</span></p>
         <p><span class="label">屬性:</span></p>
@@ -433,7 +444,7 @@
       <img src="12ap藍月耳環(1).png" alt="12ap藍月耳環(1)">
     </div>
     
-     <div class="product" data-name="聖十字耳環" data-job="法師" data-type="耳環" data-price="12000000" data-snow="20" data-int="4" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="8" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+     <div class="product" id="12ap聖十字耳環(1)" data-name="聖十字耳環" data-job="法師" data-type="耳環" data-price="12000000" data-snow="20" data-int="4" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="8" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">聖十字耳環</span></p>
         <p><span class="label">屬性:</span></p>
@@ -445,7 +456,7 @@
       <img src="12ap聖十字耳環(1).png" alt="12ap聖十字耳環(1)">
     </div>
 
-      <div class="product" data-name="藍雪鞋" data-job="法師" data-type="鞋子" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="12" data-acc="0">
+      <div class="product" id="12速藍雪鞋" data-name="藍雪鞋" data-job="法師" data-type="鞋子" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="12" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
         <p><span class="label">屬性:</span></p>
@@ -458,7 +469,7 @@
     </div>
 
 
-    <div class="product" data-name="藍雪鞋" data-job="法師" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="10" data-acc="0">
+    <div class="product" data-name="藍雪鞋" id="10速藍雪鞋" data-job="法師" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="10" data-acc="0">
 
       <div class="info">
 
@@ -480,7 +491,7 @@
 
 
 
-    <div class="product" data-name="紅色艾倫鞋" data-job="法師" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="8" data-acc="0">
+    <div class="product" data-name="紅色艾倫鞋" id="8速7屬紅色艾倫鞋" data-job="法師" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="8" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
         <p><span class="label">屬性:</span></p>
@@ -495,7 +506,7 @@
 
     
 
-      <div class="product" data-name="銀龍槍" data-job="劍士" data-type="武器" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="10" data-atk="93" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="19">
+      <div class="product" data-name="銀龍槍" id="19命中+5銀龍槍" data-job="劍士" data-type="武器" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="10" data-atk="93" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="19">
 
       <div class="info">
 
@@ -517,7 +528,7 @@
       <img src="19命中+5銀龍槍.png" alt="銀龍槍(+5)">
     </div>
 
-    <div class="product" data-name="彩色游泳圈" data-job="通用" data-type="武器" data-price="300000" data-snow="0.5" data-int="0" data-luk="0" data-str="2" data-dex="0" data-atk="89" data-matk="0" data-hp="0" data-mp="0" data-jump="10" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="彩色游泳圈" id="彩色游泳圈(+2)" data-job="通用" data-type="武器" data-price="300000" data-snow="0.5" data-int="0" data-luk="0" data-str="2" data-dex="0" data-atk="89" data-matk="0" data-hp="0" data-mp="0" data-jump="10" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">彩色游泳圈</span></p>
         <p><span class="label">屬性:</span></p>
@@ -530,7 +541,7 @@
       <img src="彩色游泳圈(+2).png" alt="彩色游泳圈(+2)">
     </div>
 
-        <div class="product" data-name="彩色游泳圈" data-job="通用" data-type="武器" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="5" data-dex="0" data-atk="95" data-matk="0" data-hp="0" data-mp="0" data-jump="10" data-avoid="0" data-spd="0" data-acc="0">
+        <div class="product" data-name="彩色游泳圈" id="彩色游泳圈(+5)" data-job="通用" data-type="武器" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="5" data-dex="0" data-atk="95" data-matk="0" data-hp="0" data-mp="0" data-jump="10" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">彩色游泳圈</span></p>
         <p><span class="label">屬性:</span></p>
@@ -543,7 +554,7 @@
       <img src="彩色游泳圈(+5).png" alt="彩色游泳圈(+5)">
     </div>
 
-            <div class="product" data-name="藍色條紋游泳圈" data-job="通用" data-type="武器" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="6" data-dex="0" data-atk="27" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+            <div class="product" data-name="藍色條紋游泳圈" id="藍色條紋游泳圈(+6)" data-job="通用" data-type="武器" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="6" data-dex="0" data-atk="27" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍色條紋游泳圈</span></p>
         <p><span class="label">屬性:</span></p>
@@ -555,7 +566,7 @@
       <img src="藍色條紋游泳圈(+6).png" alt="藍色條紋游泳圈(+6)">
     </div>
 
-<div class="product" data-name="救生圈" data-job="通用" data-type="武器" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="4" data-dex="0" data-atk="83" data-matk="0" data-hp="150" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+<div class="product" data-name="救生圈" data-job="通用" id="救生圈(+4)" data-type="武器" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="4" data-dex="0" data-atk="83" data-matk="0" data-hp="150" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">救生圈</span></p>
         <p><span class="label">屬性:</span></p>
@@ -569,7 +580,7 @@
     </div>
     
 
-        <div class="product" data-name="霸王劍" data-job="劍士" data-type="武器" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="0" data-atk="95" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+        <div class="product" data-name="霸王劍" id="95ad+5霸王劍" data-job="劍士" data-type="武器" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="0" data-atk="95" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -593,7 +604,7 @@
 
     
 
-    <div class="product" data-name="紅色艾姆普里斯戰甲" data-job="劍士" data-type="套服" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="15" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="9">
+    <div class="product" data-name="紅色艾姆普里斯戰甲" id="劍士29屬套服(紅)" data-job="劍士" data-type="套服" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="15" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="9">
 
       <div class="info">
 
@@ -619,7 +630,7 @@
 
 
 
-    <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="下衣" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="65" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="下衣" id="65hp下衣(1)" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="65" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -643,7 +654,7 @@
 
 
 
-    <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="下衣" data-price="45000000" data-snow="75" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="110" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" id="下衣(1)110hp" data-type="下衣" data-price="45000000" data-snow="75" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="110" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -667,7 +678,7 @@
 
     
 
-    <div class="product" data-name="粉紅優雅緊身衣" data-job="法師" data-type="上衣" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="100" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="粉紅優雅緊身衣" id="100hp上衣(1)" data-job="法師" data-type="上衣" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="100" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -691,7 +702,7 @@
 
 
 
-    <div class="product" data-name="方形木盾" data-job="通用" data-type="盾牌" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="105" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="方形木盾" id="105hp木盾(1)" data-job="通用" data-type="盾牌" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="105" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -715,7 +726,7 @@
 
 
 
-    <div class="product" data-name="黑色魔法披風" data-job="通用" data-type="披風" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="50" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="黑色魔法披風" data-job="通用" id="50hp黑色魔法披風(1)" data-type="披風" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="50" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -739,7 +750,7 @@
 
 
 
-    <div class="product" data-name="紫水晶耳環" data-job="通用" data-type="耳環" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="紫水晶耳環" id="60hp紫水晶耳環(1)" data-job="通用" data-type="耳環" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">紫水晶耳環</span></p>
         <p><span class="label">屬性:</span></p>
@@ -751,7 +762,7 @@
       <img src="60hp紫水晶耳環(1).png" alt="60hp紫水晶耳環(1)">
     </div>
 
-    <div class="product" data-name="鑽石護盾" data-job="法師" data-type="盾牌" data-price="15000000" data-snow="25" data-int="1" data-luk="8" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="鑽石護盾" id="1智8幸鑽盾(1)" data-job="法師" data-type="盾牌" data-price="15000000" data-snow="25" data-int="1" data-luk="8" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">鑽石護盾</span></p>
         <p><span class="label">屬性:</span></p>
@@ -763,7 +774,7 @@
       <img src="1智8幸鑽盾(1).png" alt="1智8幸鑽盾(1)">
     </div>
 
-    <div class="product" data-name="神秘護盾" data-job="法師" data-type="盾牌" data-price="15000000" data-snow="25" data-int="2" data-luk="6" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="神秘護盾" id="2智6幸神秘護盾(1)" data-job="法師" data-type="盾牌" data-price="15000000" data-snow="25" data-int="2" data-luk="6" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">神秘護盾</span></p>
         <p><span class="label">屬性:</span></p>
@@ -775,7 +786,7 @@
       <img src="2智6幸神秘護盾(1).png" alt="2智6幸神秘護盾(1)">
     </div>
 
-    <div class="product" data-name="紅色鞭子" data-job="通用" data-type="武器" data-price="600000" data-snow="1" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="48" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="15" data-acc="0">
+    <div class="product" data-name="紅色鞭子" id="15速紅鞭(1)" data-job="通用" data-type="武器" data-price="600000" data-snow="1" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="48" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="15" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">紅色鞭子</span></p>
         <p><span class="label">屬性:</span></p>
@@ -788,7 +799,7 @@
       <img src="15速紅鞭(1).png" alt="15速紅鞭(1)">
     </div>
 
-    <div class="product" data-name="愛心耳環" data-job="通用" data-type="耳環" data-price="15000000" data-snow="25" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="愛心耳環" id="75hp愛心耳環(1)" data-job="通用" data-type="耳環" data-price="15000000" data-snow="25" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -812,7 +823,7 @@
 
 
 
-    <div class="product" data-name="工地手套" data-job="通用" data-type="手套" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+    <div class="product" data-name="工地手套" id="工地手套75hp" data-job="通用" data-type="手套" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -831,7 +842,7 @@
       <img src="工地手套75hp.png" alt="工地手套75hp">
     </div>
 
-        <div class="product" data-name="披風敏捷性卷軸60%" data-job="通用" data-type="卷軸&消耗品" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+        <div class="product" data-name="披風敏捷性卷軸60%" id="披風敏捷性卷軸60" data-job="通用" data-type="卷軸&消耗品" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -848,7 +859,7 @@
       <img src="披風敏捷性卷軸60.png" class="product-img long-img" alt="披風敏捷性卷軸60%">
     </div>
 
-       <div class="product" data-name="手槍攻擊力卷軸60%" data-job="通用" data-type="卷軸&消耗品" data-price="1200000" data-snow="2" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+       <div class="product" data-name="手槍攻擊力卷軸60%" id="手槍攻擊力卷軸60" data-job="通用" data-type="卷軸&消耗品" data-price="1200000" data-snow="2" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -867,7 +878,7 @@
       <img src="手槍攻擊力卷軸60.png" class="product-img long-img" alt="手槍攻擊力卷軸60%">
     </div>
 
-          <div class="product" data-name="短劍攻擊力卷軸10%" data-job="通用" data-type="卷軸&消耗品" data-price="1200000" data-snow="2" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+          <div class="product" data-name="短劍攻擊力卷軸10%" id="短劍攻擊力卷軸10" data-job="通用" data-type="卷軸&消耗品" data-price="1200000" data-snow="2" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -886,7 +897,7 @@
       <img src="短劍攻擊力卷軸10.png" class="product-img long-img" alt="短劍攻擊力卷軸10%">
     </div>
 
-              <div class="product" data-name="弓攻擊力卷軸10%" data-job="通用" data-type="卷軸&消耗品" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
+              <div class="product" data-name="弓攻擊力卷軸10%" id="弓攻擊力卷軸10" data-job="通用" data-type="卷軸&消耗品" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
 
         <div class="info">
 
@@ -917,93 +928,140 @@
 
   <script>
     // 先取得登入狀態
-const isAdmin = localStorage.getItem("isAdmin") === "true";
+    let isAdmin = localStorage.getItem("isAdmin") === "true";
 
-// 新增：初始化商品狀態選單與售出標籤
-function initProductStatusControls() {
-  originalProducts.forEach(product => {
-    // 不重複加入狀態選單
-    if (product.querySelector(".status-select")) return;
+    // 新增：初始化商品狀態選單與售出標籤
+    function initProductStatusControls() {
+      originalProducts.forEach(product => {
+        // 不重複加入狀態選單
+        if (product.querySelector(".status-select")) return;
 
-    // 建立狀態下拉選單
-    const select = document.createElement("select");
-    select.className = "status-select";
-    select.style.display = isAdmin ? "inline-block" : "none"; // 非管理員隱藏
+        // 建立狀態下拉選單
+        const select = document.createElement("select");
+        select.className = "status-select";
+        select.style.display = isAdmin ? "inline-block" : "none"; // 非管理員隱藏
 
-    // 加入選項
-    const optionOnSale = document.createElement("option");
-    optionOnSale.value = "on-sale";
-    optionOnSale.textContent = "上架中";
-    const optionSoldOut = document.createElement("option");
-    optionSoldOut.value = "sold-out";
-    optionSoldOut.textContent = "已售出";
-    select.appendChild(optionOnSale);
-    select.appendChild(optionSoldOut);
+        // 加入選項
+        const optionOnSale = document.createElement("option");
+        optionOnSale.value = "on-sale";
+        optionOnSale.textContent = "上架中";
+        const optionSoldOut = document.createElement("option");
+        optionSoldOut.value = "sold-out";
+        optionSoldOut.textContent = "已售出";
+        select.appendChild(optionOnSale);
+        select.appendChild(optionSoldOut);
 
-    // 讀取存儲的狀態
-    const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
-    select.value = savedStatus;
+        // 讀取存儲的狀態
+        const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
+        select.value = savedStatus;
 
-    // 根據狀態設定外觀
-    updateProductStatusVisual(product, savedStatus);
+        // 根據狀態設定外觀
+        updateProductStatusVisual(product, savedStatus);
 
-    // 狀態變更監聽
-    select.addEventListener("change", e => {
-      const status = e.target.value;
-      localStorage.setItem("product-status-" + product.id, status);
-      updateProductStatusVisual(product, status);
-    });
+        // 狀態變更監聽
+        select.addEventListener("change", e => {
+          const status = e.target.value;
+          localStorage.setItem("product-status-" + product.id, status);
+          updateProductStatusVisual(product, status);
+        });
 
-    // 狀態選單放在商品內右下角（視需求調整位置）
-    product.style.position = "relative"; // 確保相對定位
-    select.style.position = "absolute";
-    select.style.bottom = "10px";
-    select.style.right = "10px";
-    product.appendChild(select);
-  });
-}
-
-// 根據狀態更新商品外觀和標籤
-function updateProductStatusVisual(product, status) {
-  if (status === "sold-out") {
-    product.classList.add("sold");
-    // 如果還沒標籤，新增
-    if (!product.querySelector(".sold-label")) {
-      const label = document.createElement("div");
-      label.className = "sold-label";
-      label.textContent = "已售出";
-      product.appendChild(label);
+        // 狀態選單放在商品內右下角（視需求調整位置）
+        product.style.position = "relative"; // 確保相對定位
+        select.style.position = "absolute";
+        select.style.bottom = "10px";
+        select.style.right = "10px";
+        product.appendChild(select);
+      });
     }
-  } else {
-    product.classList.remove("sold");
-    // 移除標籤
-    const label = product.querySelector(".sold-label");
-    if (label) label.remove();
-  }
-}
 
-// 你原本的 filterProducts 呼叫時，先初始化狀態控制
-filterProducts = (function(originalFilter) {
-  return function() {
-    // 先恢復商品原始狀態
-    productList.innerHTML = originalHTML;
-    // 更新 originalProducts 參考（篩選後需重新取得）
-    originalProducts.length = 0;
-    originalProducts.push(...Array.from(document.querySelectorAll(".product")));
+    // 根據狀態更新商品外觀和標籤
+    function updateProductStatusVisual(product, status) {
+      if (status === "sold-out") {
+        product.classList.add("sold");
+        // 如果還沒標籤，新增
+        if (!product.querySelector(".sold-label")) {
+          const label = document.createElement("div");
+          label.className = "sold-label";
+          label.textContent = "已售出";
+          product.appendChild(label);
+        }
+      } else {
+        product.classList.remove("sold");
+        // 移除標籤
+        const label = product.querySelector(".sold-label");
+        if (label) label.remove();
+      }
+    }
 
-    // 呼叫原本的 filterProducts 功能
-    originalFilter();
+    // 你原本的 filterProducts 呼叫時，先初始化狀態控制
+    filterProducts = (function(originalFilter) {
+      return function() {
+        // 先恢復商品原始狀態
+        productList.innerHTML = originalHTML;
+        // 更新 originalProducts 參考（篩選後需重新取得）
+        originalProducts.length = 0;
+        originalProducts.push(...Array.from(document.querySelectorAll(".product")));
 
-    // 篩選完後，初始化狀態控制和售出標籤
-    initProductStatusControls();
-  };
-})(filterProducts);
+        // 呼叫原本的 filterProducts 功能
+        originalFilter();
 
-// 頁面一載入，呼叫一次初始化
-window.addEventListener("load", () => {
-  // 先初始化商品狀態控制（會根據登入狀態決定是否顯示）
-  initProductStatusControls();
-});
+        // 篩選完後，初始化狀態控制和售出標籤
+        initProductStatusControls();
+      };
+    })(filterProducts);
+
+    // 新增：管理員登入按鈕，放右上，且登入需輸入密碼
+    window.addEventListener("load", () => {
+      // 建立按鈕
+      const adminBtn = document.createElement("button");
+      adminBtn.id = "admin-login-button";
+      adminBtn.style.position = "fixed";
+      adminBtn.style.top = "10px";
+      adminBtn.style.right = "10px";
+      adminBtn.style.zIndex = 9999;
+      adminBtn.style.padding = "8px 12px";
+      adminBtn.style.backgroundColor = "#007bff";
+      adminBtn.style.color = "#fff";
+      adminBtn.style.border = "none";
+      adminBtn.style.borderRadius = "5px";
+      adminBtn.style.cursor = "pointer";
+      adminBtn.style.fontSize = "14px";
+
+      // 根據狀態設定文字
+      function updateButtonText() {
+        adminBtn.textContent = isAdmin ? "管理員登出" : "管理員登入";
+      }
+      updateButtonText();
+
+      // 點擊事件：切換登入狀態（登入需密碼驗證）
+      adminBtn.addEventListener("click", () => {
+        if (!isAdmin) {
+          // 要登入，先要求輸入密碼
+          const pwd = prompt("請輸入管理員密碼：");
+          if (pwd === null) return; // 取消輸入不動作
+          if (pwd === "0000") {
+            isAdmin = true;
+            localStorage.setItem("isAdmin", "true");
+            alert("登入成功！");
+          } else {
+            alert("密碼錯誤，無法登入！");
+            return; // 不改變狀態
+          }
+        } else {
+          // 登出直接切換
+          isAdmin = false;
+          localStorage.setItem("isAdmin", "false");
+        }
+        updateButtonText();
+        // 重新初始化商品狀態選單顯示
+        initProductStatusControls();
+      });
+
+      document.body.appendChild(adminBtn);
+
+      // 你的原本初始化商品狀態控制
+      initProductStatusControls();
+    });
 
     const originalProducts = Array.from(document.querySelectorAll(".product"));
     const productList = document.querySelector(".product-list");
@@ -1031,51 +1089,52 @@ window.addEventListener("load", () => {
       });
     }
 
-function filterProducts() {
-  const searchInput = document.getElementById("searchInput").value.toLowerCase();
-  const category = document.getElementById("categorySelect").value;
-  const job = document.getElementById("jobSelect").value;
-  const filters = {
-    strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
-    dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
-    intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
-    lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
-    atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
-    matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
-    hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
-    mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
-    jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
-    avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
-    spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
-    accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
-  };
+    function filterProducts() {
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
+      const category = document.getElementById("categorySelect").value;
+      const job = document.getElementById("jobSelect").value;
+      const filters = {
+        strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
+        dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
+        intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
+        lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
+        atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
+        matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
+        hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
+        mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
+        jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
+        avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
+        spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
+        accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
+      };
 
-  const products = getFilteredProducts(); // 所有 DOM 中的 .product 元素
-  const filtered = products.filter((product) => {
-    const prodJob = product.getAttribute("data-job") || "";
-    const name = product.getAttribute("data-name")?.toLowerCase() || "";
-    const type = product.getAttribute("data-type") || "";
-    const attrs = ["str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "acc"];
-    return (
-      name.includes(searchInput) &&
-      (category === "all" || type === category) &&
-      (job === "all" || prodJob === job) &&
-      attrs.every(attr => {
-        const val = +product.getAttribute("data-" + attr);
-        return val >= filters[attr + "Min"] && val <= filters[attr + "Max"];
-      })
-    );
-  });
+      const products = getFilteredProducts(); // 所有 DOM 中的 .product 元素
+      const filtered = products.filter((product) => {
+        const prodJob = product.getAttribute("data-job") || "";
+        const name = product.getAttribute("data-name")?.toLowerCase() || "";
+        const type = product.getAttribute("data-type") || "";
+        const attrs = ["str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "acc"];
+        return (
+          name.includes(searchInput) &&
+          (category === "all" || type === category) &&
+          (job === "all" || prodJob === job) &&
+          attrs.every(attr => {
+            const val = +product.getAttribute("data-" + attr);
+            return val >= filters[attr + "Min"] && val <= filters[attr + "Max"];
+          })
+        );
+      });
 
-  const productList = document.getElementById("productList");
-  const noResults = document.getElementById("noResults");
-  const sorted = applyCurrentSort(filtered);
+      const productList = document.getElementById("productList");
+      const noResults = document.getElementById("noResults");
+      const sorted = applyCurrentSort(filtered);
 
-  productList.innerHTML = "";
-  sorted.forEach(p => productList.appendChild(p));
+      productList.innerHTML = "";
+      sorted.forEach(p => productList.appendChild(p));
 
-  noResults.style.display = sorted.length === 0 ? "block" : "none";
-}
+      noResults.style.display = sorted.length === 0 ? "block" : "none";
+    }
+
     function sortBy(type) {
       const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
       document.getElementById(type + "Sort").innerText = (type === "price" ? "楓幣 " : "雪 ") + (ascending ? "⬆" : "⬇");
@@ -1101,6 +1160,6 @@ function filterProducts() {
     document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
     document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
     productList.innerHTML = originalHTML;
-  </script>
+</script>
 </body>
 </html>
