@@ -1137,16 +1137,31 @@
 
     // 載入商品ID至管理員控制台下拉選單
     function fillAdminProductSelect() {
-      const selectEl = document.getElementById("admin-product-select");
-      if (!selectEl) return;
-      selectEl.innerHTML = "";
-      document.querySelectorAll(".product[id]").forEach(product => {
-        const option = document.createElement("option");
-        option.value = product.id;
-        option.textContent = product.id;
-        selectEl.appendChild(option);
-      });
-    }
+  const selectEl = document.getElementById("admin-product-select");
+  if (!selectEl) {
+    console.warn("找不到 admin-product-select");
+    return;
+  }
+  selectEl.innerHTML = "";
+
+  const products = document.querySelectorAll(".product[id]");
+  if(products.length === 0){
+    console.warn("找不到任何帶有 id 的商品元素");
+  }
+
+  products.forEach(product => {
+    const id = product.id;
+    if(!id) {
+      console.warn("商品缺少 id", product);
+      return;
+    }
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = id;
+    selectEl.appendChild(option);
+  });
+}
+
 
     const originalProducts = Array.from(document.querySelectorAll(".product"));
     const productList = document.querySelector(".product-list");
