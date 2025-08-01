@@ -1133,6 +1133,7 @@ window.addEventListener("load", () => {
         isAdmin = true;
         localStorage.setItem("isAdmin", "true");
         alert("登入成功！");
+        filterProducts();
       } else {
         return alert("密碼錯誤！");
       }
