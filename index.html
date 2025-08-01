@@ -1090,7 +1090,7 @@
         if (!isAdmin) {
           const pwd = prompt("請輸入管理員密碼：");
           if (pwd === null) return; // 取消
-          if (pwd === "0000") {
+          if (pwd === "062205") {
             isAdmin = true;
             localStorage.setItem("isAdmin", "true");
             adminBtn.textContent = "管理員登出";
