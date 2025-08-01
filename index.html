@@ -1109,6 +1109,20 @@
         initProductStatusControls();
       });
 
+       const logDiv = document.createElement("div");
+  logDiv.style.position = "fixed";
+  logDiv.style.bottom = "10px";
+  logDiv.style.left = "10px";
+  logDiv.style.backgroundColor = "rgba(0,0,0,0.7)";
+  logDiv.style.color = "white";
+  logDiv.style.padding = "10px";
+  logDiv.style.maxHeight = "200px";
+  logDiv.style.overflowY = "auto";
+  logDiv.style.zIndex = 10000;
+  logDiv.style.fontSize = "12px";
+  logDiv.style.fontFamily = "monospace";
+  document.body.appendChild(logDiv);
+
       // 確認按鈕事件：批量更新商品狀態
       document.getElementById("admin-update-btn").addEventListener("click", () => {
         const selectEl = document.getElementById("admin-product-select");
@@ -1265,25 +1279,6 @@
     // 初始執行商品狀態控制和管理員控制台（如果登入）
     initProductStatusControls();
     if (isAdmin) fillAdminProductSelect();
-
-
-
-
-   window.addEventListener("load", () => {
-  // 建立一個顯示訊息的區塊
-  const logDiv = document.createElement("div");
-  logDiv.style.position = "fixed";
-  logDiv.style.bottom = "10px";
-  logDiv.style.left = "10px";
-  logDiv.style.backgroundColor = "rgba(0,0,0,0.7)";
-  logDiv.style.color = "white";
-  logDiv.style.padding = "10px";
-  logDiv.style.maxHeight = "200px";
-  logDiv.style.overflowY = "auto";
-  logDiv.style.zIndex = 10000;
-  logDiv.style.fontSize = "12px";
-  logDiv.style.fontFamily = "monospace";
-  document.body.appendChild(logDiv);
 
   const products = document.querySelectorAll(".product[id]");
   logDiv.innerHTML += `找到的商品數量：${products.length}<br>`;
