@@ -942,6 +942,7 @@
   </p>
 
 <script>
+// 全域變數初始化
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 let productList;
 let originalHTML;
@@ -958,6 +959,7 @@ function initProductStatusControls() {
     select.style.display = isAdmin ? "inline-block" : "none";
 
     const option1 = new Option("上架中", "on-sale");
+    const option2 = new Option("已售出", "sold-out");
     select.append(option1, option2);
 
     const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
@@ -1082,6 +1084,7 @@ filterProducts = (function (originalFilter) {
     originalProducts.push(...document.querySelectorAll(".product"));
 
     originalFilter();
+    initProductStatusControls();
     if (isAdmin) fillAdminProductSelect();
   };
 })(filterProducts);
@@ -1108,6 +1111,8 @@ window.addEventListener("load", () => {
   productList = document.getElementById("productList");
   originalHTML = productList.innerHTML;
   originalProducts.push(...document.querySelectorAll(".product"));
+
+  initProductStatusControls();
   if (isAdmin) fillAdminProductSelect();
 
   const adminBtn = document.createElement("button");
