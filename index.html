@@ -942,63 +942,20 @@
   </p>
 
 <script>
-// 全域變數初始化
+// === [ 全域變數與初始化 ] ===
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 let productList;
 let originalHTML;
 const originalProducts = [];
 let currentSort = null;
 
-// 初始化商品狀態控制器
-function initProductStatusControls() {
-  originalProducts.forEach(product => {
-    let select = product.querySelector(".status-select");
-
-    if (!select) {
-      select = document.createElement("select");
-      select.className = "status-select";
-      product.appendChild(select);
-    }
-
-    select.innerHTML = "";
-    const option1 = new Option("上架中", "on-sale");
-    const option2 = new Option("已售出", "sold-out");
-    select.append(option1, option2);
-
-    const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
-    select.value = savedStatus;
-
-    // 所有人都看到紅框與標籤
-    updateProductStatusVisual(product, savedStatus);
-
-    if (isAdmin) {
-      select.addEventListener("change", e => {
-        const status = e.target.value;
-        localStorage.setItem("product-status-" + product.id, status);
-        updateProductStatusVisual(product, status);
-      });
-      select.style.display = "inline-block";
-    } else {
-      select.style.display = "none";
-    }
-
-    product.style.position = "relative";
-    Object.assign(select.style, {
-      position: "absolute",
-      bottom: "10px",
-      right: "10px"
-    });
-  });
-}
-
+// === [ 商品狀態顯示（紅框 + 標籤） ] ===
 function updateProductStatusVisual(product, status) {
-  // 所有人都會看到紅框與標籤
-  const borderStyle = "2px dashed red";
   const existingLabel = product.querySelector(".sold-label");
 
   if (status === "sold-out") {
     product.classList.add("sold");
-    product.style.border = borderStyle;
+    product.style.border = "2px dashed red";
 
     if (!existingLabel) {
       const label = document.createElement("div");
@@ -1021,6 +978,49 @@ function updateProductStatusVisual(product, status) {
     if (existingLabel) existingLabel.remove();
   }
 }
+
+// === [ 商品卡片下拉選單控制（僅管理員可見） ] ===
+function initProductStatusControls() {
+  originalProducts.forEach(product => {
+    let select = product.querySelector(".status-select");
+
+    if (!select) {
+      select = document.createElement("select");
+      select.className = "status-select";
+      product.appendChild(select);
+    }
+
+    select.innerHTML = "";
+    const option1 = new Option("上架中", "on-sale");
+    const option2 = new Option("已售出", "sold-out");
+    select.append(option1, option2);
+
+    const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
+    select.value = savedStatus;
+    updateProductStatusVisual(product, savedStatus);
+
+    // 僅限管理員可操作
+    if (isAdmin) {
+      select.style.display = "inline-block";
+      select.addEventListener("change", e => {
+        const status = e.target.value;
+        localStorage.setItem("product-status-" + product.id, status);
+        updateProductStatusVisual(product, status);
+      });
+    } else {
+      select.style.display = "none";
+    }
+
+    product.style.position = "relative";
+    Object.assign(select.style, {
+      position: "absolute",
+      bottom: "10px",
+      right: "10px"
+    });
+  });
+}
+
+// === [ 篩選相關邏輯 ] ===
 function getValue(id, fallback) {
   const val = document.getElementById(id)?.value;
   return val === "" ? fallback : parseInt(val);
@@ -1078,6 +1078,7 @@ function filterProducts() {
   if (noResults) noResults.style.display = sorted.length === 0 ? "block" : "none";
 }
 
+// === [ 篩選函式包裝 ] ===
 filterProducts = (function (originalFilter) {
   return function () {
     productList.innerHTML = originalHTML;
@@ -1086,10 +1087,10 @@ filterProducts = (function (originalFilter) {
 
     originalFilter();
     initProductStatusControls();
-    if (isAdmin) fillAdminProductSelect();
   };
 })(filterProducts);
 
+// === [ 排序功能 ] ===
 function sortBy(type) {
   const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
   currentSort = { type, ascending };
@@ -1097,6 +1098,7 @@ function sortBy(type) {
   filterProducts();
 }
 
+// === [ 重設篩選器 ] ===
 function resetFilters() {
   document.getElementById("searchInput").value = "";
   document.getElementById("categorySelect").value = "all";
@@ -1108,14 +1110,13 @@ function resetFilters() {
   filterProducts();
 }
 
+// === [ 初始化執行一次 ] ===
 window.addEventListener("load", () => {
   productList = document.getElementById("productList");
   originalHTML = productList.innerHTML;
   originalProducts.push(...document.querySelectorAll(".product"));
 
-  initProductStatusControls();
-  if (isAdmin) fillAdminProductSelect();
-
+  // 管理員登入按鈕
   const adminBtn = document.createElement("button");
   adminBtn.id = "admin-login-button";
   adminBtn.textContent = isAdmin ? "管理員登出" : "管理員登入";
@@ -1124,28 +1125,6 @@ window.addEventListener("load", () => {
     padding: "8px 12px", backgroundColor: "#007bff", color: "white",
     border: "none", borderRadius: "5px", cursor: "pointer"
   });
-
-  const panel = document.createElement("div");
-  panel.id = "admin-control-panel";
-  panel.style.display = isAdmin ? "block" : "none";
-  Object.assign(panel.style, {
-    position: "fixed", top: "10px", right: "130px", zIndex: 9999,
-    padding: "10px", backgroundColor: "#f9f9f9", border: "1px solid #ccc",
-    borderRadius: "5px", width: "250px", fontSize: "12px"
-  });
-  panel.innerHTML = `
-    <label>選擇商品 ID</label>
-    <select id="admin-product-select" multiple size="3" style="width:100%;"></select><br><br>
-    <label>設定狀態</label>
-    <select id="admin-status-select" style="width:100%;">
-      <option value="on-sale">上架中</option>
-      <option value="sold-out">已售出</option>
-    </select><br><br>
-    <button id="admin-update-btn" style="width:100%;padding:6px;background:#007bff;color:white;border:none;border-radius:5px;cursor:pointer;">確認變更</button>
-  `;
-
-  document.body.append(adminBtn, panel);
-  if (isAdmin) fillAdminProductSelect();
 
   adminBtn.addEventListener("click", () => {
     if (!isAdmin) {
@@ -1164,37 +1143,11 @@ window.addEventListener("load", () => {
     location.reload();
   });
 
-  document.getElementById("admin-update-btn").addEventListener("click", () => {
-    const selected = Array.from(document.getElementById("admin-product-select").selectedOptions).map(opt => opt.value);
-    const status = document.getElementById("admin-status-select").value;
-    selected.forEach(id => {
-      const product = document.getElementById(id);
-      if (product) {
-        localStorage.setItem("product-status-" + id, status);
-        updateProductStatusVisual(product, status);
-        const select = product.querySelector(".status-select");
-        if (select) select.value = status;
-      }
-    });
-    alert("商品狀態已更新！");
-  });
-
-  // Debug 顯示
-  const logDiv = document.createElement("div");
-  Object.assign(logDiv.style, {
-    position: "fixed", bottom: "10px", left: "10px", color: "white",
-    backgroundColor: "rgba(0,0,0,0.7)", padding: "10px", maxHeight: "200px",
-    overflowY: "auto", zIndex: 9999, fontSize: "12px", fontFamily: "monospace"
-  });
-  document.body.appendChild(logDiv);
-
-  const products = document.querySelectorAll(".product[id]");
-  logDiv.innerHTML = `找到的商品數量：${products.length}<br>`;
-  products.forEach((p, i) => logDiv.innerHTML += `第${i + 1}個商品ID: ${p.id}<br>`);
-  const select = document.getElementById("admin-product-select");
-  if (select) logDiv.innerHTML += `下拉選單選項數量：${select.options.length}<br>`;
+  document.body.appendChild(adminBtn);
+  filterProducts();
 });
 
+// === [ 綁定事件 ] ===
 document.getElementById("searchInput").addEventListener("input", filterProducts);
 document.getElementById("categorySelect").addEventListener("change", filterProducts);
 document.getElementById("jobSelect").addEventListener("change", filterProducts);
