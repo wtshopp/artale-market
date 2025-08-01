@@ -4,221 +4,194 @@
   <meta charset="UTF-8">
   <title>西龜商城 🍉🐢</title>
   <link rel="icon" href="favicon.png" type="image/png">
-  <style>
-    body {
-      background-color: #d0d0d0;
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
+ <style>
 
-    .product-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 20px;
-      justify-content: flex-start;
-    }
-
-    .product {
-      width: calc(50% - 10px);
-      background-color: #aaa;
-      display: flex;
-      padding: 10px;
-      border-radius: 8px;
-      min-height: 160px;
-      align-items: center;
-      box-sizing: border-box;
-      position: relative;
-    }
-
-    .product img {
-      width: 140px;
-      height: 140px;
-      object-fit: cover;
-      margin-left: auto;
-      margin-right: 20px;
-      border-radius: 8px;
-    }
-
-    .product-img.long-img {
-      width: auto;
-      height: auto;
-      max-width: 250px;
-      max-height: 250px;
-      object-fit: contain;
-    }
-
-    .sold {
-      background-color: #ccc !important;
-      opacity: 0.6;
-      border: 2px dashed red;
-      position: relative;
-    }
-
-    .sold-label {
-      position: absolute;
-      top: 5px;
-      right: 5px;
-      background-color: red;
-      color: white;
-      padding: 2px 6px;
-      font-size: 12px;
-      border-radius: 4px;
-      font-weight: bold;
-      pointer-events: none;
-    }
-
-    .status-select {
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      display: none;
-      padding: 4px 8px;
-      border-radius: 5px;
-      border: 1px solid #aaa;
-      font-size: 14px;
-      background-color: white;
-      z-index: 1;
-    }
-
-    #admin-login-button {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 9999;
-      padding: 8px 12px;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
-    #admin-login-button:hover {
-      background-color: #0056b3;
-    }
-    .controls {
-  display: flex;
-  flex-wrap: nowrap;
-  align-items: center;
-  gap: 10px;
-  overflow-x: auto;
-  max-width: 100%;
-  margin-bottom: 20px;
+   .label-name {
+  color: green; /* 商品名: 用綠色 */
+  font-weight: bold;
 }
 
-.controls input,
-.controls select,
-.controls button,
-.controls summary {
-  padding: 5px 10px;
-  border-radius: 5px;
-  border: 1px solid #aaa;
-  background-color: #eeeeee;
-  font-size: 14px;
-  white-space: nowrap;
+.label {
+  color: red;   /* 其他標籤: 用紅色 */
+  font-weight: bold;
 }
 
-.controls button:hover {
-  cursor: pointer;
+.value {
+  color: #333333; /* 數值不變，用深灰色顯示 */
+  margin-left: 4px;
 }
+  body {
+    background-color: #d0d0d0;
+    font-family: Arial, sans-serif;
+    padding: 20px;
+  }
 
-.reset-button {
-  background-color: #ffdddd;
-}
+  .product-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: flex-start;
+  }
 
-.controls details {
-  white-space: nowrap;
-  flex-shrink: 0;
-}
+  .product {
+    width: calc(50% - 10px);
+    background-color: #aaa;
+    display: flex;
+    padding: 10px;
+    border-radius: 8px;
+    min-height: 160px;
+    align-items: center;
+    box-sizing: border-box;
+    position: relative;
+  }
 
-details[open] summary {
-  background-color: #e0e0e0;
-}
+  .product img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    margin-left: auto;
+    margin-right: 20px;
+    border-radius: 8px;
+  }
 
-  </style>
+  .product-img.long-img {
+    width: auto;
+    height: auto;
+    max-width: 250px;
+    max-height: 250px;
+    object-fit: contain;
+  }
+
+  .sold {
+    background-color: #ccc !important;
+    opacity: 0.6;
+    border: 2px dashed red;
+    position: relative;
+  }
+
+  .sold-label {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: red;
+    color: white;
+    padding: 2px 6px;
+    font-size: 12px;
+    border-radius: 4px;
+    font-weight: bold;
+    pointer-events: none;
+  }
+
+  .status-select {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    display: none;
+    padding: 4px 8px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    font-size: 14px;
+    background-color: white;
+    z-index: 1;
+  }
+
+  #admin-login-button {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999;
+    padding: 8px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #admin-login-button:hover {
+    background-color: #0056b3;
+  }
+
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .controls input,
+  .controls select,
+  .controls button,
+  .controls summary {
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #aaa;
+    background-color: #eeeeee;
+    font-size: 14px;
+    white-space: nowrap;
+  }
+
+  .controls button:hover {
+    cursor: pointer;
+  }
+
+  .reset-button {
+    background-color: #ffdddd;
+  }
+
+  .controls details {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  details[open] summary {
+    background-color: #e0e0e0;
+  }
+</style>
 </head>
 <body>
 
   <h2>西龜商城 🍉🐢</h2>
-
   <div class="contact">
-
     <h4>這裡是我出售的商品 如有需要，請聯繫:</h4>
-
     <p>
-
       Discord: jun_.0605 |
-
       Artale: Lin凜#5YfsH | FB: Weijun | Instagram: wei_.0605_
-
     </p>
-
   </div>
-
   <div class="controls">
-
     <input type="text" id="searchInput" placeholder="搜尋商品">
-
     <button class="reset-button" onclick="resetFilters()">重置所有篩選</button>
-
     <select id="categorySelect">
-
       <option value="all">所有分類</option>
-      
       <option value="卷軸&消耗品">卷軸&消耗品</option>
-
       <option value="頭盔">頭盔</option>
-
       <option value="手套">手套</option>
-
       <option value="鞋子">鞋子</option>
-
       <option value="盾牌">盾牌</option>
-
       <option value="耳環">耳環</option>
-
       <option value="披風">披風</option>
-
       <option value="武器">武器</option>
-
       <option value="上衣">上衣</option>
-
       <option value="下衣">下衣</option>
-
       <option value="套服">套服</option>
-
       <option value="特殊部位飾品">特殊部位飾品</option>
-
     </select>
-
   <select id="jobSelect">
-
     <option value="all">所有職業</option>
-
     <option value="通用">通用</option>
-
     <option value="劍士">劍士</option>
-
     <option value="法師">法師</option>
-
     <option value="弓箭手">弓箭手</option>
-
     <option value="盜賊">盜賊</option>
-
     <option value="海盜">海盜</option>
-
    </select>
-
     <button id="priceSort">楓幣 ⬆</button>
-
     <button id="snowSort">雪⬆</button>
-
     <details>
-
       <summary>進階篩選</summary>
-
       <div style="margin-top: 10px;">
-
         <div class="advanced-grid">
           <label>力量<input type="number" id="strMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="strMax" placeholder="最大" style="width: 60px;"></label>
           <label>敏捷<input type="number" id="dexMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="dexMax" placeholder="最大" style="width: 60px;"></label>
@@ -241,18 +214,14 @@ details[open] summary {
   <label>選擇商品 ID（可複選）：</label><br>
   <select id="product-id-select" multiple size="5" style="width: 100%;">
     <!-- 動態插入 -->
-  </select><br><br>
-  
+  </select><br><br>  
   <label>設定狀態：</label><br>
   <select id="status-select">
     <option value="上架中">上架中</option>
     <option value="已售出">已售出</option>
-  </select><br><br>
-  
+  </select><br><br>  
   <button onclick="updateStatus()">確認變更</button>
     </div>
-
-
 <!-- 管理員操作區（預設隱藏） -->
 <div id="admin-control" style="display:none; margin:20px 0; background:#fff; padding:10px; border-radius:8px; box-shadow: 0 0 8px rgba(0,0,0,0.15);">
   <label for="admin-product-select">選擇商品（可多選）:</label><br>
@@ -261,15 +230,11 @@ details[open] summary {
   <button id="mark-sold-button">標記為已售出</button>
   <button id="mark-available-button">標記為可販售</button>
 </div>
-
   </div>
-
   <div id="admin-login-container" style="position: fixed; top: 10px; right: 10px;">
   <button id="admin-login-btn">管理員登入</button>
   </div>
-
   <div class="product-list" id="productList">
-
        <div class="product" data-name="藍月耳環" data-job="法師" data-type="耳環" data-price="12000000" data-snow="20" data-int="4" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="8" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍月耳環</span></p>
@@ -281,7 +246,6 @@ details[open] summary {
       </div>
       <img src="12ap藍月耳環(1).png" alt="12ap藍月耳環(1)">
     </div>
-    
      <div class="product" data-name="聖十字耳環" data-job="法師" data-type="耳環" data-price="12000000" data-snow="20" data-int="4" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="8" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">聖十字耳環</span></p>
@@ -293,7 +257,6 @@ details[open] summary {
       </div>
       <img src="12ap聖十字耳環(1).png" alt="12ap聖十字耳環(1)">
     </div>
-
       <div class="product" data-name="藍雪鞋" data-job="法師" data-type="鞋子" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="12" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
@@ -305,30 +268,17 @@ details[open] summary {
       </div>     
       <img src="12速藍雪鞋.png" alt="藍雪鞋(+6)">
     </div>
-
-
     <div class="product" data-name="藍雪鞋" data-job="法師" data-type="鞋子" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="10" data-acc="0">
-
       <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">藍雪鞋</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">移動速度+10</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">3雪 / 180萬楓幣</span></p>
-
       </div>
       <img src="10速藍雪鞋.png" alt="藍雪鞋(+5)">
     </div>
-
-
-
     <div class="product" data-name="紅色艾倫鞋" data-job="法師" data-type="鞋子" data-price="3000000" data-snow="5" data-int="4" data-luk="2" data-str="0" data-dex="0" data-atk="0" data-matk="1" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="8" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">紅色艾倫鞋</span></p>
@@ -341,31 +291,18 @@ details[open] summary {
       </div>
       <img src="8速7屬艾倫鞋.png" alt="紅色艾倫鞋(+4)">
     </div>
-
-    
-
       <div class="product" data-name="銀龍槍" data-job="劍士" data-type="武器" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="10" data-atk="93" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="19">
-
       <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">銀龍槍</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">敏捷+10 物攻+93</span></p>
-
         <p><span class="value">命中+19</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">10雪 / 600萬楓幣</span></p>
-
       </div>
       <img src="19命中+5銀龍槍.png" alt="銀龍槍(+5)">
     </div>
-
     <div class="product" data-name="彩色游泳圈" data-job="通用" data-type="武器" data-price="300000" data-snow="0.5" data-int="0" data-luk="0" data-str="2" data-dex="0" data-atk="89" data-matk="0" data-hp="0" data-mp="0" data-jump="10" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">彩色游泳圈</span></p>
@@ -378,7 +315,6 @@ details[open] summary {
       </div>     
       <img src="彩色游泳圈(+2).png" alt="彩色游泳圈(+2)">
     </div>
-
         <div class="product" data-name="彩色游泳圈" data-job="通用" data-type="武器" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="5" data-dex="0" data-atk="95" data-matk="0" data-hp="0" data-mp="0" data-jump="10" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">彩色游泳圈</span></p>
@@ -391,7 +327,6 @@ details[open] summary {
       </div>     
       <img src="彩色游泳圈(+5).png" alt="彩色游泳圈(+5)">
     </div>
-
             <div class="product" data-name="藍色條紋游泳圈" data-job="通用" data-type="武器" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="6" data-dex="0" data-atk="27" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">藍色條紋游泳圈</span></p>
@@ -403,7 +338,6 @@ details[open] summary {
       </div>     
       <img src="藍色條紋游泳圈(+6).png" alt="藍色條紋游泳圈(+6)">
     </div>
-
 <div class="product" data-name="救生圈" data-job="通用" data-type="武器" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="4" data-dex="0" data-atk="83" data-matk="0" data-hp="150" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
       <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">救生圈</span></p>
@@ -416,178 +350,84 @@ details[open] summary {
       </div>     
       <img src="救生圈(+4).png" alt="救生圈(+4)">
     </div>
-    
-
         <div class="product" data-name="霸王劍" data-job="劍士" data-type="武器" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="0" data-atk="95" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">霸王劍</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">力量+5 物攻+95</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">7雪 / 420萬楓幣</span></p>
-
       </div>   
-
       <img src="95ad+5霸王劍.png" alt="霸王劍(+5)">
-
     </div>
-
-    
-
     <div class="product" data-name="紅色艾姆普里斯戰甲" data-job="劍士" data-type="套服" data-price="4200000" data-snow="7" data-int="0" data-luk="0" data-str="5" data-dex="15" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="9">
-
       <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">紅色艾姆普里斯戰甲</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">力量+5 敏捷+15</span></p>
-
         <p><span class="value">命中+9</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">7雪 / 420萬楓幣</span></p>
-
       </div>
-
       <img src="劍士29屬套服(紅).png" alt="29屬套服(lv.80/紅/+6)">
-
     </div>
-
-
-
     <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="下衣" data-price="3000000" data-snow="5" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="65" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">粉紅優雅緊身裙</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">Hp+65</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">5雪 / 300萬楓幣</span></p>
-
       </div>   
-
       <img src="65hp下衣(1).png" alt="65hp下衣(1)">
-
     </div>
-
-
-
     <div class="product" data-name="粉紅優雅緊身裙" data-job="法師" data-type="下衣" data-price="45000000" data-snow="75" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="110" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">粉紅優雅緊身裙</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">Hp+110</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">75雪 / 4500萬楓幣</span></p>
-
       </div>   
-
       <img src="下衣(1)110hp.png" alt="下衣(1)110hp">
-
     </div>
-
-    
-
     <div class="product" data-name="粉紅優雅緊身衣" data-job="法師" data-type="上衣" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="100" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">粉紅優雅緊身衣</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">Hp+100</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">30雪 / 1800萬楓幣</span></p>
-
       </div>   
-
       <img src="100hp上衣(1).png" alt="100hp上衣(1)">
-
     </div>
-
-
-
     <div class="product" data-name="方形木盾" data-job="通用" data-type="盾牌" data-price="18000000" data-snow="30" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="105" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">方形木盾</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">Hp+105</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">30雪 / 1800萬楓幣</span></p>
-
       </div>   
-
       <img src="105hp木盾(1).png" alt="105hp木盾(1)">
-
     </div>
-
-
-
     <div class="product" data-name="黑色魔法披風" data-job="通用" data-type="披風" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="50" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">黑色魔法披風</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">Hp+50</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
-
       </div>   
-
       <img src="50hp黑色魔法披風(1).png" alt="50hp黑色魔法披風(1)">
-
     </div>
-
-
-
     <div class="product" data-name="紫水晶耳環" data-job="通用" data-type="耳環" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">紫水晶耳環</span></p>
@@ -599,7 +439,6 @@ details[open] summary {
       </div>   
       <img src="60hp紫水晶耳環(1).png" alt="60hp紫水晶耳環(1)">
     </div>
-
     <div class="product" data-name="鑽石護盾" data-job="法師" data-type="盾牌" data-price="15000000" data-snow="25" data-int="1" data-luk="8" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">鑽石護盾</span></p>
@@ -611,7 +450,6 @@ details[open] summary {
       </div>   
       <img src="1智8幸鑽盾(1).png" alt="1智8幸鑽盾(1)">
     </div>
-
     <div class="product" data-name="神秘護盾" data-job="法師" data-type="盾牌" data-price="15000000" data-snow="25" data-int="2" data-luk="6" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">神秘護盾</span></p>
@@ -623,7 +461,6 @@ details[open] summary {
       </div>   
       <img src="2智6幸神秘護盾(1).png" alt="2智6幸神秘護盾(1)">
     </div>
-
     <div class="product" data-name="紅色鞭子" data-job="通用" data-type="武器" data-price="600000" data-snow="1" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="48" data-matk="0" data-hp="60" data-mp="0" data-jump="0" data-avoid="0" data-spd="15" data-acc="0">
         <div class="info">
         <p><span class="label-name">商品名:</span> <span class="value">紅色鞭子</span></p>
@@ -636,134 +473,76 @@ details[open] summary {
       </div>   
       <img src="15速紅鞭(1).png" alt="15速紅鞭(1)">
     </div>
-
     <div class="product" data-name="愛心耳環" data-job="通用" data-type="耳環" data-price="15000000" data-snow="25" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">愛心耳環</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">Hp+75</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">25雪 / 1500萬楓幣</span></p>
-
       </div>   
-
       <img src="75hp愛心耳環(1).png" alt="75hp愛心耳環(1)">
-
     </div>
-
-
-
     <div class="product" data-name="工地手套" data-job="通用" data-type="手套" data-price="9000000" data-snow="15" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="75" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">工地手套</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">Hp+75</span></p>
-
         <p><span class="label">剩餘卷軸數:</span> <span class="value">0</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">15雪 / 900萬楓幣</span></p>
       </div>   
       <img src="工地手套75hp.png" alt="工地手套75hp">
     </div>
-
         <div class="product" data-name="披風敏捷性卷軸60%" data-job="通用" data-type="卷軸&消耗品" data-price="6000000" data-snow="10" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">披風敏捷性卷軸60%</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">敏捷+2 成功率60%</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">5</span></p>
-
         <p><span class="label">售價:</span> <span class="value">10雪 / 600萬楓幣</span></p>
       </div>   
       <img src="披風敏捷性卷軸60.png" class="product-img long-img" alt="披風敏捷性卷軸60%">
     </div>
-
        <div class="product" data-name="手槍攻擊力卷軸60%" data-job="通用" data-type="卷軸&消耗品" data-price="1200000" data-snow="2" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">手槍攻擊力卷軸60%</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">物攻+2 命中+1</span></p>
-
         <p><span class="value">成功率60%</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">2</span></p>
-
         <p><span class="label">售價:</span> <span class="value">2雪 / 120萬楓幣</span></p>
       </div>   
       <img src="手槍攻擊力卷軸60.png" class="product-img long-img" alt="手槍攻擊力卷軸60%">
     </div>
-
           <div class="product" data-name="短劍攻擊力卷軸10%" data-job="通用" data-type="卷軸&消耗品" data-price="1200000" data-snow="2" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">短劍攻擊力卷軸10%</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">物攻+5 幸運+3</span></p>
-
         <p><span class="value">物防+1 成功率10%</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">2雪 / 120萬楓幣</span></p>
       </div>   
       <img src="短劍攻擊力卷軸10.png" class="product-img long-img" alt="短劍攻擊力卷軸10%">
     </div>
-
-              <div class="product" data-name="弓攻擊力卷軸10%" data-job="通用" data-type="卷軸&消耗品" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
-
+        <div class="product" data-name="弓攻擊力卷軸10%" data-job="通用" data-type="卷軸&消耗品" data-price="1800000" data-snow="3" data-int="0" data-luk="0" data-str="0" data-dex="0" data-atk="0" data-matk="0" data-hp="0" data-mp="0" data-jump="0" data-avoid="0" data-spd="0" data-acc="0">
         <div class="info">
-
         <p><span class="label-name">商品名:</span> <span class="value">弓攻擊力卷軸10%</span></p>
-
         <p><span class="label">屬性:</span></p>
-
         <p><span class="value">物攻+5 命中+3</span></p>
-
         <p><span class="value">敏捷+1 成功率10%</span></p>
-
         <p><span class="label">商品量:</span> <span class="value">1</span></p>
-
         <p><span class="label">售價:</span> <span class="value">3雪 / 180萬楓幣</span></p>
       </div>   
       <img src="弓攻擊力卷軸10.png" class="product-img long-img" alt="弓攻擊力卷軸10%">
     </div>
-
-    
-
   </div>
-
   <p id="noResults" style="display: none; margin-top: 20px; font-weight: bold; color: #a89f74;">
-
     沒有符合條件的商品
-
   </p>
-
+  
 <script>
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 let productList;
