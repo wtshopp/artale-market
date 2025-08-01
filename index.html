@@ -942,7 +942,6 @@
   </p>
 
 <script>
-// 全域變數初始化
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 let productList;
 let originalHTML;
@@ -956,6 +955,7 @@ function initProductStatusControls() {
 
     const select = document.createElement("select");
     select.className = "status-select";
+    select.style.display = isAdmin ? "inline-block" : "none";
 
     const option1 = new Option("上架中", "on-sale");
     const option2 = new Option("已售出", "sold-out");
@@ -1097,7 +1097,35 @@ window.addEventListener("load", () => {
   originalHTML = productList.innerHTML;
   originalProducts.push(...document.querySelectorAll(".product"));
 
-  initProductStatusControls();
+  // 管理員登入按鈕
+  const adminBtn = document.createElement("button");
+  adminBtn.id = "admin-login-button";
+  adminBtn.textContent = isAdmin ? "管理員登出" : "管理員登入";
+  Object.assign(adminBtn.style, {
+    position: "fixed", top: "10px", right: "10px", zIndex: 9999,
+    padding: "8px 12px", backgroundColor: "#007bff", color: "white",
+    border: "none", borderRadius: "5px", cursor: "pointer"
+  });
+
+  adminBtn.addEventListener("click", () => {
+    if (!isAdmin) {
+      const pwd = prompt("請輸入管理員密碼：");
+      if (pwd === "062205") {
+        isAdmin = true;
+        localStorage.setItem("isAdmin", "true");
+        alert("登入成功！");
+      } else {
+        return alert("密碼錯誤！");
+      }
+    } else {
+      isAdmin = false;
+      localStorage.setItem("isAdmin", "false");
+    }
+    location.reload();
+  });
+
+  document.body.appendChild(adminBtn);
+
   filterProducts();
 });
 
@@ -1107,5 +1135,6 @@ document.getElementById("jobSelect").addEventListener("change", filterProducts);
 document.querySelectorAll(".advanced-grid input").forEach(i => i.addEventListener("input", filterProducts));
 document.getElementById("priceSort").addEventListener("click", () => sortBy("price"));
 document.getElementById("snowSort").addEventListener("click", () => sortBy("snow"));
+</script>
 </body>
 </html>
