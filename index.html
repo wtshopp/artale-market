@@ -410,12 +410,10 @@
           <label>迴避<input type="number" id="avoidMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="avoidMax" placeholder="最大" style="width: 60px;"></label>
 
           <label>移動速度<input type="number" id="spdMin" placeholder="最小" style="width: 60px;"> ~ <input type="number" id="spdMax" placeholder="最大" style="width: 60px;"></label>
-
         </div>
-
-      </div>
-
+      </div> 
     </details>
+</div> 
     <div id="admin-control-panel" style="display:none; position: fixed; top: 100px; right: 10px; background: #f0f0f0; border: 1px solid #ccc; padding: 10px;">
   <label>選擇商品 ID（可複選）：</label><br>
   <select id="product-id-select" multiple size="5" style="width: 100%;">
@@ -946,7 +944,7 @@
  <script>
     // 先取得登入狀態
     let isAdmin = localStorage.getItem("isAdmin") === "true";
-
+    const products = document.querySelectorAll(".product[id]");
     // 新增：初始化商品狀態選單與售出標籤
     function initProductStatusControls() {
       originalProducts.forEach(product => {
@@ -1070,7 +1068,7 @@
 
       controlPanel.innerHTML = `
         <label for="admin-product-select">選擇商品 ID（可複選）</label>
-        <select id="admin-product-select" multiple size="5" style="width: 100%; margin-top: 2px;"></select><br><br>
+        <select id="admin-product-select" style="width: 100%; margin-top: 5px;"></select><br><br>
         <label for="admin-status-select">設定狀態</label>
         <select id="admin-status-select" style="width: 100%; margin-top: 5px;">
           <option value="on-sale">上架中</option>
@@ -1143,8 +1141,6 @@
     return;
   }
   selectEl.innerHTML = "";
-
-  const products = document.querySelectorAll(".product[id]");
   if(products.length === 0){
     console.warn("找不到任何帶有 id 的商品元素");
   }
