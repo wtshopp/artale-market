@@ -944,16 +944,21 @@
   </p>
 
  <script>
-         let isAdmin = localStorage.getItem("isAdmin") === "true";
+    // 先取得登入狀態
+    let isAdmin = localStorage.getItem("isAdmin") === "true";
 
+    // 新增：初始化商品狀態選單與售出標籤
     function initProductStatusControls() {
       originalProducts.forEach(product => {
+        // 不重複加入狀態選單
         if (product.querySelector(".status-select")) return;
 
+        // 建立狀態下拉選單
         const select = document.createElement("select");
         select.className = "status-select";
-        select.style.display = isAdmin ? "inline-block" : "none";
+        select.style.display = isAdmin ? "inline-block" : "none"; // 非管理員隱藏
 
+        // 加入選項
         const optionOnSale = document.createElement("option");
         optionOnSale.value = "on-sale";
         optionOnSale.textContent = "上架中";
@@ -963,18 +968,22 @@
         select.appendChild(optionOnSale);
         select.appendChild(optionSoldOut);
 
+        // 讀取存儲的狀態
         const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
         select.value = savedStatus;
 
+        // 根據狀態設定外觀
         updateProductStatusVisual(product, savedStatus);
 
+        // 狀態變更監聽
         select.addEventListener("change", e => {
           const status = e.target.value;
           localStorage.setItem("product-status-" + product.id, status);
           updateProductStatusVisual(product, status);
         });
 
-        product.style.position = "relative";
+        // 狀態選單放在商品內右下角（視需求調整位置）
+        product.style.position = "relative"; // 確保相對定位
         select.style.position = "absolute";
         select.style.bottom = "10px";
         select.style.right = "10px";
@@ -982,9 +991,11 @@
       });
     }
 
+    // 根據狀態更新商品外觀和標籤
     function updateProductStatusVisual(product, status) {
       if (status === "sold-out") {
         product.classList.add("sold");
+        // 如果還沒標籤，新增
         if (!product.querySelector(".sold-label")) {
           const label = document.createElement("div");
           label.className = "sold-label";
@@ -1000,62 +1011,33 @@
         }
       } else {
         product.classList.remove("sold");
+        // 移除標籤
         const label = product.querySelector(".sold-label");
         if (label) label.remove();
       }
     }
 
-    function fillAdminProductSelect() {
-      const selectEl = document.getElementById("admin-product-select");
-      if (!selectEl) return;
-      selectEl.innerHTML = "";
+    // 你原本的 filterProducts 呼叫時，先初始化狀態控制
+    filterProducts = (function(originalFilter) {
+      return function() {
+        // 先恢復商品原始狀態
+        productList.innerHTML = originalHTML;
+        // 更新 originalProducts 參考（篩選後需重新取得）
+        originalProducts.length = 0;
+        originalProducts.push(...Array.from(document.querySelectorAll(".product")));
 
-      const products = document.querySelectorAll(".product[id]");
-      products.forEach(product => {
-        const id = product.id;
-        if (!id) return;
-        const option = document.createElement("option");
-        option.value = id;
-        option.textContent = id;
-        selectEl.appendChild(option);
-      });
-    }
+        // 呼叫原本的 filterProducts 功能
+        originalFilter();
 
-    function showLogDiv() {
-      let logDiv = document.getElementById("admin-log");
-      if (!logDiv) {
-        logDiv = document.createElement("div");
-        logDiv.id = "admin-log";
-        logDiv.style.position = "fixed";
-        logDiv.style.bottom = "10px";
-        logDiv.style.left = "10px";
-        logDiv.style.backgroundColor = "rgba(0,0,0,0.7)";
-        logDiv.style.color = "white";
-        logDiv.style.padding = "10px";
-        logDiv.style.maxHeight = "200px";
-        logDiv.style.overflowY = "auto";
-        logDiv.style.zIndex = 10000;
-        logDiv.style.fontSize = "12px";
-        logDiv.style.fontFamily = "monospace";
-        document.body.appendChild(logDiv);
-      }
-      logDiv.innerHTML = "";
-      const products = document.querySelectorAll(".product[id]");
-      logDiv.innerHTML += `找到的商品數量：${products.length}<br>`;
-      products.forEach((p, i) => {
-        logDiv.innerHTML += `第${i + 1}個商品ID: ${p.id}<br>`;
-      });
+        // 篩選完後，初始化狀態控制和售出標籤
+        initProductStatusControls();
+        if (isAdmin) fillAdminProductSelect();
+      };
+    })(filterProducts);
 
-      const selectEl = document.getElementById("admin-product-select");
-      logDiv.innerHTML += `下拉選單選項數量：${selectEl?.options.length || 0}<br>`;
-    }
-
-    let originalProducts;
-
+    // 建立管理員登入按鈕及控制台區塊
     window.addEventListener("load", () => {
-      const productList = document.querySelector(".product-list");
-      originalProducts = Array.from(document.querySelectorAll(".product"));
-
+      // 建立管理員登入按鈕
       const adminBtn = document.createElement("button");
       adminBtn.id = "admin-login-button";
       adminBtn.style.position = "fixed";
@@ -1070,8 +1052,8 @@
       adminBtn.style.cursor = "pointer";
       adminBtn.style.fontSize = "14px";
       adminBtn.textContent = isAdmin ? "管理員登出" : "管理員登入";
-      document.body.appendChild(adminBtn);
 
+      // 建立管理員控制台容器，預設隱藏
       const controlPanel = document.createElement("div");
       controlPanel.id = "admin-control-panel";
       controlPanel.style.position = "fixed";
@@ -1085,7 +1067,8 @@
       controlPanel.style.display = isAdmin ? "block" : "none";
       controlPanel.style.fontSize = "12px";
       controlPanel.style.borderRadius = "5px";
-      controlPanel.innerHTML = `
+
+      controlPanel.innerHTML = 
         <label for="admin-product-select" style="font-weight:bold;">選擇商品 ID（可複選）</label><br>
         <select id="admin-product-select" multiple size="6" style="width: 100%; margin-top: 5px;"></select><br><br>
         <label for="admin-status-select" style="font-weight:bold;">設定狀態</label><br>
@@ -1094,20 +1077,25 @@
           <option value="sold-out">已售出</option>
         </select><br><br>
         <button id="admin-update-btn" style="width:100%; padding:6px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer;">確認變更</button>
-      `;
-      document.body.appendChild(controlPanel);
+      ;
 
+      document.body.appendChild(adminBtn);
+      document.body.appendChild(controlPanel);
+      fillAdminProductSelect();
+      // 載入商品ID到控制台
+      if (isAdmin) fillAdminProductSelect();
+
+      // 登入按鈕點擊事件
       adminBtn.addEventListener("click", () => {
         if (!isAdmin) {
-          const password = prompt("請輸入管理員密碼：");
-          if (password === "0000") {
+          const pwd = prompt("請輸入管理員密碼：");
+          if (pwd === null) return; // 取消
+          if (pwd === "0000") {
             isAdmin = true;
             localStorage.setItem("isAdmin", "true");
             adminBtn.textContent = "管理員登出";
             controlPanel.style.display = "block";
-            showLogDiv();
             fillAdminProductSelect();
-            initProductStatusControls();
             alert("登入成功！");
           } else {
             alert("密碼錯誤，無法登入！");
@@ -1117,39 +1105,34 @@
           localStorage.setItem("isAdmin", "false");
           adminBtn.textContent = "管理員登入";
           controlPanel.style.display = "none";
-          const log = document.getElementById("admin-log");
-          if (log) log.remove();
-          initProductStatusControls();
         }
+        initProductStatusControls();
       });
 
-      document.body.addEventListener("click", e => {
-        if (e.target.id === "admin-update-btn") {
-          const selectEl = document.getElementById("admin-product-select");
-          const selectedIds = Array.from(selectEl.selectedOptions).map(opt => opt.value);
-          const status = document.getElementById("admin-status-select").value;
-          if (selectedIds.length === 0) {
-            alert("請至少選擇一個商品 ID");
-            return;
+      // 確認按鈕事件：批量更新商品狀態
+      document.getElementById("admin-update-btn").addEventListener("click", () => {
+        const selectEl = document.getElementById("admin-product-select");
+        const selectedIds = Array.from(selectEl.selectedOptions).map(opt => opt.value);
+        const status = document.getElementById("admin-status-select").value;
+
+        if (selectedIds.length === 0) {
+          alert("請至少選擇一個商品 ID");
+          return;
+        }
+
+        selectedIds.forEach(id => {
+          const product = document.getElementById(id);
+          if (product) {
+            localStorage.setItem("product-status-" + id, status);
+            updateProductStatusVisual(product, status);
+            const statusSelect = product.querySelector(".status-select");
+            if (statusSelect) statusSelect.value = status;
           }
-          selectedIds.forEach(id => {
-            const product = document.getElementById(id);
-            if (product) {
-              localStorage.setItem("product-status-" + id, status);
-              updateProductStatusVisual(product, status);
-              const statusSelect = product.querySelector(".status-select");
-              if (statusSelect) statusSelect.value = status;
-            }
-          });
-          alert("商品狀態已更新！");
-        }
+        });
+
+        alert("商品狀態已更新！");
       });
 
-      if (isAdmin) {
-        fillAdminProductSelect();
-        showLogDiv();
-      }
-      initProductStatusControls();
     });
 
     // 載入商品ID至管理員控制台下拉選單
@@ -1283,10 +1266,29 @@
     initProductStatusControls();
     if (isAdmin) fillAdminProductSelect();
 
+
+
+
+   window.addEventListener("load", () => {
+  // 建立一個顯示訊息的區塊
+  const logDiv = document.createElement("div");
+  logDiv.style.position = "fixed";
+  logDiv.style.bottom = "10px";
+  logDiv.style.left = "10px";
+  logDiv.style.backgroundColor = "rgba(0,0,0,0.7)";
+  logDiv.style.color = "white";
+  logDiv.style.padding = "10px";
+  logDiv.style.maxHeight = "200px";
+  logDiv.style.overflowY = "auto";
+  logDiv.style.zIndex = 10000;
+  logDiv.style.fontSize = "12px";
+  logDiv.style.fontFamily = "monospace";
+  document.body.appendChild(logDiv);
+
   const products = document.querySelectorAll(".product[id]");
-  logDiv.innerHTML += `找到的商品數量：${products.length}<br>`;
+  logDiv.innerHTML += 找到的商品數量：${products.length}<br>;
   products.forEach((p, i) => {
-    logDiv.innerHTML += `第${i + 1}個商品ID: ${p.id}<br>`;
+    logDiv.innerHTML += 第${i + 1}個商品ID: ${p.id}<br>;
   });
 
   const selectEl = document.getElementById("admin-product-select");
@@ -1298,13 +1300,11 @@
       opt.textContent = p.id;
       selectEl.appendChild(opt);
     });
-    logDiv.innerHTML += `下拉選單選項數量：${selectEl.options.length}<br>`;
+    logDiv.innerHTML += 下拉選單選項數量：${selectEl.options.length}<br>;
   } else {
-    logDiv.innerHTML += `找不到下拉選單 #admin-product-select<br>`;
+    logDiv.innerHTML += 找不到下拉選單 #admin-product-select<br>;
   }
 });
-
-   
 </script>
 </body>
 </html>
