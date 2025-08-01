@@ -944,7 +944,7 @@
   </p>
 
  <script>
-     let isAdmin = localStorage.getItem("isAdmin") === "true";
+         let isAdmin = localStorage.getItem("isAdmin") === "true";
 
     function initProductStatusControls() {
       originalProducts.forEach(product => {
@@ -1050,7 +1050,12 @@
       logDiv.innerHTML += `下拉選單選項數量：${selectEl?.options.length || 0}<br>`;
     }
 
+    let originalProducts;
+
     window.addEventListener("load", () => {
+      const productList = document.querySelector(".product-list");
+      originalProducts = Array.from(document.querySelectorAll(".product"));
+
       const adminBtn = document.createElement("button");
       adminBtn.id = "admin-login-button";
       adminBtn.style.position = "fixed";
@@ -1065,7 +1070,6 @@
       adminBtn.style.cursor = "pointer";
       adminBtn.style.fontSize = "14px";
       adminBtn.textContent = isAdmin ? "管理員登出" : "管理員登入";
-
       document.body.appendChild(adminBtn);
 
       const controlPanel = document.createElement("div");
@@ -1081,7 +1085,6 @@
       controlPanel.style.display = isAdmin ? "block" : "none";
       controlPanel.style.fontSize = "12px";
       controlPanel.style.borderRadius = "5px";
-
       controlPanel.innerHTML = `
         <label for="admin-product-select" style="font-weight:bold;">選擇商品 ID（可複選）</label><br>
         <select id="admin-product-select" multiple size="6" style="width: 100%; margin-top: 5px;"></select><br><br>
@@ -1092,22 +1095,23 @@
         </select><br><br>
         <button id="admin-update-btn" style="width:100%; padding:6px; background:#007bff; color:white; border:none; border-radius:5px; cursor:pointer;">確認變更</button>
       `;
-
       document.body.appendChild(controlPanel);
 
       adminBtn.addEventListener("click", () => {
-        const password = !isAdmin ? prompt("請輸入管理員密碼：") : null;
-        if (!isAdmin && password === "0000") {
-          isAdmin = true;
-          localStorage.setItem("isAdmin", "true");
-          adminBtn.textContent = "管理員登出";
-          controlPanel.style.display = "block";
-          fillAdminProductSelect();
-          showLogDiv();
-          initProductStatusControls();
-          alert("登入成功！");
-        } else if (!isAdmin && password !== null) {
-          alert("密碼錯誤，無法登入！");
+        if (!isAdmin) {
+          const password = prompt("請輸入管理員密碼：");
+          if (password === "0000") {
+            isAdmin = true;
+            localStorage.setItem("isAdmin", "true");
+            adminBtn.textContent = "管理員登出";
+            controlPanel.style.display = "block";
+            showLogDiv();
+            fillAdminProductSelect();
+            initProductStatusControls();
+            alert("登入成功！");
+          } else {
+            alert("密碼錯誤，無法登入！");
+          }
         } else {
           isAdmin = false;
           localStorage.setItem("isAdmin", "false");
@@ -1124,12 +1128,10 @@
           const selectEl = document.getElementById("admin-product-select");
           const selectedIds = Array.from(selectEl.selectedOptions).map(opt => opt.value);
           const status = document.getElementById("admin-status-select").value;
-
           if (selectedIds.length === 0) {
             alert("請至少選擇一個商品 ID");
             return;
           }
-
           selectedIds.forEach(id => {
             const product = document.getElementById(id);
             if (product) {
@@ -1139,7 +1141,6 @@
               if (statusSelect) statusSelect.value = status;
             }
           });
-
           alert("商品狀態已更新！");
         }
       });
@@ -1148,7 +1149,6 @@
         fillAdminProductSelect();
         showLogDiv();
       }
-
       initProductStatusControls();
     });
 
