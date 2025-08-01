@@ -1126,7 +1126,7 @@ window.addEventListener("load", () => {
     border: "none", borderRadius: "5px", cursor: "pointer"
   });
 
- adminBtn.addEventListener("click", () => {
+adminBtn.addEventListener("click", () => {
   if (!isAdmin) {
     const pwd = prompt("請輸入管理員密碼：");
     if (pwd === "062205") {
@@ -1134,16 +1134,26 @@ window.addEventListener("load", () => {
       localStorage.setItem("isAdmin", "true");
       alert("登入成功！");
       adminBtn.textContent = "管理員登出";
-      filterProducts(); // ← ✅ 必須重新執行初始化，才能讓下拉選單出現
+
+      // ✅ 重建商品區域並重新套用控制器
+      productList.innerHTML = originalHTML;
+      originalProducts.length = 0;
+      originalProducts.push(...document.querySelectorAll(".product"));
+      filterProducts();
     } else {
-      alert("密碼錯誤！");
+      return alert("密碼錯誤！");
     }
   } else {
     isAdmin = false;
     localStorage.setItem("isAdmin", "false");
     alert("已登出！");
     adminBtn.textContent = "管理員登入";
-    filterProducts(); // ← ✅ 登出後也要重繪，移除下拉選單
+
+    // ✅ 登出後也重新建立商品清單並清除選單
+    productList.innerHTML = originalHTML;
+    originalProducts.length = 0;
+    originalProducts.push(...document.querySelectorAll(".product"));
+    filterProducts();
   }
 });
 // === [ 綁定事件 ] ===
