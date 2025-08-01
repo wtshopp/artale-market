@@ -944,9 +944,10 @@
   </p>
 
 <script>
-   function isAdmin() {
-  return localStorage.getItem("isAdmin") === "true";
-}
+    function isAdmin() {
+      return localStorage.getItem("isAdmin") === "true";
+    }
+
     function initProductStatusControls() {
       originalProducts.forEach(product => {
         if (product.querySelector(".status-select")) return;
@@ -1085,7 +1086,7 @@
       controlPanel.style.width = "220px";
       controlPanel.style.maxHeight = "calc(100vh - 60px)";
       controlPanel.style.overflowY = "auto";
-      controlPanel.style.display = isAdmin ? "block" : "none";
+      controlPanel.style.display = isAdmin() ? "block" : "none";
       controlPanel.style.fontSize = "12px";
       controlPanel.style.borderRadius = "5px";
       controlPanel.innerHTML = `
@@ -1104,7 +1105,6 @@
         if (!isAdmin()) {
           const password = prompt("請輸入管理員密碼：");
           if (password === "0000") {
-            isAdmin = true;
             localStorage.setItem("isAdmin", "true");
             adminBtn.textContent = "管理員登出";
             controlPanel.style.display = "block";
@@ -1116,7 +1116,6 @@
             alert("密碼錯誤，無法登入！");
           }
         } else {
-          isAdmin() = false;
           localStorage.setItem("isAdmin", "false");
           adminBtn.textContent = "管理員登入";
           controlPanel.style.display = "none";
