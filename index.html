@@ -944,15 +944,16 @@
   </p>
 
 <script>
-    let isAdmin = localStorage.getItem("isAdmin") === "true";
-
+   function isAdmin() {
+  return localStorage.getItem("isAdmin") === "true";
+}
     function initProductStatusControls() {
       originalProducts.forEach(product => {
         if (product.querySelector(".status-select")) return;
 
         const select = document.createElement("select");
         select.className = "status-select";
-        select.style.display = isAdmin ? "inline-block" : "none";
+        select.style.display = isAdmin() ? "inline-block" : "none";
 
         const optionOnSale = document.createElement("option");
         optionOnSale.value = "on-sale";
@@ -1069,7 +1070,7 @@
       adminBtn.style.borderRadius = "5px";
       adminBtn.style.cursor = "pointer";
       adminBtn.style.fontSize = "14px";
-      adminBtn.textContent = isAdmin ? "管理員登出" : "管理員登入";
+      adminBtn.textContent = isAdmin() ? "管理員登出" : "管理員登入";
       document.body.appendChild(adminBtn);
 
       const controlPanel = document.createElement("div");
@@ -1100,7 +1101,7 @@
       document.body.appendChild(controlPanel);
 
       adminBtn.addEventListener("click", () => {
-        if (!isAdmin) {
+        if (!isAdmin()) {
           const password = prompt("請輸入管理員密碼：");
           if (password === "0000") {
             isAdmin = true;
@@ -1115,7 +1116,7 @@
             alert("密碼錯誤，無法登入！");
           }
         } else {
-          isAdmin = false;
+          isAdmin() = false;
           localStorage.setItem("isAdmin", "false");
           adminBtn.textContent = "管理員登入";
           controlPanel.style.display = "none";
@@ -1147,7 +1148,7 @@
         }
       });
 
-      if (isAdmin) {
+      if (isAdmin()) {
         fillAdminProductSelect();
         showLogDiv();
       }
@@ -1282,7 +1283,7 @@
 
     // 初始執行商品狀態控制和管理員控制台（如果登入）
     initProductStatusControls();
-    if (isAdmin) fillAdminProductSelect();
+    if (isAdmin()) fillAdminProductSelect();
 
 
 
