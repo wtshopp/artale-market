@@ -1086,8 +1086,8 @@ filterProducts = (function (originalFilter) {
     productList.innerHTML = originalHTML;
     originalProducts.length = 0;
     originalProducts.push(...document.querySelectorAll(".product"));
-
     originalFilter();
+    initProductStatusControls();
   };
 })(filterProducts);
 
@@ -1136,6 +1136,7 @@ window.addEventListener("load", () => {
         alert("登入成功！");
         adminBtn.textContent = "管理員登出";
         filterProducts();
+        initProductStatusControls();
       } else {
         return alert("密碼錯誤！");
       }
@@ -1145,6 +1146,7 @@ window.addEventListener("load", () => {
       alert("已登出！");
       adminBtn.textContent = "管理員登入";
       filterProducts();
+      initProductStatusControls();
     }
   });
 
