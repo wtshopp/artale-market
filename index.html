@@ -1129,12 +1129,14 @@ window.addEventListener("load", () => {
   adminBtn.addEventListener("click", () => {
     if (!isAdmin) {
       const pwd = prompt("請輸入管理員密碼：");
-      if (pwd === "062205") {
-        isAdmin = true;
-        localStorage.setItem("isAdmin", "true");
-        alert("登入成功！");
-        adminBtn.textContent = "管理員登出";
-        filterProducts(); // 重新初始化狀態控制器
+     if (pwd === "062205") {
+  isAdmin = true;
+  localStorage.setItem("isAdmin", "true");
+  alert("登入成功！");
+  adminBtn.textContent = "管理員登出";
+  filterProducts();        // 重新載入商品
+  initProductStatusControls(); // <<== ⬅⬅ 加上這行保險
+}
       } else {
         alert("密碼錯誤！");
       }
