@@ -979,15 +979,14 @@ function updateProductStatusVisual(product, status) {
   }
 }
 
-// === [ 商品狀態控制器（每張卡各自擁有選單） ] ===
 function initProductStatusControls() {
   originalProducts.forEach(product => {
     const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
-
-    // 所有人都應套用紅框 / 已售出標籤
+    
+    // ✅ 所有人：都套用視覺樣式（紅框 / 已售出標籤）
     updateProductStatusVisual(product, savedStatus);
 
-    // 避免重複建立 select
+    // ✅ 管理員限定：才顯示選單
     let select = product.querySelector(".status-select");
     if (!select) {
       select = document.createElement("select");
@@ -995,22 +994,22 @@ function initProductStatusControls() {
       product.appendChild(select);
     }
 
-    // 更新選單內容與狀態
     select.innerHTML = "";
-    select.append(new Option("上架中", "on-sale"));
-    select.append(new Option("已售出", "sold-out"));
+    const option1 = new Option("上架中", "on-sale");
+    const option2 = new Option("已售出", "sold-out");
+    select.append(option1, option2);
     select.value = savedStatus;
 
-    select.onchange = (e) => {
+    // 變更狀態時，同步更新
+    select.addEventListener("change", e => {
       const status = e.target.value;
       localStorage.setItem("product-status-" + product.id, status);
       updateProductStatusVisual(product, status);
-    };
+    });
 
-    // 僅管理員顯示下拉選單
+    // ✅ 僅登入後才顯示選單
     select.style.display = isAdmin ? "inline-block" : "none";
 
-    // 確保商品卡內相對定位
     product.style.position = "relative";
     Object.assign(select.style, {
       position: "absolute",
@@ -1020,7 +1019,7 @@ function initProductStatusControls() {
   });
 }
 
-// === [ 篩選邏輯 ] ===
+// === [ 篩選相關邏輯 ] ===
 function getValue(id, fallback) {
   const val = document.getElementById(id)?.value;
   return val === "" ? fallback : parseInt(val);
@@ -1076,9 +1075,12 @@ function filterProducts() {
 
   const noResults = document.getElementById("noResults");
   if (noResults) noResults.style.display = sorted.length === 0 ? "block" : "none";
+
+  // ✅ 重新套用狀態標籤與選單
+  initProductStatusControls();
 }
 
-// === [ 篩選包裝處理：確保狀態與選單完整重建 ] ===
+// === [ 篩選函式包裝 ] ===
 filterProducts = (function (originalFilter) {
   return function () {
     productList.innerHTML = originalHTML;
@@ -1086,7 +1088,6 @@ filterProducts = (function (originalFilter) {
     originalProducts.push(...document.querySelectorAll(".product"));
 
     originalFilter();
-    initProductStatusControls();
   };
 })(filterProducts);
 
@@ -1110,13 +1111,13 @@ function resetFilters() {
   filterProducts();
 }
 
-// === [ 初始化頁面 ] ===
+// === [ 初始化：第一次載入 ] ===
 window.addEventListener("load", () => {
   productList = document.getElementById("productList");
   originalHTML = productList.innerHTML;
   originalProducts.push(...document.querySelectorAll(".product"));
 
-  // 登入按鈕建立
+  // ✅ 管理員登入按鈕
   const adminBtn = document.createElement("button");
   adminBtn.id = "admin-login-button";
   adminBtn.textContent = isAdmin ? "管理員登出" : "管理員登入";
@@ -1129,29 +1130,27 @@ window.addEventListener("load", () => {
   adminBtn.addEventListener("click", () => {
     if (!isAdmin) {
       const pwd = prompt("請輸入管理員密碼：");
-     if (pwd === "062205") {
-  isAdmin = true;
-  localStorage.setItem("isAdmin", "true");
-  alert("登入成功！");
-  adminBtn.textContent = "管理員登出";
-  filterProducts();        // 重新載入商品
-  initProductStatusControls(); // <<== ⬅⬅ 加上這行保險
-}
+      if (pwd === "062205") {
+        isAdmin = true;
+        localStorage.setItem("isAdmin", "true");
+        alert("登入成功！");
+        adminBtn.textContent = "管理員登出";
+        filterProducts();
       } else {
-        alert("密碼錯誤！");
+        return alert("密碼錯誤！");
       }
     } else {
       isAdmin = false;
       localStorage.setItem("isAdmin", "false");
       alert("已登出！");
       adminBtn.textContent = "管理員登入";
-      filterProducts(); // 移除選單
+      filterProducts();
     }
   });
 
   document.body.appendChild(adminBtn);
 
-  // 首次篩選與初始化
+  // 初次載入商品
   filterProducts();
 });
 
