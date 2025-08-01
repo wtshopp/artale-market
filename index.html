@@ -1067,9 +1067,9 @@
       controlPanel.style.borderRadius = "5px";
 
       controlPanel.innerHTML = `
-        <label for="admin-product-select">選擇商品 ID（可複選）</label>
-        <select id="admin-product-select" style="width: 100%; margin-top: 5px;"></select><br><br>
-        <label for="admin-status-select">設定狀態</label>
+        <label for="admin-product-select" style="text-align: left;">選擇商品 ID（可複選）</label>
+        <select id="admin-product-select" multiple size="3" style="width: 100%; margin-top: 5px;"></select><br><br>
+        <label for="admin-status-select" style="text-align: left;">設定狀態</label>
         <select id="admin-status-select" style="width: 100%; margin-top: 5px;">
           <option value="on-sale">上架中</option>
           <option value="sold-out">已售出</option>
