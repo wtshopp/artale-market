@@ -979,11 +979,15 @@ function updateProductStatusVisual(product, status) {
   }
 }
 
-// === [ 商品卡片下拉選單控制（僅管理員可見） ] ===
 function initProductStatusControls() {
   originalProducts.forEach(product => {
-    let select = product.querySelector(".status-select");
+    const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
+    
+    // ✅ 所有人：都套用視覺樣式（紅框 / 已售出標籤）
+    updateProductStatusVisual(product, savedStatus);
 
+    // ✅ 管理員限定：才顯示選單
+    let select = product.querySelector(".status-select");
     if (!select) {
       select = document.createElement("select");
       select.className = "status-select";
@@ -994,22 +998,17 @@ function initProductStatusControls() {
     const option1 = new Option("上架中", "on-sale");
     const option2 = new Option("已售出", "sold-out");
     select.append(option1, option2);
-
-    const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
     select.value = savedStatus;
-    updateProductStatusVisual(product, savedStatus);
 
-    // 僅限管理員可操作
-    if (isAdmin) {
-      select.style.display = "inline-block";
-      select.addEventListener("change", e => {
-        const status = e.target.value;
-        localStorage.setItem("product-status-" + product.id, status);
-        updateProductStatusVisual(product, status);
-      });
-    } else {
-      select.style.display = "none";
-    }
+    // 變更狀態時，同步更新
+    select.addEventListener("change", e => {
+      const status = e.target.value;
+      localStorage.setItem("product-status-" + product.id, status);
+      updateProductStatusVisual(product, status);
+    });
+
+    // ✅ 僅登入後才顯示選單
+    select.style.display = isAdmin ? "inline-block" : "none";
 
     product.style.position = "relative";
     Object.assign(select.style, {
@@ -1019,6 +1018,7 @@ function initProductStatusControls() {
     });
   });
 }
+
 
 // === [ 篩選相關邏輯 ] ===
 function getValue(id, fallback) {
