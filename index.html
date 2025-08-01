@@ -985,39 +985,32 @@ function initProductStatusControls() {
 function updateProductStatusVisual(product, status) {
   if (status === "sold-out") {
     product.classList.add("sold");
+    product.style.border = "2px dashed red"; // 加上紅色虛線邊框
+
     if (!product.querySelector(".sold-label")) {
       const label = document.createElement("div");
       label.className = "sold-label";
       label.textContent = "已售出";
       Object.assign(label.style, {
-        color: "red",
+        color: "white",
+        backgroundColor: "red",
         position: "absolute",
         top: "5px",
         right: "5px",
-        backgroundColor: "rgba(255,255,255,0.8)",
-        padding: "2px 6px",
-        borderRadius: "3px"
+        padding: "4px 8px",
+        borderRadius: "4px",
+        fontWeight: "bold",
+        fontSize: "14px",
+        zIndex: 10
       });
       product.appendChild(label);
     }
   } else {
     product.classList.remove("sold");
+    product.style.border = ""; // 清除邊框樣式
     const label = product.querySelector(".sold-label");
     if (label) label.remove();
   }
-}
-
-function fillAdminProductSelect() {
-  const selectEl = document.getElementById("admin-product-select");
-  if (!selectEl) return;
-  selectEl.innerHTML = "";
-
-  document.querySelectorAll(".product[id]").forEach(product => {
-    const id = product.id;
-    if (!id) return;
-    const option = new Option(id, id);
-    selectEl.appendChild(option);
-  });
 }
 
 function getValue(id, fallback) {
