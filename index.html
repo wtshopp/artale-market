@@ -944,7 +944,6 @@
   </p>
 
  <script>
-    // 先取得登入狀態
     let isAdmin = localStorage.getItem("isAdmin") === "true";
 
     function initProductStatusControls() {
@@ -1023,22 +1022,24 @@
     }
 
     function showLogDiv() {
-      if (document.getElementById("admin-log")) return;
-      const logDiv = document.createElement("div");
-      logDiv.id = "admin-log";
-      logDiv.style.position = "fixed";
-      logDiv.style.bottom = "10px";
-      logDiv.style.left = "10px";
-      logDiv.style.backgroundColor = "rgba(0,0,0,0.7)";
-      logDiv.style.color = "white";
-      logDiv.style.padding = "10px";
-      logDiv.style.maxHeight = "200px";
-      logDiv.style.overflowY = "auto";
-      logDiv.style.zIndex = 10000;
-      logDiv.style.fontSize = "12px";
-      logDiv.style.fontFamily = "monospace";
-      document.body.appendChild(logDiv);
-
+      let logDiv = document.getElementById("admin-log");
+      if (!logDiv) {
+        logDiv = document.createElement("div");
+        logDiv.id = "admin-log";
+        logDiv.style.position = "fixed";
+        logDiv.style.bottom = "10px";
+        logDiv.style.left = "10px";
+        logDiv.style.backgroundColor = "rgba(0,0,0,0.7)";
+        logDiv.style.color = "white";
+        logDiv.style.padding = "10px";
+        logDiv.style.maxHeight = "200px";
+        logDiv.style.overflowY = "auto";
+        logDiv.style.zIndex = 10000;
+        logDiv.style.fontSize = "12px";
+        logDiv.style.fontFamily = "monospace";
+        document.body.appendChild(logDiv);
+      }
+      logDiv.innerHTML = "";
       const products = document.querySelectorAll(".product[id]");
       logDiv.innerHTML += `找到的商品數量：${products.length}<br>`;
       products.forEach((p, i) => {
@@ -1099,19 +1100,17 @@
       }
 
       adminBtn.addEventListener("click", () => {
-        if (!isAdmin) {
-          const pwd = prompt("請輸入管理員密碼：");
-          if (pwd === "0000") {
-            isAdmin = true;
-            localStorage.setItem("isAdmin", "true");
-            adminBtn.textContent = "管理員登出";
-            controlPanel.style.display = "block";
-            fillAdminProductSelect();
-            showLogDiv();
-            alert("登入成功！");
-          } else {
-            alert("密碼錯誤，無法登入！");
-          }
+        const password = !isAdmin ? prompt("請輸入管理員密碼：") : null;
+        if (!isAdmin && password === "0000") {
+          isAdmin = true;
+          localStorage.setItem("isAdmin", "true");
+          adminBtn.textContent = "管理員登出";
+          controlPanel.style.display = "block";
+          fillAdminProductSelect();
+          showLogDiv();
+          alert("登入成功！");
+        } else if (!isAdmin && password !== null) {
+          alert("密碼錯誤，無法登入！");
         } else {
           isAdmin = false;
           localStorage.setItem("isAdmin", "false");
@@ -1120,7 +1119,6 @@
           const log = document.getElementById("admin-log");
           if (log) log.remove();
         }
-
         initProductStatusControls();
       });
 
