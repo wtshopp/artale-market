@@ -1087,6 +1087,16 @@ filterProducts = (function (originalFilter) {
     originalProducts.length = 0;
     originalProducts.push(...document.querySelectorAll(".product"));
     originalFilter();
+
+    // ✅ 修正 isAdmin 被關閉在舊閉包中的問題 → 執行時動態判斷
+    const adminMode = localStorage.getItem("isAdmin") === "true";
+    originalProducts.forEach(product => {
+      const select = product.querySelector(".status-select");
+      if (select) {
+        select.style.display = adminMode ? "inline-block" : "none";
+      }
+    });
+
     initProductStatusControls();
   };
 })(filterProducts);
