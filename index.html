@@ -983,15 +983,17 @@ function initProductStatusControls() {
 }
 
 function updateProductStatusVisual(product, status) {
+  const label = product.querySelector(".sold-label");
+
   if (status === "sold-out") {
     product.classList.add("sold");
-    product.style.border = "2px dashed red"; // 加上紅色虛線邊框
+    product.style.border = "2px dashed red";
 
-    if (!product.querySelector(".sold-label")) {
-      const label = document.createElement("div");
-      label.className = "sold-label";
-      label.textContent = "已售出";
-      Object.assign(label.style, {
+    if (!label) {
+      const soldLabel = document.createElement("div");
+      soldLabel.className = "sold-label";
+      soldLabel.textContent = "已售出";
+      Object.assign(soldLabel.style, {
         color: "white",
         backgroundColor: "red",
         position: "absolute",
@@ -1003,16 +1005,15 @@ function updateProductStatusVisual(product, status) {
         fontSize: "14px",
         zIndex: 10
       });
-      product.appendChild(label);
+      product.appendChild(soldLabel);
     }
   } else {
     product.classList.remove("sold");
-    product.style.border = ""; // 清除邊框樣式
-    const label = product.querySelector(".sold-label");
+    product.style.border = "";
+
     if (label) label.remove();
   }
 }
-
 function getValue(id, fallback) {
   const val = document.getElementById(id)?.value;
   return val === "" ? fallback : parseInt(val);
