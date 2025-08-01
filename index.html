@@ -2,305 +2,102 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8">
-
   <title>西龜商城 🍉🐢</title>
   <link rel="icon" href="favicon.png" type="image/png">
   <style>
-
-    /* 管理員登入按鈕 - 右上角固定 */
-#admin-login-button {
-  position: fixed;
-  top: 10px;
-  right: 10px;
-  z-index: 999;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 8px 12px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 14px;
-}
-#admin-login-button:hover {
-  background-color: #0056b3;
-}
-
-/* 商品售出樣式 */
-.sold {
-  background-color: #ccc !important;
-  opacity: 0.6;
-  border: 2px dashed red;
-  position: relative;
-}
-
-/* 售出標籤 */
-.sold-label {
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: red;
-  color: white;
-  padding: 2px 6px;
-  font-size: 12px;
-  border-radius: 4px;
-  font-weight: bold;
-  pointer-events: none;
-}
-
-/* 狀態下拉選單（管理員才看得到） */
-.status-select {
-  margin-left: auto;
-  padding: 4px 8px;
-  border-radius: 5px;
-  border: 1px solid #aaa;
-  font-size: 14px;
-  position: absolute; /* 方便放在商品右下角 */
-  bottom: 10px;
-  right: 10px;
-  display: none; /* 預設隱藏，只有管理員登入後 JS 顯示 */
-}
-
-
     body {
-
       background-color: #d0d0d0;
-
       font-family: Arial, sans-serif;
-
       padding: 20px;
-
     }
 
-    h2 {
-
-      color: #005ab5;
-
-    }
-
-    h4 {
-
-      color: #333;
-
-    }
-
-    .contact {
-
-      margin-bottom: 20px;
-
-    }
-
-    .controls {
-
+    .product-list {
       display: flex;
-
-      align-items: flex-start;
-
       flex-wrap: wrap;
-
-      margin-bottom: 20px;
-
-      gap: 10px;
-
+      gap: 20px;
+      justify-content: flex-start;
     }
 
-    .controls input,
-
-    .controls select,
-
-    .controls button {
-
-      padding: 5px 10px;
-
-      border-radius: 5px;
-
-      border: 1px solid #aaa;
-
-      background-color: #eeeeee;
-
-    }
-
-    .controls button:hover {
-
-      cursor: pointer;
-
-    }
-
-    .reset-button {
-
-      background-color: #ffdddd;
-
-    }
-
-    details summary {
-
-      cursor: pointer;
-
-      padding: 5px 10px;
-
-      border-radius: 5px;
-
-      border: 1px solid #aaa;
-
-      background-color: #eeeeee;
-
-    }
-    details[open] summary {
-
-      background-color: #e0e0e0;
-
-    }
-
-.product-list {
-
-  display: flex;
-
-  flex-wrap: wrap;
-
-  gap: 20px;
-
-  justify-content: flex-start;
-
-}
-
-
-
-.product {
-
-  width: calc(50% - 10px); /* 每列兩格，留間距 */
-
-  background-color: #aaa;
-
-  display: flex;
-
-  padding: 10px;
-
-  border-radius: 8px;
-
-  min-height: 160px;
-
-  align-items: center;
-
-  box-sizing: border-box;
-
-}
-
-
-
-.product img {
-
-  width: 140px;
-
-  height: 140px;
-
-  object-fit: cover;
-
-  margin-left: auto;
-
-  margin-right: 20px;
-
-  border-radius: 8px;
-
-}
-  .product-img.long-img {
-  width: auto;
-  height: auto;
-  max-width: 250px;
-  max-height: 250px;
-  object-fit: contain;
-}
-
-.product-text {
-
-  font-size: 14px;
-
-  line-height: 1.4;
-
-}
-
-    hr {
-
-
-
-      border: 1px solid #bbb;
-
-
-
-      width: 100%;
-
-
-
-      margin: 30px 0;
-
-
-
-    }
-
-    .info p {
-
-      margin: 4px 0;
-
-    }
-
-    .info p span.label {
-
-      color: red;
-
-      font-weight: normal;
-
-    }
-
-    .info p span.label-name {
-
-      color: darkgreen;
-
-      font-weight: normal;
-
-    }
-
-    .info p span.value {
-
-      color: black;
-
-    }
-
-    .advanced-grid {
-
-      display: grid;
-
-      grid-template-columns: repeat(4, 1fr);
-
-      gap: 10px;
-
-    }
-
-    .advanced-grid label {
-
+    .product {
+      width: calc(50% - 10px);
+      background-color: #aaa;
       display: flex;
-
-      align-items: flex-start;
-
-      flex-direction: column;
-
+      padding: 10px;
+      border-radius: 8px;
+      min-height: 160px;
+      align-items: center;
+      box-sizing: border-box;
+      position: relative;
     }
 
-    .advanced-grid input {
-
-      width: 50%;
-
+    .product img {
+      width: 140px;
+      height: 140px;
+      object-fit: cover;
+      margin-left: auto;
+      margin-right: 20px;
+      border-radius: 8px;
     }
 
-    .break-row {
-
-      grid-column: 1 / -1;
-
-      height: 0;
-
+    .product-img.long-img {
+      width: auto;
+      height: auto;
+      max-width: 250px;
+      max-height: 250px;
+      object-fit: contain;
     }
 
+    .sold {
+      background-color: #ccc !important;
+      opacity: 0.6;
+      border: 2px dashed red;
+      position: relative;
+    }
+
+    .sold-label {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background-color: red;
+      color: white;
+      padding: 2px 6px;
+      font-size: 12px;
+      border-radius: 4px;
+      font-weight: bold;
+      pointer-events: none;
+    }
+
+    .status-select {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      display: none;
+      padding: 4px 8px;
+      border-radius: 5px;
+      border: 1px solid #aaa;
+      font-size: 14px;
+      background-color: white;
+      z-index: 1;
+    }
+
+    #admin-login-button {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
+      padding: 8px 12px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #admin-login-button:hover {
+      background-color: #0056b3;
+    }
   </style>
-
 </head>
-
 <body>
 
   <h2>西龜商城 🍉🐢</h2>
@@ -942,7 +739,6 @@
   </p>
 
 <script>
-// === [ 全域變數與初始化 ] ===
 let isAdmin = localStorage.getItem("isAdmin") === "true";
 let productList;
 let originalHTML;
@@ -979,14 +775,12 @@ function updateProductStatusVisual(product, status) {
   }
 }
 
+// ✅ 使用你指定的版本
 function initProductStatusControls() {
   originalProducts.forEach(product => {
     const savedStatus = localStorage.getItem("product-status-" + product.id) || "on-sale";
-    
-    // ✅ 所有人：都套用視覺樣式（紅框 / 已售出標籤）
     updateProductStatusVisual(product, savedStatus);
 
-    // ✅ 管理員限定：才顯示選單
     let select = product.querySelector(".status-select");
     if (!select) {
       select = document.createElement("select");
@@ -1000,14 +794,12 @@ function initProductStatusControls() {
     select.append(option1, option2);
     select.value = savedStatus;
 
-    // 變更狀態時，同步更新
     select.addEventListener("change", e => {
       const status = e.target.value;
       localStorage.setItem("product-status-" + product.id, status);
       updateProductStatusVisual(product, status);
     });
 
-    // ✅ 僅登入後才顯示選單
     select.style.display = isAdmin ? "inline-block" : "none";
 
     product.style.position = "relative";
@@ -1019,7 +811,6 @@ function initProductStatusControls() {
   });
 }
 
-// === [ 篩選相關邏輯 ] ===
 function getValue(id, fallback) {
   const val = document.getElementById(id)?.value;
   return val === "" ? fallback : parseInt(val);
@@ -1076,32 +867,20 @@ function filterProducts() {
   const noResults = document.getElementById("noResults");
   if (noResults) noResults.style.display = sorted.length === 0 ? "block" : "none";
 
-  // ✅ 重新套用狀態標籤與選單
-  initProductStatusControls();
+  initProductStatusControls(); // ✅ 重新套用紅框/標籤/選單
 }
 
-// === [ 篩選函式包裝 ] ===
+// 包裝 filterProducts，加上初始商品記錄與狀態控制
 filterProducts = (function (originalFilter) {
   return function () {
     productList.innerHTML = originalHTML;
     originalProducts.length = 0;
     originalProducts.push(...document.querySelectorAll(".product"));
     originalFilter();
-
-    // ✅ 修正 isAdmin 被關閉在舊閉包中的問題 → 執行時動態判斷
-    const adminMode = localStorage.getItem("isAdmin") === "true";
-    originalProducts.forEach(product => {
-      const select = product.querySelector(".status-select");
-      if (select) {
-        select.style.display = adminMode ? "inline-block" : "none";
-      }
-    });
-
     initProductStatusControls();
   };
 })(filterProducts);
 
-// === [ 排序功能 ] ===
 function sortBy(type) {
   const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
   currentSort = { type, ascending };
@@ -1109,7 +888,6 @@ function sortBy(type) {
   filterProducts();
 }
 
-// === [ 重設篩選器 ] ===
 function resetFilters() {
   document.getElementById("searchInput").value = "";
   document.getElementById("categorySelect").value = "all";
@@ -1121,13 +899,13 @@ function resetFilters() {
   filterProducts();
 }
 
-// === [ 初始化：第一次載入 ] ===
 window.addEventListener("load", () => {
   productList = document.getElementById("productList");
   originalHTML = productList.innerHTML;
+  originalProducts.length = 0;
   originalProducts.push(...document.querySelectorAll(".product"));
 
-  // ✅ 管理員登入按鈕
+  // 管理員登入按鈕
   const adminBtn = document.createElement("button");
   adminBtn.id = "admin-login-button";
   adminBtn.textContent = isAdmin ? "管理員登出" : "管理員登入";
@@ -1145,8 +923,6 @@ window.addEventListener("load", () => {
         localStorage.setItem("isAdmin", "true");
         alert("登入成功！");
         adminBtn.textContent = "管理員登出";
-        filterProducts();
-        initProductStatusControls();
       } else {
         return alert("密碼錯誤！");
       }
@@ -1155,18 +931,19 @@ window.addEventListener("load", () => {
       localStorage.setItem("isAdmin", "false");
       alert("已登出！");
       adminBtn.textContent = "管理員登入";
-      filterProducts();
-      initProductStatusControls();
     }
+
+    // ✅ 重新載入商品狀態與選單
+    originalProducts.length = 0;
+    originalProducts.push(...document.querySelectorAll(".product"));
+    filterProducts();
   });
 
   document.body.appendChild(adminBtn);
 
-  // 初次載入商品
-  filterProducts();
+  filterProducts(); // 初始化時顯示商品與狀態
 });
 
-// === [ 綁定事件 ] ===
 document.getElementById("searchInput").addEventListener("input", filterProducts);
 document.getElementById("categorySelect").addEventListener("change", filterProducts);
 document.getElementById("jobSelect").addEventListener("change", filterProducts);
