@@ -944,7 +944,6 @@
  <script>
     // 先取得登入狀態
     let isAdmin = localStorage.getItem("isAdmin") === "true";
-    const products = document.querySelectorAll(".product[id]");
     // 新增：初始化商品狀態選單與售出標籤
     function initProductStatusControls() {
       originalProducts.forEach(product => {
@@ -1016,7 +1015,104 @@
     }
 
     // 你原本的 filterProducts 呼叫時，先初始化狀態控制
-    filterProducts = (function(originalFilter) {
+    // 載入商品ID至管理員控制台下拉選單
+    function fillAdminProductSelect() {
+  const selectEl = document.getElementById("admin-product-select");
+  if (!selectEl) {
+    console.warn("找不到 admin-product-select");
+    return;
+  }
+  selectEl.innerHTML = "";
+  if(products.length === 0){
+    console.warn("找不到任何帶有 id 的商品元素");
+  }
+
+  document.querySelectorAll(".product[id]").forEach(product => {
+    const id = product.id;
+    if(!id) {
+      console.warn("商品缺少 id", product);
+      return;
+    }
+    const option = document.createElement("option");
+    option.value = id;
+    option.textContent = id;
+    selectEl.appendChild(option);
+  });
+}
+
+
+    const originalProducts = Array.from(document.querySelectorAll(".product"));
+    const productList = document.querySelector(".product-list");
+    const originalHTML = productList.innerHTML;
+    let currentSort = null;
+
+    function getValue(id, hp) {
+      const val = document.getElementById(id)?.value;
+      return val === "" ? hp : parseInt(val);
+    }
+
+    function getFilteredProducts() {
+      const tempContainer = document.createElement("div");
+      tempContainer.innerHTML = originalHTML;
+      return Array.from(tempContainer.querySelectorAll(".product"));
+    }
+
+    function applyCurrentSort(products) {
+      if (!currentSort) return products;
+      const { type, ascending } = currentSort;
+      return products.sort((a, b) => {
+        const aVal = +a.getAttribute("data-" + type);
+        const bVal = +b.getAttribute("data-" + type);
+        return ascending ? aVal - bVal : bVal - aVal;
+      });
+    }
+
+    function filterProducts() {
+      const searchInput = document.getElementById("searchInput").value.toLowerCase();
+      const category = document.getElementById("categorySelect").value;
+      const job = document.getElementById("jobSelect").value;
+      const filters = {
+        strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
+        dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
+        intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
+        lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
+        atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
+        matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
+        hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
+        mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
+        jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
+        avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
+        spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
+        accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
+      };
+
+      const products = getFilteredProducts(); // 所有 DOM 中的 .product 元素
+      const filtered = products.filter((product) => {
+        const prodJob = product.getAttribute("data-job") || "";
+        const name = product.getAttribute("data-name")?.toLowerCase() || "";
+        const type = product.getAttribute("data-type") || "";
+        const attrs = ["str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "acc"];
+        return (
+          name.includes(searchInput) &&
+          (category === "all" || type === category) &&
+          (job === "all" || prodJob === job) &&
+          attrs.every(attr => {
+            const val = +product.getAttribute("data-" + attr);
+            return val >= filters[attr + "Min"] && val <= filters[attr + "Max"];
+          })
+        );
+      });
+
+      const productList = document.getElementById("productList");
+      const noResults = document.getElementById("noResults");
+      const sorted = applyCurrentSort(filtered);
+
+      productList.innerHTML = "";
+      sorted.forEach(p => productList.appendChild(p));
+
+      noResults.style.display = sorted.length === 0 ? "block" : "none";
+    }
+    filterProducts = (function(originalFilter) {
       return function() {
         // 先恢復商品原始狀態
         productList.innerHTML = originalHTML;
@@ -1133,103 +1229,6 @@
 
     });
 
-    // 載入商品ID至管理員控制台下拉選單
-    function fillAdminProductSelect() {
-  const selectEl = document.getElementById("admin-product-select");
-  if (!selectEl) {
-    console.warn("找不到 admin-product-select");
-    return;
-  }
-  selectEl.innerHTML = "";
-  if(products.length === 0){
-    console.warn("找不到任何帶有 id 的商品元素");
-  }
-
-  products.forEach(product => {
-    const id = product.id;
-    if(!id) {
-      console.warn("商品缺少 id", product);
-      return;
-    }
-    const option = document.createElement("option");
-    option.value = id;
-    option.textContent = id;
-    selectEl.appendChild(option);
-  });
-}
-
-
-    const originalProducts = Array.from(document.querySelectorAll(".product"));
-    const productList = document.querySelector(".product-list");
-    const originalHTML = productList.innerHTML;
-    let currentSort = null;
-
-    function getValue(id, hp) {
-      const val = document.getElementById(id)?.value;
-      return val === "" ? hp : parseInt(val);
-    }
-
-    function getFilteredProducts() {
-      const tempContainer = document.createElement("div");
-      tempContainer.innerHTML = originalHTML;
-      return Array.from(tempContainer.querySelectorAll(".product"));
-    }
-
-    function applyCurrentSort(products) {
-      if (!currentSort) return products;
-      const { type, ascending } = currentSort;
-      return products.sort((a, b) => {
-        const aVal = +a.getAttribute("data-" + type);
-        const bVal = +b.getAttribute("data-" + type);
-        return ascending ? aVal - bVal : bVal - aVal;
-      });
-    }
-
-    function filterProducts() {
-      const searchInput = document.getElementById("searchInput").value.toLowerCase();
-      const category = document.getElementById("categorySelect").value;
-      const job = document.getElementById("jobSelect").value;
-      const filters = {
-        strMin: getValue("strMin", -Infinity), strMax: getValue("strMax", Infinity),
-        dexMin: getValue("dexMin", -Infinity), dexMax: getValue("dexMax", Infinity),
-        intMin: getValue("intMin", -Infinity), intMax: getValue("intMax", Infinity),
-        lukMin: getValue("lukMin", -Infinity), lukMax: getValue("lukMax", Infinity),
-        atkMin: getValue("atkMin", -Infinity), atkMax: getValue("atkMax", Infinity),
-        matkMin: getValue("matkMin", -Infinity), matkMax: getValue("matkMax", Infinity),
-        hpMin: getValue("hpMin", -Infinity), hpMax: getValue("hpMax", Infinity),
-        mpMin: getValue("mpMin", -Infinity), mpMax: getValue("mpMax", Infinity),
-        jumpMin: getValue("jumpMin", -Infinity), jumpMax: getValue("jumpMax", Infinity),
-        avoidMin: getValue("avoidMin", -Infinity), avoidMax: getValue("avoidMax", Infinity),
-        spdMin: getValue("spdMin", -Infinity), spdMax: getValue("spdMax", Infinity),
-        accMin: getValue("accMin", -Infinity), accMax: getValue("accMax", Infinity)
-      };
-
-      const products = getFilteredProducts(); // 所有 DOM 中的 .product 元素
-      const filtered = products.filter((product) => {
-        const prodJob = product.getAttribute("data-job") || "";
-        const name = product.getAttribute("data-name")?.toLowerCase() || "";
-        const type = product.getAttribute("data-type") || "";
-        const attrs = ["str", "dex", "int", "luk", "atk", "matk", "hp", "mp", "jump", "avoid", "spd", "acc"];
-        return (
-          name.includes(searchInput) &&
-          (category === "all" || type === category) &&
-          (job === "all" || prodJob === job) &&
-          attrs.every(attr => {
-            const val = +product.getAttribute("data-" + attr);
-            return val >= filters[attr + "Min"] && val <= filters[attr + "Max"];
-          })
-        );
-      });
-
-      const productList = document.getElementById("productList");
-      const noResults = document.getElementById("noResults");
-      const sorted = applyCurrentSort(filtered);
-
-      productList.innerHTML = "";
-      sorted.forEach(p => productList.appendChild(p));
-
-      noResults.style.display = sorted.length === 0 ? "block" : "none";
-    }
 
     function sortBy(type) {
       const ascending = !currentSort || currentSort.type !== type ? true : !currentSort.ascending;
